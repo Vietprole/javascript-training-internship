@@ -50,3 +50,7 @@ npm install --save-dev parcel
   }
 }
 ```
+- If there are already config files
+```bash
+npm install
+```
