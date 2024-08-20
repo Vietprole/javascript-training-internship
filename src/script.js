@@ -158,6 +158,14 @@ for (let i = 0; i < 5; i++) {
 for (let item of arr8) {
   console.log(item)
 } // 0 1 2 3 4 5
+let user4 = {
+  name: 'John',
+  age: 30,
+  isAdmin: true,
+}
+for (let key in user4) {
+  console.log(key, user4[key])
+} // name John, age 30, isAdmin true
 
 //* Functions
 // Function declaration
@@ -199,11 +207,12 @@ let getData4 = () => 'hi!'
 
 //* Objects
 // Object initialization
-const obj = {
-  /* ... */
+const user = {
+  name: "John",
+  age: 30
 } // Using object literal
 const obj1 = new Object() // Using the object built-in function
-const obj3 = Object.create(null) // Using the Object.create() function
+const obj2 = Object.create(null) // Using the Object.create() function
 // Function as object constructor
 function Car(brand, model) {
   this.brand = brand
@@ -234,9 +243,45 @@ const car1 = {
     name: 'Ford',
   },
 }
+// Property value shorthand
+function makeUser(name, age){
+  return {
+    name, // same as name: name
+    age // same as age: age
+  }
+}
+let user1 = makeUser('John', 30)
+console.log(user1.name) // John
+
+let username = 'Doe'
+let user2 = {
+  username, // same as name: name
+  age: 30
+}
+console.log(user2.username) // Doe
+// Property names limitation
+let obj = {
+  for: 1,
+  let: 2,
+  return: 3,
+}
+console.log(obj.for + obj.let + obj.return) // 6
+
+obj = {
+  0: 'test', // same as '0': 'test'
+}// number name is converted to string
+console.log(obj[0]) // test
+console.log(obj['0']) // test
+
+obj = {}
+obj.__proto__ = 5 // __proto__ is a special property name, it must be an object
+console.log(obj.__proto__) // [object Object]
+
 // Access properties
 console.log(car1.color) // blue
-console.log(car1['the color']) // blue
+console.log(car1['the color']) // bluey
+let key = "color"
+console.log(car1[key]) // blue
 console.log(car1.name) // undefined
 console.log(car1.brand.name) // Ford
 console.log(car1['brand']['name']) // Ford
@@ -251,6 +296,26 @@ console.log(car1.model) // Fiesta
 // Delete properties
 delete car1.model
 console.log(car1.model) // undefined
+//Computed property names
+let fruit = prompt("Which fruit to buy?", "apple")
+let bag = {
+  [fruit]: 5, // the name of the property is taken from the variable fruit
+}
+alert(bag[fruit]) // 5
+
+fruit = 'apple'
+bag = {
+  ['a_bunch_of_' + fruit]: 52,
+}
+console.log(bag.a_bunch_of_apple) // 52
+// Property existence
+let user3 = {}
+console.log(user3.noSuchProperty === undefined) // true
+// non-existing property & property value: undefined returns undefined
+console.log('age' in user) // true
+console.log('name' in user) // true
+key = 'age'
+console.log(key in user) // true
 // Object methods
 const car2 = {
   brand: 'Ford',
@@ -271,6 +336,20 @@ const car3 = {
 }
 car3.start() // Started undefined undefined
 
+// Object order when looping
+let codes = {
+  "49": "Germany",
+  "41": "Switzerland",
+  "44": "Great Britain",
+  // ..,
+  "1": "USA",
+  z: "this is z",
+  a: "this is a"
+};
+
+for (let code in codes) {
+  console.log(code); // 1, 41, 44, 49, z, a
+}// integer properties are sorted, others appear in creation order
 //* Classes
 class Person {
   constructor(name) {
@@ -353,3 +432,27 @@ async function getUserName() {
 
 getUserName()
 console.log('Fetching user name...')
+
+//* Variables scope
+// Global scope
+var globalVar = 'I am a global var variable'
+let globalLet = 'I am a global let variable'
+const globalConst = 'I am a global const variable'
+
+// Function scope
+function myFunction() {
+  console.log(globalVar) // I am a global var variable
+  console.log(globalLet) // I am a global let variable
+  console.log(globalConst) // I am a global const variable
+  //You can log the functionVar before it is declared
+  console.log(functionVar) // undefined
+  if (true) {
+    var functionVar = 'I am a function var variable'
+    let functionLet = 'I am a function let variable'
+    const functionConst = 'I am a function const variable'
+  }
+  console.log(functionVar) // I am a function var variable
+  // console.log(functionLet) // ReferenceError: functionLet is not defined
+  // console.log(functionConst) // ReferenceError: functionConst is not defined
+}
+myFunction()
