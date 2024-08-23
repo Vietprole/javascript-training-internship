@@ -2,13 +2,47 @@
 <html lang="en">
   <head>
     <title>Learning the DOM</title>
-    <script src="./script/DOM-manipulation.js"></script>
   </head>
+  <style>
+    body {
+      max-width: 600px;
+      margin: 0 auto;
+      font-family: sans-serif;
+    }
+    .active {
+      border: 2px solid blue;
+    }
 
+    .warning {
+      border: 2px solid red;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    div {
+      border: 2px dashed lightgray;
+      padding: 15px;
+      margin: 5px;
+    }
+  </style>
   <body>
     <h1>Document Object Model</h1>
     <div id="demo-id">Demo ID</div>
     <div class="demo-class">Demo Class 1</div>
     <div class="demo-class">Demo Class 2</div>
+    <div>Div 1</div>
+    <div class="active">Div 2</div>
+    <div
+      class="style-modify"
+      style="height: 100px; width: 100px; border: 2px solid black"
+    >
+      Modify my style
+    </div>
+    <img
+      src="https://images.unsplash.com/photo-1544923408-75c5cef46f14?w=690&q=80"
+    />
+    <script src="./script/DOM-manipulation.js"></script>
   </body>
 </html>

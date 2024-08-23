@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>Events</title>
+  </head>
+  <style>
+    form,
+    form * {
+        margin: 10px;
+        border: 1px solid blue;
+    }
+  </style>
+
+  <body>
+    <div>
+      <!-- Add button -->
+      <button onclick="changeText()">Click me</button>
+
+      <p>Try to change me using inline event handler.</p>
+    </div>
+    <div>
+      <!-- Add button -->
+      <button class="event-handler-btn">Click me</button>
+
+      <p class="event-handler-p">
+        Try to change me using event handler properties.
+      </p>
+    </div>
+    <div>
+      <!-- Add button -->
+      <button class="event-listener-btn">Click me</button>
+
+      <p class="event-listener-p">Try to change me using event listeners.</p>
+    </div>
+    <p>Press WASD to change the text below:</p>
+    <div class="event-object">Text</div>
+    <br>
+    <div>Click on the item below to view on Console:</div>
+    <section>
+        <div id="one">One</div>
+        <div id="two">Two</div>
+        <div id="three">Three</div>
+    </section>
+    <br>
+    <div>Click on each tag to see event bubbling:</div>
+    <form onclick="alert('form')" class="bubbling">FORM
+        <div onclick="alert('div')">DIV
+          <p onclick="alert('p')">P</p>
+        </div>
+    </form>
+    <br>
+    <div>Click on each tag to see event capturing then bubbling:</div>
+    <form class="capturing">FORM
+        <div>DIV
+          <p>P</p>
+        </div>
+    </form>
+  </body>
+
+  <!-- Reference JavaScript file -->
+  <script src="./script/events.js"></script>
+</html>
