@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Storage</title>
+  </head>
+  <body>
+    <script>
+      // Local storage
+      localStorage.setItem('test1', 1)
+      console.log(localStorage.getItem('test1'))
+      localStorage.setItem('test2', 2)
+      localStorage.setItem('test3', 3)
+      console.log(localStorage.length)
+      localStorage.removeItem('test1')
+      console.log(localStorage.key(0))
+      //localStorage.clear()
+
+      // Object-like access
+      localStorage.test = 2
+      localStorage.test
+      delete localStorage.test
+      let key = 'length'
+      localStorage[key] = 5 // Error, can't assign length
+      // storage event doesn't happen for object-like access
+
+      // Storage objects are not iterable
+      for (let i = 0; i < localStorage.length; i++) {
+        let key = localStorage.key(i)
+        console.log(`${key}: ${localStorage.getItem(key)}`)
+      }
+      // or
+      let keys = Object.keys(localStorage)
+      for (let key of keys) {
+        console.log(`${key}: ${localStorage.getItem(key)}`)
+      }
+
+      // Session storage
+      sessionStorage.setItem('test1', 1)
+      console.log(sessionStorage.getItem('test1'))
+      sessionStorage.setItem('test2', 2)
+      sessionStorage.setItem('test3', 3)
+      for (let i = 0; i < localStorage.length; i++) {
+        let key = localStorage.key(i)
+        console.log(`${key}: ${localStorage.getItem(key)}`)
+      }
+      console.log(sessionStorage.length)
+      sessionStorage.removeItem('test1')
+      console.log(sessionStorage.key(0))
+      sessionStorage.clear()
+    </script>
+  </body>
+</html>

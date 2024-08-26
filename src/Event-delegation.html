@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event delegation</title>
+    <style>
+      #bagua-table th {
+        text-align: center;
+        font-weight: bold;
+      }
+
+      #bagua-table td {
+        width: 150px;
+        white-space: nowrap;
+        text-align: center;
+        vertical-align: bottom;
+        padding-top: 5px;
+        padding-bottom: 12px;
+      }
+
+      #bagua-table .nw {
+        background: #999;
+      }
+
+      #bagua-table .n {
+        background: #03f;
+        color: #fff;
+      }
+
+      #bagua-table .ne {
+        background: #ff6;
+      }
+
+      #bagua-table .w {
+        background: #ff0;
+      }
+
+      #bagua-table .c {
+        background: #60c;
+        color: #fff;
+      }
+
+      #bagua-table .e {
+        background: #09f;
+        color: #fff;
+      }
+
+      #bagua-table .sw {
+        background: #963;
+        color: #fff;
+      }
+
+      #bagua-table .s {
+        background: #f60;
+        color: #fff;
+      }
+
+      #bagua-table .se {
+        background: #0c3;
+        color: #fff;
+      }
+
+      #bagua-table .highlight {
+        background: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Event delegation examples</h1>
+    <h2>Click on a table's cell to highlight it!</h2>
+    <table id="bagua-table">
+      <tr>
+        <th colspan="3">
+          <em>Bagua</em> Chart: Direction, Element, Color, Meaning
+        </th>
+      </tr>
+      <tr>
+        <td class="nw">
+          <strong>Northwest</strong> <br />Metal <br />Silver <br />Elders
+        </td>
+        <td class="n">
+          <strong>North</strong> <br />Water <br />Blue <br />Change
+        </td>
+        <td class="ne">
+          <strong>Northeast</strong> <br />Earth <br />Yellow <br />Direction
+        </td>
+      </tr>
+      <tr>
+        <td class="w">
+          <strong>West</strong> <br />Metal <br />Gold <br />Youth
+        </td>
+        <td class="c">
+          <strong>Center</strong> <br />All <br />Purple <br />Harmony
+        </td>
+        <td class="e">
+          <strong>East</strong> <br />Wood <br />Blue <br />Future
+        </td>
+      </tr>
+      <tr>
+        <td class="sw">
+          <strong>Southwest</strong> <br />Earth <br />Brown <br />Tranquility
+        </td>
+        <td class="s">
+          <strong>South</strong> <br />Fire <br />Orange <br />Fame
+        </td>
+        <td class="se">
+          <strong>Southeast</strong> <br />Wood <br />Green <br />Romance
+        </td>
+      </tr>
+    </table>
+    <h2>Click on different buttons for different alerts!</h2>
+    <div id="menu">
+      <button data-action="save">Save</button>
+      <button data-action="load">Load</button>
+      <button data-action="search">Search</button>
+    </div>
+    <h2>Behavior pattern</h2>
+    <h3>Behavior: Counter. Click on counter to increase the number!</h3>
+    Counter: <input type="button" value="1" data-counter /> One more counter:
+    <input type="button" value="1" data-counter /> Not a counter:
+    <input type="button" value="1" />
+    <h3>Behavior: Toggle</h3>
+    <button data-toggle-id="subscribe-mail">Show the subscription form</button>
+
+    <form id="subscribe-mail" hidden>Your mail: <input type="email" /></form>
+
+    <script>
+      let table = document.getElementById('bagua-table')
+      let selectedTd
+      table.onclick = function (event) {
+        // Code below to deal with tags inside the TD. Ex: <td><strong>Text</strong></td>
+        // get the nearest ancestor that matches the selector
+        let td = event.target.closest('td')
+        // if no td is found then target is not inside any td, return
+        if (!td) return
+        // if the td is not inside the current table, return
+        if (!table.contains(td)) return
+
+        // highlight the td, not the target
+        highlight(td)
+      }
+
+      function highlight(td) {
+        if (selectedTd) {
+          // remove the existing highlight if any
+          selectedTd.classList.remove('highlight')
+        }
+        selectedTd = td
+        selectedTd.classList.add('highlight') // highlight the new td
+      }
+
+      class Menu {
+        constructor(elem) {
+          this._elem = elem
+          elem.onclick = this.onClick.bind(this)
+        }
+        save() {
+          alert('Saving')
+        }
+
+        load() {
+          alert('Loading')
+        }
+
+        search() {
+          alert('Searching')
+        }
+
+        onClick(event) {
+          let action = event.target.dataset.action
+          if (action) {
+            this[action]()
+          }
+        }
+      }
+
+      // the browser automatically creates a global variable named 'menu' for id="menu" element
+      new Menu(menu)
+
+      // behavior: counter
+      document.addEventListener('click', function (event) {
+        if (event.target.dataset.counter !== undefined) {
+          event.target.value++
+        }
+      })
+
+      // behavior: toggle
+      document.addEventListener('click', function (event) {
+        let id = event.target.dataset.toggleId
+        if (!id) return
+        let elem = document.getElementById(id)
+        elem.hidden = !elem.hidden
+      })
+    </script>
+  </body>
+</html>
