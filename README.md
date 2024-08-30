@@ -3,7 +3,7 @@ Javascript training
 
 Config:
 - Install [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) extension
-- Intall [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) extension
+- Install [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) extension
 - Run:
 ```bash
 npm install -D eslint prettier
