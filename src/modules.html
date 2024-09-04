@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modules</title>
+    <script type="module">
+        // Importing named exports
+        import { add, subtract } from './script/modules.js';
+        console.log(add(2, 3)); // 5
+        console.log(subtract(5, 3)); // 2
+
+        // Importing the default export
+        import multiply from './script/modules.js';
+        console.log(multiply(2, 3)); // 6
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

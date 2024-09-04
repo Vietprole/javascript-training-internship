@@ -46,3 +46,39 @@ const foundIndex = arr8.findIndex((element, index, array) => {
 console.log(foundIndex) // 3
 console.log(arr8.includes(4)) // true
 console.log(arr8.includes(4, 5)) // find from index 5 to the end
+
+//* Higher order functions
+// forEach
+arr8.forEach((element, index, array) => {
+  console.log(`Element: ${element}, Index: ${index}, Array: ${array}`)
+})
+
+// map
+const mappedArray = arr8.map((element, index, array) => {
+  return element * 2
+})
+console.log(mappedArray) // [0, 2, 4, 6, 8, 10]
+
+// filter
+const filteredArray = arr8.filter((element, index, array) => {
+  return element % 2 === 0
+})
+console.log(filteredArray) // [0, 2, 4]
+
+// reduce
+const reducedValue = arr8.reduce((accumulator, element, index, array) => {
+  return accumulator + element
+}, 0)
+console.log(reducedValue) // 15
+
+// some
+const hasEven = arr8.some((element, index, array) => {
+  return element % 2 === 0
+})
+console.log(hasEven) // true
+
+// every
+const allEven = arr8.every((element, index, array) => {
+  return element % 2 === 0
+})
+console.log(allEven) // false
