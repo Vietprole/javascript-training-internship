@@ -1,1 +1,2 @@
-console.log('Hello, world!')
+const a = 'Hello World';
+console.log(a);
