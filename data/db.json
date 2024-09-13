@@ -1,0 +1,58 @@
+{
+  "customers": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "status": "Open",
+      "rate": 70,
+      "balance": -270,
+      "deposit": 500,
+      "description": "This is a updated test customer"
+    },
+    {
+      "id": "2",
+      "name": "John Doe",
+      "status": "Open",
+      "rate": 70,
+      "balance": -270,
+      "deposit": 500,
+      "description": "This is a updated 2 test customer"
+    },
+    {
+      "id": "2",
+      "name": "John Doe",
+      "status": "Open",
+      "rate": 70,
+      "balance": -270,
+      "deposit": 500,
+      "description": "This is a test customer"
+    },
+    {
+      "id": "4",
+      "name": "John Doe",
+      "status": "Open",
+      "rate": 70,
+      "balance": -270,
+      "deposit": 500,
+      "description": "This is a test customer"
+    },
+    {
+      "id": 1,
+      "name": "John Doe",
+      "status": "Open",
+      "rate": 70,
+      "balance": -270,
+      "deposit": 500,
+      "description": "This is a test customer"
+    },
+    {
+      "id": "1",
+      "name": "John Doe",
+      "status": "Open",
+      "rate": 70,
+      "balance": -270,
+      "deposit": 500,
+      "description": "This is a test customer"
+    }
+  ]
+}
