@@ -1,3 +1,5 @@
+import httpRequest from './utils';
+
 class Customer {
   constructor(id, name, status, rate, balance, deposit, description) {
     this.id = id;
@@ -22,119 +24,25 @@ class Customer {
   }
 }
 
-// Define the URL for the HTTP request
-const url = 'http://localhost:3000/customers';
+export default Customer;
 
-// Make the GET request using fetch
-fetch(url)
-  .then((response) => {
-    // Check if the response is OK (status code 200-299)
-    if (!response.ok) {
-      throw new Error(`Network response was not ok ${response.statusText}`);
-    }
-    // Parse the JSON from the response
-    return response.json();
-  })
-  .then((data) => {
-    // Handle the data from the response
-    console.log(data);
-  })
-  .catch((error) => {
-    // Handle any errors that occurred during the fetch
-    console.error('There was a problem with the fetch operation:', error);
-  });
+const url = 'http://localhost:3000/customers/1';
+httpRequest('GET', null, url);
 
-const newCustomer = new Customer(
-  '1',
-  'John Doe',
-  'Open',
-  70,
-  -270,
-  500,
-  'This is a test customer'
-).toJSON();
-fetch(url, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: newCustomer,
-})
-  .then((response) => {
-    // Check if the response is OK (status code 200-299)
-    if (!response.ok) {
-      throw new Error(`Network response was not ok ${response.statusText}`);
-    }
-    // Parse the JSON from the response
-    return response.json();
-  })
-  .then((data) => {
-    // Handle the data from the response
-    console.log(data);
-  })
-  .catch((error) => {
-    // Handle any errors that occurred during the fetch
-    console.error('There was a problem with the fetch operation:', error);
-  });
+const postUrl = 'http://localhost:3000/customers';
+const newCustomer = new Customer('5', 'John Boe', 'Due', 0.05, 2000, 600, 'A new test customer');
+httpRequest('POST', newCustomer.toJSON(), postUrl);
 
 const putUrl = 'http://localhost:3000/customers/2';
 const updatedCustomer = new Customer(
   '2',
   'John Doe',
   'Open',
-  70,
-  -270,
-  500,
-  'This is a updated 2 test customer'
-).toJSON();
+  0.05,
+  2000,
+  600,
+  'An updated test customer'
+);
 
-fetch(putUrl, {
-  method: 'PUT',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: updatedCustomer,
-})
-  .then((response) => {
-    // Check if the response is OK (status code 200-299)
-    if (!response.ok) {
-      throw new Error(`Network response was not ok ${response.statusText}`);
-    }
-    // Parse the JSON from the response
-    return response.json();
-  })
-  .then((data) => {
-    // Handle the data from the response
-    console.log(data);
-  })
-  .catch((error) => {
-    // Handle any errors that occurred during the fetch
-    console.error('There was a problem with the fetch operation:', error);
-  });
-
-// Define the URL for the DELETE request to delete customer with id 1
-const deleteUrl = 'http://localhost:3000/customers/1';
-
-// Make the DELETE request using fetch
-fetch(deleteUrl, {
-  method: 'DELETE',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-})
-  .then((response) => {
-    // Check if the response is OK (status code 200-299)
-    if (!response.ok) {
-      throw new Error(`Network response was not ok ${response.statusText}`);
-    }
-    // Parse the JSON from the response
-    return response.json();
-  })
-  .then((data) => {
-    // Handle the data from the response
-    console.log('Customer deleted:', data);
-  })
-  .catch((error) => {
-    // Handle any errors that occurred during the fetch
-    console.error('There was a problem with the fetch operation:', error);
-  });
+httpRequest('PUT', updatedCustomer.toJSON(), putUrl);
+httpRequest('DELETE', null, 'http://localhost:3000/customers/3');

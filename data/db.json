@@ -7,16 +7,16 @@
       "rate": 70,
       "balance": -270,
       "deposit": 500,
-      "description": "This is a updated test customer"
+      "description": "This is a test customer"
     },
     {
       "id": "2",
       "name": "John Doe",
       "status": "Open",
-      "rate": 70,
-      "balance": -270,
-      "deposit": 500,
-      "description": "This is a updated 2 test customer"
+      "rate": 0.05,
+      "balance": 2000,
+      "deposit": 600,
+      "description": "An updated test customer"
     },
     {
       "id": "3",
@@ -35,6 +35,15 @@
       "balance": -270,
       "deposit": 500,
       "description": "This is a test customer"
+    },
+    {
+      "id": "5",
+      "name": "John Boe",
+      "status": "Due",
+      "rate": 0.05,
+      "balance": 2000,
+      "deposit": 600,
+      "description": "A new test customer"
     }
   ]
 }
