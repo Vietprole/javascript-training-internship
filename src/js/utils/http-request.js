@@ -1,4 +1,4 @@
-import API_BASE_URL from '../constants';
+import { API_BASE_URL } from '../constants/api';
 
 async function httpRequest(method, body = null, url = API_BASE_URL) {
   const options = { method };

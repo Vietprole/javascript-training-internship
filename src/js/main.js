@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
-import httpRequest from './utils';
+import { API_BASE_URL, HTTP_METHODS } from './constants/api';
+import httpRequest from './utils/http-request';
 
 class Customer {
   constructor(id, name, status, rate, balance, deposit, description) {
@@ -27,8 +28,7 @@ class Customer {
 
 export default Customer;
 
-const url = 'http://localhost:3000/customers';
-httpRequest('GET', null, url);
+httpRequest(HTTP_METHODS.GET);
 
 const newUuid = uuidv4();
 const newCustomer = new Customer(
@@ -40,9 +40,9 @@ const newCustomer = new Customer(
   600,
   'A new test customer'
 );
-httpRequest('POST', newCustomer.toJSON(), url);
+httpRequest(HTTP_METHODS.POST, newCustomer.toJSON());
 
-const putUrl = 'http://localhost:3000/customers/8434960a-b06b-4dc9-98b9-d6306de7cdad';
+const putUrl = `${API_BASE_URL}/8434960a-b06b-4dc9-98b9-d6306de7cdad`;
 const updatedCustomer = new Customer(
   newUuid,
   'John Doe',
@@ -53,5 +53,5 @@ const updatedCustomer = new Customer(
   'An updated test customer'
 );
 
-httpRequest('PUT', updatedCustomer.toJSON(), putUrl);
-httpRequest('DELETE', null, 'http://localhost:3000/customers/5b4f0c09-6f57-4467-8cad-23c11a65afe1');
+httpRequest(HTTP_METHODS.PUT, updatedCustomer.toJSON(), putUrl);
+httpRequest(HTTP_METHODS.DELETE, null, `${API_BASE_URL}/5b4f0c09-6f57-4467-8cad-23c11a65afe1`);
