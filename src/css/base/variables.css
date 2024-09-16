@@ -1,0 +1,39 @@
+:root {
+    --button-primary-color: #2264E5;
+    --button-secondary-color: #D12953;
+    --button-primary-hover-color: #4F5AED;
+    --button-secondary-hover-color: #D12953;
+    --text-default-color: #464F60;
+    --text-primary-color: #171C26;
+    --text-secondary-color: #687182;
+    --text-light-color: #FFFFFF;
+    --text-info-color: #2264E5;
+    --text-danger-color: #D12953;
+    --text-positive-color: #14804A;
+    --background-primary-color: #FFFFFF;
+    --background-secondary-color: #F4F7FCBF;
+    --background-status-open-color: #F0F1FA;
+    --background-status-paid-color: #E1FCEF;
+    --background-status-inactive-color: #E9EDF5;
+    --background-status-due-color: #FAF0F3;
+    --text-status-open-color: #4F5AED;
+    --text-status-paid-color: #14804A;
+    --text-status-inactive-color: #5A6376;
+    --text-status-due-color: #D12953;
+
+    --heading-size-sm: 11px;
+    --heading-size-md: 22px;
+    --body-size-xs: 11px;
+    --body-size-sm: 12px;
+    --body-size-md: 14px;
+    --body-size-lg: 22px;
+
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semi-bold: 600;
+
+    --border-radius-xs: 5px;
+    --border-radius-sm: 6px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 10px;
+}
