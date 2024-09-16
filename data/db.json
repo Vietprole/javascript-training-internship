@@ -1,16 +1,7 @@
 {
   "customers": [
     {
-      "id": "1",
-      "name": "John Doe",
-      "status": "Open",
-      "rate": 70,
-      "balance": -270,
-      "deposit": 500,
-      "description": "This is a test customer"
-    },
-    {
-      "id": "2",
+      "id": "8434960a-b06b-4dc9-98b9-d6306de7cdad",
       "name": "John Doe",
       "status": "Open",
       "rate": 0.05,
@@ -19,25 +10,61 @@
       "description": "An updated test customer"
     },
     {
-      "id": "3",
-      "name": "John Doe",
-      "status": "Open",
-      "rate": 70,
-      "balance": -270,
-      "deposit": 500,
-      "description": "This is a test customer"
+      "id": "f4d3707e-852c-4307-8186-7088444d4ba4",
+      "name": "John Boe",
+      "status": "Due",
+      "rate": 0.05,
+      "balance": 2000,
+      "deposit": 600,
+      "description": "A new test customer"
     },
     {
-      "id": "4",
-      "name": "John Doe",
-      "status": "Open",
-      "rate": 70,
-      "balance": -270,
-      "deposit": 500,
-      "description": "This is a test customer"
+      "id": "e2f23473-62b9-4285-9f1a-f013eba68518",
+      "name": "John Boe",
+      "status": "Due",
+      "rate": 0.05,
+      "balance": 2000,
+      "deposit": 600,
+      "description": "A new test customer"
     },
     {
-      "id": "5",
+      "id": "428b4499-4791-4ec4-a952-5749248b08ec",
+      "name": "John Boe",
+      "status": "Due",
+      "rate": 0.05,
+      "balance": 2000,
+      "deposit": 600,
+      "description": "A new test customer"
+    },
+    {
+      "id": "53f52b0b-5ae4-4161-8649-aafea9178c73",
+      "name": "John Boe",
+      "status": "Due",
+      "rate": 0.05,
+      "balance": 2000,
+      "deposit": 600,
+      "description": "A new test customer"
+    },
+    {
+      "id": "1089b739-6cdf-4c98-bbaa-5bd7d6e4ad7f",
+      "name": "John Boe",
+      "status": "Due",
+      "rate": 0.05,
+      "balance": 2000,
+      "deposit": 600,
+      "description": "A new test customer"
+    },
+    {
+      "id": "d92bf0ff-1a41-4681-8d97-5be33d7afcfa",
+      "name": "John Boe",
+      "status": "Due",
+      "rate": 0.05,
+      "balance": 2000,
+      "deposit": 600,
+      "description": "A new test customer"
+    },
+    {
+      "id": "6ff4e8a0-a8ac-4a8b-8fec-63799b82dbb1",
       "name": "John Boe",
       "status": "Due",
       "rate": 0.05,

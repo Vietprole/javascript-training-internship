@@ -3,7 +3,8 @@
   "source": "src/index.html",
   "scripts": {
     "start": "parcel",
-    "build": "parcel build"
+    "build": "parcel build",
+    "json-server": "npx json-server data/db.json"
   },
   "devDependencies": {
     "eslint": "^8.2.0",
@@ -19,6 +20,7 @@
   },
   "dependencies": {
     "javascript-examples": "file:",
-    "json-server": "^1.0.0-beta.2"
+    "json-server": "^1.0.0-beta.2",
+    "uuid": "^10.0.0"
   }
 }

@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import httpRequest from './utils';
 
 class Customer {
@@ -26,16 +27,24 @@ class Customer {
 
 export default Customer;
 
-const url = 'http://localhost:3000/customers/1';
+const url = 'http://localhost:3000/customers';
 httpRequest('GET', null, url);
 
-const postUrl = 'http://localhost:3000/customers';
-const newCustomer = new Customer('5', 'John Boe', 'Due', 0.05, 2000, 600, 'A new test customer');
-httpRequest('POST', newCustomer.toJSON(), postUrl);
+const newUuid = uuidv4();
+const newCustomer = new Customer(
+  newUuid,
+  'John Boe',
+  'Due',
+  0.05,
+  2000,
+  600,
+  'A new test customer'
+);
+httpRequest('POST', newCustomer.toJSON(), url);
 
-const putUrl = 'http://localhost:3000/customers/2';
+const putUrl = 'http://localhost:3000/customers/8434960a-b06b-4dc9-98b9-d6306de7cdad';
 const updatedCustomer = new Customer(
-  '2',
+  newUuid,
   'John Doe',
   'Open',
   0.05,
@@ -45,4 +54,4 @@ const updatedCustomer = new Customer(
 );
 
 httpRequest('PUT', updatedCustomer.toJSON(), putUrl);
-httpRequest('DELETE', null, 'http://localhost:3000/customers/3');
+httpRequest('DELETE', null, 'http://localhost:3000/customers/5b4f0c09-6f57-4467-8cad-23c11a65afe1');
