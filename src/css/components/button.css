@@ -3,6 +3,7 @@
     height: 51px;
     color: var(--text-light-color);
     background-color: var(--button-primary-color);
+    border: none;
 }
 
 .button-primary:hover {

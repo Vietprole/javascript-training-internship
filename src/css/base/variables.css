@@ -20,6 +20,9 @@
     --text-status-paid-color: #14804A;
     --text-status-inactive-color: #5A6376;
     --text-status-due-color: #D12953;
+    --search-shadow-primary-color: #68718229;
+    --search-shadow-secondary-color: #0000000F;
+    --search-placeholder-color: #A1A9B8;
 
     --heading-size-sm: 11px;
     --heading-size-md: 22px;

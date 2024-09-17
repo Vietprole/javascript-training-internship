@@ -4,43 +4,146 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Finance Tracking</title>
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/index.css" />
     <!-- <script src="./js/main.js" type="module"></script> -->
   </head>
   <body>
-    <header class="header">
-      <button class="button-primary">Primary</button>
-      <button class="button-secondary">Secondary</button>
-      <div class="search-bar">
-        <div class="icon-wrapper">
-          <img src="./assets/icons/add-icon.svg" alt="Add customer icon">
+    <section class="dashboard">
+      <div class="search-add-container">
+        <div class="search-bar" tabindex="0">
+          <div class="icon-wrapper">
+            <img src="./assets/icons/search-icon.svg" alt="Search customer icon" />
+          </div>
+          <input type="text" class="search-input" placeholder="Search..." />
         </div>
-        <input type="text" class="search-input" placeholder="Search...">
+        <button class="button-primary add-button" type="button">
+          <div class="icon-wrapper">
+            <img src="./assets/icons/add-icon.svg" alt="Add customer icon" />
+          </div>
+          Add customer
+        </button>
       </div>
-      <button class="button add-button" type="button"></button>
-    </header>
-    <main>
-      <table>
-        <tr>
-          <th>
-            Name
-            <div class="icon-wrapper">
-              <img src="./assets/icons/sort-default-icon.svg" alt="Sort icon">
-            </div>
-          </th>
-          <th>Description</th>
-          <th>Status</th>
-          <th>Rate</th>
-          <th>Balance</th>
-          <th>Deposit</th>
-        </tr>
-        <tr>
-          <td>
-            <div class="name">Ann Culhane</div>
-            <div class="id">5684236526</div>
-          </td>
-        </tr>
-      </table>
-    </main>
+      <div class="table-header">
+        <div class="name-header">
+          <div>Name</div>
+          <div class="icon-wrapper">
+            <img src="./assets/icons/sort-default-icon.svg" alt="Sort icon" />
+          </div>
+        </div>
+        <div class="description-header">Description</div>
+        <div class="status-header">Status</div>
+        <div class="rate-header">Rate</div>
+        <div class="balance-header">Balance</div>
+        <div class="deposit-header">Deposit</div>
+      </div>
+      <div class="table-row odd">
+        <div class="name-row">
+          <div class="name">Ann Culhane</div>
+          <div class="id">5684236526</div>
+        </div>
+        <div class="description-row">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis error, numquam eius saepe
+          molestiae est magni. Vel aliquam alias ad aut nemo perspiciatis sed, tempore magnam, dicta
+          aliquid sint! Explicabo.
+        </div>
+        <div class="status-row status-open">Open</div>
+        <div class="rate-row">
+          <div class="amount">$70.00</div>
+          <div class="currency">CAD</div>
+        </div>
+        <div class="balance-row">
+          <div class="amount">-$270.00</div>
+          <div class="currency">CAD</div>
+        </div>
+        <div class="deposit-row">
+          <div class="amount">$500.00</div>
+          <div class="currency">CAD</div>
+        </div>
+        <div class="icon-wrapper">
+          <img src="./assets/icons/menu-icon.svg" alt="Menu icon" />
+        </div>
+      </div>
+      <div class="table-row even">
+        <div class="name-row">
+          <div class="name">Ann Culhane</div>
+          <div class="id">5684236526</div>
+        </div>
+        <div class="description-row">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis error, numquam eius saepe
+          molestiae est magni. Vel aliquam alias ad aut nemo perspiciatis sed, tempore magnam, dicta
+          aliquid sint! Explicabo.
+        </div>
+        <div class="status-row status-paid">Paid</div>
+        <div class="rate-row">
+          <div class="amount">$70.00</div>
+          <div class="currency">CAD</div>
+        </div>
+        <div class="balance-row">
+          <div class="amount">-$270.00</div>
+          <div class="currency">CAD</div>
+        </div>
+        <div class="deposit-row">
+          <div class="amount">$500.00</div>
+          <div class="currency">CAD</div>
+        </div>
+        <div class="icon-wrapper">
+          <img src="./assets/icons/menu-icon.svg" alt="Menu icon" />
+        </div>
+      </div>
+      <div class="table-row odd">
+        <div class="name-row">
+          <div class="name">Ann Culhane</div>
+          <div class="id">5684236526</div>
+        </div>
+        <div class="description-row">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis error, numquam eius saepe
+          molestiae est magni. Vel aliquam alias ad aut nemo perspiciatis sed, tempore magnam, dicta
+          aliquid sint! Explicabo.
+        </div>
+        <div class="status-row status-inactive">Inactive</div>
+        <div class="rate-row">
+          <div class="amount">$70.00</div>
+          <div class="currency">CAD</div>
+        </div>
+        <div class="balance-row">
+          <div class="amount">-$270.00</div>
+          <div class="currency">CAD</div>
+        </div>
+        <div class="deposit-row">
+          <div class="amount">$500.00</div>
+          <div class="currency">CAD</div>
+        </div>
+        <div class="icon-wrapper">
+          <img src="./assets/icons/menu-icon.svg" alt="Menu icon" />
+        </div>
+      </div>
+      <div class="table-row even">
+        <div class="name-row">
+          <div class="name">Ann Culhane</div>
+          <div class="id">5684236526</div>
+        </div>
+        <div class="description-row">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis error, numquam eius saepe
+          molestiae est magni. Vel aliquam alias ad aut nemo perspiciatis sed, tempore magnam, dicta
+          aliquid sint! Explicabo.
+        </div>
+        <div class="status-row status-due">Due</div>
+        <div class="rate-row">
+          <div class="amount">$70.00</div>
+          <div class="currency">CAD</div>
+        </div>
+        <div class="balance-row">
+          <div class="amount">-$270.00</div>
+          <div class="currency">CAD</div>
+        </div>
+        <div class="deposit-row">
+          <div class="amount">$500.00</div>
+          <div class="currency">CAD</div>
+        </div>
+        <div class="icon-wrapper">
+          <img src="./assets/icons/menu-icon.svg" alt="Menu icon" />
+        </div>
+      </div>
+    </section>
   </body>
 </html>
