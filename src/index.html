@@ -145,5 +145,57 @@
         </div>
       </div>
     </section>
+    <div class="add-customer-modal">
+      <h1>Add customer</h1>
+      <hr />
+      <form class="add-customer-form" action="">
+        <div class="name-field">
+          <label for="add-name-input">Name</label>
+          <input type="text" id="add-name-input" />
+        </div>
+        <div class="status-field">
+          <label for="add-status-input">Status</label>
+          <select name="add-status-input" id="add-status-input">
+            <option value="open">Open</option>
+            <option value="paid">Paid</option>
+            <option value="inactive">Inactive</option>
+            <option value="due">Due</option>
+          </select>
+        </div>
+        <div class="rate-field">
+          <label for="add-rate-input">Rate</label>
+          <div class="input-wrapper">
+            <span>$</span>
+            <input type="text" id="add-rate-input" />
+          </div>
+        </div>
+        <div class="balance-field">
+          <label for="add-balance-input">Balance</label>
+          <div class="input-wrapper">
+            <span>$</span>
+            <input type="text" id="add-balance-input" />
+          </div>
+        </div>
+        <div class="deposit-field">
+          <label for="add-deposit-input">Deposit</label>
+          <div class="input-wrapper">
+            <span>$</span>
+            <input type="text" id="add-deposit-input" />
+          </div>
+        </div>
+        <div class="description-field">
+          <label for="add-description-input">Description</label>
+          <input type="textarea" id="add-description-input" />
+        </div>
+      </form>
+      <div class="button-group">
+        <button class="button-primary">
+          <div class="button-text">Create</div>
+        </button>
+        <button class="button-secondary">
+          <div class="button-text">Close</div>
+        </button>
+      </div>
+    </div>
   </body>
 </html>
