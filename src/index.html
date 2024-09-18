@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Finance Tracking</title>
     <link rel="stylesheet" href="css/index.css" />
-    <!-- <script src="./js/main.js" type="module"></script> -->
   </head>
   <body>
     <section class="dashboard">
@@ -52,7 +51,7 @@
           <div class="currency">CAD</div>
         </div>
         <div class="balance-row">
-          <div class="amount">-$270.00</div>
+          <div class="amount negative">-$270.00</div>
           <div class="currency">CAD</div>
         </div>
         <div class="deposit-row">
@@ -79,7 +78,7 @@
           <div class="currency">CAD</div>
         </div>
         <div class="balance-row">
-          <div class="amount">-$270.00</div>
+          <div class="amount positive">$600.00</div>
           <div class="currency">CAD</div>
         </div>
         <div class="deposit-row">
@@ -106,7 +105,7 @@
           <div class="currency">CAD</div>
         </div>
         <div class="balance-row">
-          <div class="amount">-$270.00</div>
+          <div class="amount negative">-$350.00</div>
           <div class="currency">CAD</div>
         </div>
         <div class="deposit-row">
@@ -133,7 +132,7 @@
           <div class="currency">CAD</div>
         </div>
         <div class="balance-row">
-          <div class="amount">-$270.00</div>
+          <div class="amount positive">$30.00</div>
           <div class="currency">CAD</div>
         </div>
         <div class="deposit-row">
@@ -145,5 +144,54 @@
         </div>
       </div>
     </section>
+    <!-- TODO: Will apply JavaScript soon -->
+    <div class="add-customer-modal">
+      <h2>Add customer</h2>
+      <hr />
+      <form class="add-customer-form" action="">
+        <div class="name-field">
+          <label for="add-name-input">Name</label>
+          <input type="text" id="add-name-input" />
+        </div>
+        <div class="status-field">
+          <label for="add-status-input">Status</label>
+          <select name="add-status-input" id="add-status-input">
+            <option value="open">Open</option>
+            <option value="paid">Paid</option>
+            <option value="inactive">Inactive</option>
+            <option value="due">Due</option>
+          </select>
+        </div>
+        <div class="rate-field">
+          <label for="add-rate-input">Rate</label>
+          <div class="input-wrapper">
+            <span>$</span>
+            <input type="text" id="add-rate-input" />
+          </div>
+        </div>
+        <div class="balance-field">
+          <label for="add-balance-input">Balance</label>
+          <div class="input-wrapper">
+            <span>$</span>
+            <input type="text" id="add-balance-input" />
+          </div>
+        </div>
+        <div class="deposit-field">
+          <label for="add-deposit-input">Deposit</label>
+          <div class="input-wrapper">
+            <span>$</span>
+            <input type="text" id="add-deposit-input" />
+          </div>
+        </div>
+        <div class="description-field">
+          <label for="add-description-input">Description</label>
+          <input type="textarea" id="add-description-input" />
+        </div>
+      </form>
+      <div class="button-group">
+        <button class="button-primary">Create</button>
+        <button class="button-secondary">Close</button>
+      </div>
+    </div>
   </body>
 </html>

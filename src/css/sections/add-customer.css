@@ -1,0 +1,108 @@
+.add-customer-modal {
+  width: 794px;
+  height: 598px;
+  padding: 23px 40px 27px;
+}
+
+.add-customer-modal h1 {
+  font-weight: var(--font-weight-semi-bold);
+  font-size: var(--heading-size-md);
+  line-height: 27px;
+  color: var(--text-primary-color);
+  margin-bottom: 18px;
+}
+
+.add-customer-modal hr {
+  border: 1px solid #000000;
+  margin-bottom: 19px;
+}
+
+.add-customer-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 20px 30px;
+  margin-bottom: 45px;
+}
+
+.name-field,
+.status-field,
+.rate-field,
+.balance-field,
+.deposit-field,
+.description-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.name-field label,
+.status-field label,
+.rate-field label,
+.balance-field label,
+.deposit-field label,
+.description-field label {
+  font-weight: var(--font-weight-semi-bold);
+  font-size: var(--body-size-md);
+  line-height: 17px;
+  color: var(--text-default-color);
+  margin-bottom: 8px;
+}
+
+.name-field input,
+.status-field select,
+.rate-field input,
+.balance-field input,
+.deposit-field input,
+.description-field input {
+  padding: 15px 15px;
+  border: 1px solid var(--text-secondary-color);
+  border-radius: var(--border-radius-sm);
+  font-family: 'Inter';
+  font-weight: var(--font-weight-regular);
+  font-size: var(--body-size-md);
+  line-height: 20px;
+  color: var(--text-default-color);
+  letter-spacing: 0.02em;
+}
+
+.status-field select {
+  appearance: none;
+  background: url('../../assets/icons/dropdown-icon.svg') no-repeat right 14px center;
+  background-size: 13px;
+}
+
+.rate-field input,
+.balance-field input,
+.deposit-field input {
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  outline: none;
+}
+
+.description-field input {
+  height: 107px;
+}
+
+.input-wrapper {
+  padding: 15px 15px;
+  border: 1px solid var(--text-secondary-color);
+  border-radius: var(--border-radius-sm);
+}
+
+.input-wrapper span {
+  margin-right: 5px;
+  font-family: 'Inter';
+  font-weight: var(--font-weight-regular);
+  font-size: var(--body-size-md);
+  line-height: 20px;
+  color: var(--text-default-color);
+  letter-spacing: 0.02em;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 13px;
+}

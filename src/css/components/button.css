@@ -1,5 +1,15 @@
+.button-primary,
+.button-secondary {
+  min-width: 173px;
+  padding: 17px 0px;
+  font-family: 'Inter';
+  font-weight: var(--font-weight-semi-bold);
+  font-size: var(--body-size-md);
+  line-height: 17px;
+  border-radius: var(--border-radius-xs);
+}
+
 .button-primary {
-  padding: 10px 20px;
   color: var(--text-light-color);
   background-color: var(--button-primary-color);
   border: none;
@@ -11,8 +21,8 @@
 }
 
 .button-secondary {
-  padding: 10px 20px;
   color: var(--text-danger-color);
+  background-color: var(--text-light-color);
   border: 1px solid var(--button-secondary-color);
 }
 
