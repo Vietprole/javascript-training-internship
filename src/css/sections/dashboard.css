@@ -41,8 +41,6 @@
 }
 
 .add-button {
-  width: 146px;
-  height: 32px;
   display: flex;
   align-items: center;
   padding: 6px 12px;
@@ -52,6 +50,7 @@
   font-weight: var(--font-weight-medium);
   font-size: var(--body-size-md);
   line-height: 20px;
+  letter-spacing: 0.02em;
 }
 
 .table-header {

@@ -1,29 +1,27 @@
 .button-primary {
-    width: 173px;
-    height: 51px;
-    color: var(--text-light-color);
-    background-color: var(--button-primary-color);
-    border: none;
+  padding: 9px 22px 11px 20px;
+  color: var(--text-light-color);
+  background-color: var(--button-primary-color);
+  border: none;
 }
 
 .button-primary:hover {
-    color: var(--text-light-color);
-    background-color: var(--button-primary-hover-color);
+  color: var(--text-light-color);
+  background-color: var(--button-primary-hover-color);
 }
 
 .button-secondary {
-    width: 173px;
-    height: 51px;
-    color: var(--text-danger-color);
-    border: 1px solid var(--button-secondary-color);
+  padding: 9px 22px 11px 20px;
+  color: var(--text-danger-color);
+  border: 1px solid var(--button-secondary-color);
 }
 
 .button-secondary:hover {
-    color: var(--text-light-color);
-    background-color: var(--button-secondary-hover-color);
+  color: var(--text-light-color);
+  background-color: var(--button-secondary-hover-color);
 }
 
 .button-primary:disabled,
 .button-secondary:disabled {
-    opacity: 70%;
+  opacity: 70%;
 }
