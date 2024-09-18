@@ -56,11 +56,11 @@
 
 .table-header {
   height: 40px;
+  min-width: 1020px;
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
-  gap: 20px;
-  padding: 0px 50px 0px 20px;
+  justify-content: space-between;
+  padding: 0px calc(55px + (100vw - 995px) / 6) 0px 20px; /* Padding number to make the header scale properly with the row in responsive view */
   background-color: var(--background-secondary-color);
   text-transform: uppercase;
   font-weight: var(--font-weight-semi-bold);
@@ -100,7 +100,7 @@
 
 .table-row {
   height: 64px;
-  /* width: 1020px; */
+  min-width: 1020px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -136,10 +136,14 @@
 
 .description-row {
   width: 238px;
+  height: 40px;
   margin-right: 100px;
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
   font-weight: var(--font-weight-regular);
   font-size: var(--body-size-md);
   line-height: 20px;
@@ -147,37 +151,38 @@
 }
 
 .status-row {
-  /* width: 68px; */
   height: 20px;
-  /* margin-right: 22px; */
   font-weight: var(--font-weight-medium);
   font-size: var(--body-size-sm);
   line-height: 18px;
   border-radius: var(--border-radius-lg);
   text-align: center;
-  margin-right: auto;
 }
 
 .status-open {
   width: 52px;
+  margin-right: 38px;
   color: var(--text-status-open-color);
   background-color: var(--background-status-open-color);
 }
 
 .status-paid {
   width: 47px;
+  margin-right: 43px;
   color: var(--text-status-paid-color);
   background-color: var(--background-status-paid-color);
 }
 
 .status-inactive {
   width: 68px;
+  margin-right: 22px;
   color: var(--text-status-inactive-color);
   background-color: var(--background-status-inactive-color);
 }
 
 .status-due {
   width: 44px;
+  margin-right: 46px;
   color: var(--text-status-due-color);
   background-color: var(--background-status-due-color);
 }
