@@ -222,3 +222,11 @@
   width: 5px;
   height: 20px;
 }
+
+.negative{
+  color: var(--text-danger-color);
+}
+
+.positive{
+  color: var(--text-positive-color);
+}
