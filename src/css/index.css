@@ -1,0 +1,7 @@
+@import './base/reset.css';
+@import './base/base.css';
+@import './base/typography.css';
+@import './base/variables.css';
+@import './components/button.css';
+@import './components/icon.css';
+@import './sections/dashboard.css';

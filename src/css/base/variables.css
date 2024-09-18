@@ -1,0 +1,42 @@
+:root {
+  --button-primary-color: #2264e5;
+  --button-secondary-color: #d12953;
+  --button-primary-hover-color: #4f5aed;
+  --button-secondary-hover-color: #d12953;
+  --text-default-color: #464f60;
+  --text-primary-color: #171c26;
+  --text-secondary-color: #687182;
+  --text-light-color: #ffffff;
+  --text-info-color: #2264e5;
+  --text-danger-color: #d12953;
+  --text-positive-color: #14804a;
+  --background-primary-color: #ffffff;
+  --background-secondary-color: #f4f7fcbf;
+  --background-status-open-color: #f0f1fa;
+  --background-status-paid-color: #e1fcef;
+  --background-status-inactive-color: #e9edf5;
+  --background-status-due-color: #faf0f3;
+  --text-status-open-color: #4f5aed;
+  --text-status-paid-color: #14804a;
+  --text-status-inactive-color: #5a6376;
+  --text-status-due-color: #d12953;
+  --search-shadow-primary-color: #68718229;
+  --search-shadow-secondary-color: #0000000f;
+  --search-placeholder-color: #a1a9b8;
+
+  --heading-size-sm: 11px;
+  --heading-size-md: 22px;
+  --body-size-xs: 11px;
+  --body-size-sm: 12px;
+  --body-size-md: 14px;
+  --body-size-lg: 22px;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semi-bold: 600;
+
+  --border-radius-xs: 5px;
+  --border-radius-sm: 6px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 10px;
+}
