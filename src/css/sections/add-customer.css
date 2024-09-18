@@ -1,4 +1,6 @@
 .add-customer-modal {
+  width: 794px;
+  height: 598px;
   padding: 23px 40px 27px;
 }
 
@@ -61,6 +63,12 @@
   line-height: 20px;
   color: var(--text-default-color);
   letter-spacing: 0.02em;
+}
+
+.status-field select {
+  appearance: none;
+  background: url('../../assets/icons/dropdown-icon.svg') no-repeat right 14px center;
+  background-size: 13px;
 }
 
 .rate-field input,
