@@ -9,6 +9,7 @@
     0px 5px 15px 0px var(--action-menu-shadow-primary-color),
     0px 15px 35px -5px var(--action-menu-shadow-secondary-color),
     0px 0px 0px 1px var(--action-menu-shadow-tertiary-color);
+    border-radius: var(--border-radius-sm);
 }
 
 .action-menu > div {
@@ -17,6 +18,11 @@
   gap: 8px;
   padding: 4px 10px;
   cursor: pointer;
+  margin-bottom: 1px;
+}
+
+.action-menu .delete-button {
+  margin-bottom: 0;
 }
 
 .action-menu > div:hover {

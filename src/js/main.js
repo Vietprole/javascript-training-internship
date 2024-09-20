@@ -70,10 +70,7 @@ actionMenuButtons.forEach((button) => {
 });
 
 window.addEventListener('click', (event) => {
-  if (
-    !actionMenu.contains(event.target) &&
-    !Array.from(actionMenuButtons).some((button) => button.contains(event.target))
-  ) {
+  if (!Array.from(actionMenuButtons).some((button) => button.contains(event.target))) {
     actionMenu.style.display = 'none';
   }
 });
