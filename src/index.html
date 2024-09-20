@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/index.css" />
   </head>
   <body>
+    <!--* Main Page -->
     <section class="dashboard">
       <div class="search-add-container">
         <div class="search-bar" tabindex="0">
@@ -25,7 +26,7 @@
       <div class="table-header">
         <div class="name-header">
           <div>Name</div>
-          <div class="icon-wrapper">
+          <div class="sort-button icon-wrapper">
             <img src="./assets/icons/sort-default-icon.svg" alt="Sort icon" />
           </div>
         </div>
@@ -58,7 +59,7 @@
           <div class="amount">$500.00</div>
           <div class="currency">CAD</div>
         </div>
-        <div class="icon-wrapper">
+        <div class="menu-button icon-wrapper">
           <img src="./assets/icons/menu-icon.svg" alt="Menu icon" />
         </div>
       </div>
@@ -85,7 +86,7 @@
           <div class="amount">$500.00</div>
           <div class="currency">CAD</div>
         </div>
-        <div class="icon-wrapper">
+        <div class="menu-button icon-wrapper">
           <img src="./assets/icons/menu-icon.svg" alt="Menu icon" />
         </div>
       </div>
@@ -112,7 +113,7 @@
           <div class="amount">$500.00</div>
           <div class="currency">CAD</div>
         </div>
-        <div class="icon-wrapper">
+        <div class="menu-button icon-wrapper">
           <img src="./assets/icons/menu-icon.svg" alt="Menu icon" />
         </div>
       </div>
@@ -139,13 +140,35 @@
           <div class="amount">$500.00</div>
           <div class="currency">CAD</div>
         </div>
-        <div class="icon-wrapper">
+        <div class="menu-button icon-wrapper">
           <img src="./assets/icons/menu-icon.svg" alt="Menu icon" />
         </div>
       </div>
     </section>
+    <!--* Action Menu -->
+    <div class="action-menu">
+      <div class="view-button">
+        <div class="text">View</div>
+        <div class="icon-wrapper">
+          <img src="./assets/icons/view-icon.svg" alt="View icon" />
+        </div>
+      </div>
+      <div class="edit-button">
+        <div class="text">Edit</div>
+        <div class="icon-wrapper">
+          <img src="./assets/icons/edit-icon.svg" alt="Edit icon" />
+        </div>
+      </div>
+      <div class="delete-button">
+        <div class="text">Delete</div>
+        <div class="icon-wrapper">
+          <img src="./assets/icons/delete-icon.svg" alt="Delete icon" />
+        </div>
+      </div>
+    </div>
+    <!--* Modal Overlay -->
     <div class="modal-overlay"></div>
-    <!-- TODO: Will apply JavaScript soon -->
+    <!--* Add Customer Modal -->
     <div class="add-customer-modal">
       <h2>Add Customer</h2>
       <hr />
@@ -189,6 +212,66 @@
           <textarea id="add-description-input"></textarea>
         </div>
       </form>
+      <div class="button-group">
+        <button class="button-primary create-button">Create</button>
+        <button class="button-secondary close-button">Close</button>
+      </div>
+    </div>
+    <!--* Edit Customer Modal -->
+    <div class="edit-customer-modal">
+      <h2>Edit Customer</h2>
+      <hr />
+      <form class="edit-customer-form" action="">
+        <div class="name-field">
+          <label for="edit-name-input">Name</label>
+          <input type="text" id="edit-name-input" />
+        </div>
+        <div class="status-field">
+          <label for="edit-status-input">Status</label>
+          <select name="edit-status-input" id="edit-status-input">
+            <option value="open">Open</option>
+            <option value="paid">Paid</option>
+            <option value="inactive">Inactive</option>
+            <option value="due">Due</option>
+          </select>
+        </div>
+        <div class="rate-field">
+          <label for="edit-rate-input">Rate</label>
+          <div class="input-wrapper">
+            <span>$</span>
+            <input type="text" id="edit-rate-input" />
+          </div>
+        </div>
+        <div class="balance-field">
+          <label for="edit-balance-input">Balance</label>
+          <div class="input-wrapper">
+            <span>$</span>
+            <input type="text" id="edit-balance-input" />
+          </div>
+        </div>
+        <div class="deposit-field">
+          <label for="edit-deposit-input">Deposit</label>
+          <div class="input-wrapper">
+            <span>$</span>
+            <input type="text" id="edit-deposit-input" />
+          </div>
+        </div>
+        <div class="description-field">
+          <label for="edit-description-input">Description</label>
+          <textarea id="edit-description-input"></textarea>
+        </div>
+      </form>
+      <div class="button-group">
+        <button class="button-primary create-button">Create</button>
+        <button class="button-secondary close-button">Close</button>
+      </div>
+    </div>
+    <!--* View Customer Modal -->
+    <div class="view-customer-modal">
+      <h2>View Customer</h2>
+      <hr />
+      <!-- TODO: Add style for the view -->
+      <div></div>
       <div class="button-group">
         <button class="button-primary create-button">Create</button>
         <button class="button-secondary close-button">Close</button>

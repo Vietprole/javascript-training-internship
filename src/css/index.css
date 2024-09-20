@@ -6,3 +6,6 @@
 @import './components/icon.css';
 @import './sections/dashboard.css';
 @import './sections/add-customer.css';
+@import './sections/action-menu.css';
+@import './sections/edit-customer.css';
+@import './sections/view-customer.css';

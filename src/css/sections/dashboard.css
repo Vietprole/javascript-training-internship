@@ -242,3 +242,7 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1; /* On top of the page, below the modal */
 }
+
+.menu-button {
+  cursor: pointer;
+}
