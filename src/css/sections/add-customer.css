@@ -4,7 +4,7 @@
   padding: 23px 40px 27px;
 }
 
-.add-customer-modal h1 {
+.add-customer-modal h2 {
   font-weight: var(--font-weight-semi-bold);
   font-size: var(--heading-size-md);
   line-height: 27px;

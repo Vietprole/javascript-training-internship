@@ -41,6 +41,7 @@
 }
 
 .add-button {
+  min-width: unset;
   display: flex;
   align-items: center;
   padding: 6px 12px;
