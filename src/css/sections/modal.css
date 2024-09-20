@@ -7,8 +7,8 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  padding: 25px 40px 25px;
-  background-color: var(--modal-color);
+  padding: 25px 40px;
+  background-color: var(--white);
 }
 
 .modal h2 {
@@ -20,7 +20,7 @@
 }
 
 .modal hr {
-  border: 1px solid var(--modal-line-color);
+  border: 1px solid var(--black);
   margin-bottom: 19px;
 }
 

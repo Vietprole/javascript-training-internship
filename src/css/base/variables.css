@@ -6,7 +6,6 @@
   --text-default-color: #464f60;
   --text-primary-color: #171c26;
   --text-secondary-color: #687182;
-  --text-light-color: #fff;
   --text-info-color: #2264e5;
   --text-danger-color: #d12953;
   --text-positive-color: #14804a;
@@ -23,8 +22,8 @@
   --search-shadow-primary-color: #68718229;
   --search-shadow-secondary-color: #0000000f;
   --search-placeholder-color: #a1a9b8;
-  --modal-color: #fff;
-  --modal-line-color: #000;
+  --white: #fff;
+  --black: #000;
   --action-menu-shadow-primary-color: #00000014;
   --action-menu-shadow-secondary-color: #11182633;
   --action-menu-shadow-tertiary-color: #98a1b21a;
