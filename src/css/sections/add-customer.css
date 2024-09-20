@@ -1,7 +1,14 @@
 .add-customer-modal {
   width: 794px;
   height: 598px;
+  display: none;
+  position: fixed;
+  z-index: 2; /* On top of overlay's 1 */
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   padding: 23px 40px 27px;
+  background-color: var(--modal-color);
 }
 
 .add-customer-modal h2 {
@@ -53,7 +60,7 @@
 .rate-field input,
 .balance-field input,
 .deposit-field input,
-.description-field input {
+.description-field textarea {
   padding: 15px 15px;
   border: 1px solid var(--text-secondary-color);
   border-radius: var(--border-radius-sm);
@@ -80,8 +87,9 @@
   outline: none;
 }
 
-.description-field input {
+.description-field textarea {
   height: 107px;
+  resize: none;
 }
 
 .input-wrapper {

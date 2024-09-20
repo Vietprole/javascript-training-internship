@@ -144,6 +144,7 @@
         </div>
       </div>
     </section>
+    <div class="modal-overlay"></div>
     <!-- TODO: Will apply JavaScript soon -->
     <div class="add-customer-modal">
       <h2>Add Customer</h2>
@@ -185,13 +186,14 @@
         </div>
         <div class="description-field">
           <label for="add-description-input">Description</label>
-          <input type="textarea" id="add-description-input" />
+          <textarea id="add-description-input"></textarea>
         </div>
       </form>
       <div class="button-group">
-        <button class="button-primary">Create</button>
-        <button class="button-secondary">Close</button>
+        <button class="button-primary create-button">Create</button>
+        <button class="button-secondary close-button">Close</button>
       </div>
     </div>
+    <script src="./js/main.js" type="module"></script>
   </body>
 </html>
