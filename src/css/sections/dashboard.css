@@ -34,13 +34,11 @@
 }
 
 .search-bar input::placeholder {
-  font-weight: var(--font-weight-regular);
-  font-size: var(--body-size-md);
-  line-height: 20px;
   color: var(--search-placeholder-color);
 }
 
 .add-button {
+  min-width: unset;
   display: flex;
   align-items: center;
   padding: 6px 12px;
@@ -82,16 +80,8 @@
   width: 70px;
 }
 
-.rate-header {
-  width: 100px;
-  text-align: right;
-}
-
-.balance-header {
-  width: 100px;
-  text-align: right;
-}
-
+.rate-header,
+.balance-header,
 .deposit-header {
   width: 100px;
   text-align: right;
@@ -186,21 +176,15 @@
   background-color: var(--background-status-due-color);
 }
 
-.rate-row {
-  width: 100px;
-  text-align: right;
-  margin-right: 20px;
-}
-
-.balance-row {
+.rate-row,
+.balance-row,
+.deposit-row {
   width: 100px;
   text-align: right;
   margin-right: 20px;
 }
 
 .deposit-row {
-  width: 100px;
-  text-align: right;
   margin-right: 30px;
 }
 
@@ -229,4 +213,8 @@
 
 .positive{
   color: var(--text-positive-color);
+}
+
+.menu-button {
+  cursor: pointer;
 }
