@@ -48,15 +48,15 @@
         </div>
         <div class="status-row status-open">Open</div>
         <div class="rate-row">
-          <div class="amount">$70.00</div>
+          <div class="amount"><span>$</span><span>70.00</span></div>
           <div class="currency">CAD</div>
         </div>
         <div class="balance-row">
-          <div class="amount negative">-$270.00</div>
+          <div class="amount negative"><span>-$</span><span>270.00</span></div>
           <div class="currency">CAD</div>
         </div>
         <div class="deposit-row">
-          <div class="amount">$500.00</div>
+          <div class="amount"><span>$</span><span>500.00</span></div>
           <div class="currency">CAD</div>
         </div>
         <div class="menu-button icon-wrapper">
@@ -75,15 +75,15 @@
         </div>
         <div class="status-row status-paid">Paid</div>
         <div class="rate-row">
-          <div class="amount">$70.00</div>
+          <div class="amount"><span>$</span><span>70.00</span></div>
           <div class="currency">CAD</div>
         </div>
         <div class="balance-row">
-          <div class="amount positive">$600.00</div>
+          <div class="amount positive"><span>$</span><span>600.00</span></div>
           <div class="currency">CAD</div>
         </div>
         <div class="deposit-row">
-          <div class="amount">$500.00</div>
+          <div class="amount"><span>$</span><span>500.00</span></div>
           <div class="currency">CAD</div>
         </div>
         <div class="menu-button icon-wrapper">
@@ -102,15 +102,15 @@
         </div>
         <div class="status-row status-inactive">Inactive</div>
         <div class="rate-row">
-          <div class="amount">$70.00</div>
+          <div class="amount"><span>$</span><span>70.00</span></div>
           <div class="currency">CAD</div>
         </div>
         <div class="balance-row">
-          <div class="amount negative">-$350.00</div>
+          <div class="amount negative"><span>-$</span><span>350.00</span></div>
           <div class="currency">CAD</div>
         </div>
         <div class="deposit-row">
-          <div class="amount">$500.00</div>
+          <div class="amount"><span>$</span><span>500.00</span></div>
           <div class="currency">CAD</div>
         </div>
         <div class="menu-button icon-wrapper">
@@ -129,15 +129,15 @@
         </div>
         <div class="status-row status-due">Due</div>
         <div class="rate-row">
-          <div class="amount">$70.00</div>
+          <div class="amount"><span>$</span><span>70.00</span></div>
           <div class="currency">CAD</div>
         </div>
         <div class="balance-row">
-          <div class="amount positive">$30.00</div>
+          <div class="amount positive"><span>$</span><span>30.00</span></div>
           <div class="currency">CAD</div>
         </div>
         <div class="deposit-row">
-          <div class="amount">$500.00</div>
+          <div class="amount"><span>$</span><span>500.00</span></div>
           <div class="currency">CAD</div>
         </div>
         <div class="menu-button icon-wrapper">
@@ -148,19 +148,19 @@
     <!--* Action Menu -->
     <div class="action-menu">
       <div class="view-button">
-        <div class="text">View</div>
+        <div class="button-text">View</div>
         <div class="icon-wrapper">
           <img src="./assets/icons/view-icon.svg" alt="View icon" />
         </div>
       </div>
       <div class="edit-button">
-        <div class="text">Edit</div>
+        <div class="button-text">Edit</div>
         <div class="icon-wrapper">
           <img src="./assets/icons/edit-icon.svg" alt="Edit icon" />
         </div>
       </div>
       <div class="delete-button">
-        <div class="text">Delete</div>
+        <div class="button-text delete">Delete</div>
         <div class="icon-wrapper">
           <img src="./assets/icons/delete-icon.svg" alt="Delete icon" />
         </div>
@@ -169,10 +169,10 @@
     <!--* Modal Overlay -->
     <div class="modal-overlay"></div>
     <!--* Add Customer Modal -->
-    <div class="add-customer-modal">
+    <div class="modal add-customer-modal">
       <h2>Add Customer</h2>
       <hr />
-      <form class="add-customer-form" action="">
+      <form class="modal-form" action="">
         <div class="name-field">
           <label for="add-name-input">Name</label>
           <input type="text" id="add-name-input" />
@@ -218,10 +218,10 @@
       </div>
     </div>
     <!--* Edit Customer Modal -->
-    <div class="edit-customer-modal">
+    <div class="modal edit-customer-modal">
       <h2>Edit Customer</h2>
       <hr />
-      <form class="edit-customer-form" action="">
+      <form class="modal-form" action="">
         <div class="name-field">
           <label for="edit-name-input">Name</label>
           <input type="text" id="edit-name-input" />
@@ -267,7 +267,7 @@
       </div>
     </div>
     <!--* View Customer Modal -->
-    <div class="view-customer-modal">
+    <div class="modal view-customer-modal">
       <h2>View Customer</h2>
       <hr />
       <!-- TODO: Add style for the view -->

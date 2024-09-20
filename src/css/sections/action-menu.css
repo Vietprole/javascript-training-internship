@@ -21,7 +21,7 @@
   margin-bottom: 1px;
 }
 
-.action-menu .delete-button {
+.action-menu > div:last-child {
   margin-bottom: 0;
 }
 
@@ -29,9 +29,7 @@
   background-color: var(--background-secondary-color);
 }
 
-.view-button .text,
-.edit-button .text,
-.delete-button .text {
+.button-text {
   width: 64px;
   font-weight: var(--font-weight-medium);
   font-size: var(--body-size-md);
@@ -40,6 +38,6 @@
   color: var(--text-info-color);
 }
 
-.delete-button .text {
+.button-text.delete {
   color: var(--text-danger-color);
 }

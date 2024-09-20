@@ -1,4 +1,4 @@
-.add-customer-modal {
+.modal {
   width: 794px;
   height: 598px;
   display: none;
@@ -11,7 +11,7 @@
   background-color: var(--modal-color);
 }
 
-.add-customer-modal h2 {
+.modal h2 {
   font-weight: var(--font-weight-semi-bold);
   font-size: var(--heading-size-md);
   line-height: 27px;
@@ -19,12 +19,12 @@
   margin-bottom: 18px;
 }
 
-.add-customer-modal hr {
-  border: 1px solid #000000;
+.modal hr {
+  border: 1px solid var(--modal-line-color);
   margin-bottom: 19px;
 }
 
-.add-customer-form {
+.modal-form {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto auto;
@@ -61,7 +61,7 @@
 .balance-field input,
 .deposit-field input,
 .description-field textarea {
-  padding: 15px 15px;
+  padding: 15px;
   border: 1px solid var(--text-secondary-color);
   border-radius: var(--border-radius-sm);
   font-family: 'Inter';
@@ -93,7 +93,7 @@
 }
 
 .input-wrapper {
-  padding: 15px 15px;
+  padding: 15px;
   border: 1px solid var(--text-secondary-color);
   border-radius: var(--border-radius-sm);
 }
@@ -113,4 +113,19 @@
   flex-direction: column;
   align-items: center;
   gap: 13px;
+}
+
+.modal-overlay {
+  position: fixed;
+  display: none;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1; /* On top of the page, below the modal */
+}
+
+.open {
+  display: block;
 }

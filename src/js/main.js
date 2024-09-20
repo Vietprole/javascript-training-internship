@@ -65,13 +65,15 @@ actionMenuButtons.forEach((button) => {
     const { top, left } = button.getBoundingClientRect();
     actionMenu.style.top = `${top}px`;
     actionMenu.style.left = `${left - 100}px`;
-    actionMenu.style.display = 'block';
+    actionMenu.classList.add('open');
   });
 });
 
 window.addEventListener('click', (event) => {
+  // Close the action menu if the user clicks outside of it
+  // Check if action menu's buttons is not the target to prevent closing the menu when clicking on them
   if (!Array.from(actionMenuButtons).some((button) => button.contains(event.target))) {
-    actionMenu.style.display = 'none';
+    actionMenu.classList.remove('open');
   }
 });
 
@@ -90,13 +92,13 @@ const modalOverlay = document.querySelector('.modal-overlay');
 //* Open and close modal functions
 function openModal(modal) {
   const modalElement = modal;
-  modalElement.style.display = 'block';
-  modalOverlay.style.display = 'block'; // Show the overlay
+  modalElement.classList.add('open'); // Show the modal
+  modalOverlay.classList.add('open'); // Show the overlay
 }
 
 function closeModal(modal) {
   const modalElement = modal;
-  modalElement.style.display = 'none';
+  modalElement.classList.remove('open'); // Hide the modal
   // Reset all input fields within the modal
   const inputs = modalElement.querySelectorAll('input');
   inputs.forEach((input) => {
@@ -118,7 +120,7 @@ function closeModal(modal) {
     temp.value = '';
   });
 
-  modalOverlay.style.display = 'none'; // Hide the overlay
+  modalOverlay.classList.remove('open'); // Hide the overlay
 }
 
 //* For Add customer modal

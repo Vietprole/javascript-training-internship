@@ -34,9 +34,6 @@
 }
 
 .search-bar input::placeholder {
-  font-weight: var(--font-weight-regular);
-  font-size: var(--body-size-md);
-  line-height: 20px;
   color: var(--search-placeholder-color);
 }
 
@@ -83,16 +80,8 @@
   width: 70px;
 }
 
-.rate-header {
-  width: 100px;
-  text-align: right;
-}
-
-.balance-header {
-  width: 100px;
-  text-align: right;
-}
-
+.rate-header,
+.balance-header,
 .deposit-header {
   width: 100px;
   text-align: right;
@@ -187,21 +176,15 @@
   background-color: var(--background-status-due-color);
 }
 
-.rate-row {
-  width: 100px;
-  text-align: right;
-  margin-right: 20px;
-}
-
-.balance-row {
+.rate-row,
+.balance-row,
+.deposit-row {
   width: 100px;
   text-align: right;
   margin-right: 20px;
 }
 
 .deposit-row {
-  width: 100px;
-  text-align: right;
   margin-right: 30px;
 }
 
@@ -230,17 +213,6 @@
 
 .positive{
   color: var(--text-positive-color);
-}
-
-.modal-overlay {
-  position: fixed;
-  display: none;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1; /* On top of the page, below the modal */
 }
 
 .menu-button {

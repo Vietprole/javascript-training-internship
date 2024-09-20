@@ -6,11 +6,11 @@
   --text-default-color: #464f60;
   --text-primary-color: #171c26;
   --text-secondary-color: #687182;
-  --text-light-color: #ffffff;
+  --text-light-color: #fff;
   --text-info-color: #2264e5;
   --text-danger-color: #d12953;
   --text-positive-color: #14804a;
-  --background-primary-color: #ffffff;
+  --background-primary-color: #fff;
   --background-secondary-color: #f4f7fcbf;
   --background-status-open-color: #f0f1fa;
   --background-status-paid-color: #e1fcef;
@@ -23,7 +23,8 @@
   --search-shadow-primary-color: #68718229;
   --search-shadow-secondary-color: #0000000f;
   --search-placeholder-color: #a1a9b8;
-  --modal-color: #ffffff;
+  --modal-color: #fff;
+  --modal-line-color: #000;
   --action-menu-shadow-primary-color: #00000014;
   --action-menu-shadow-secondary-color: #11182633;
   --action-menu-shadow-tertiary-color: #98a1b21a;
