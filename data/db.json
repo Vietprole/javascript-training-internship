@@ -35,6 +35,24 @@
       "balance": "-999",
       "deposit": "222",
       "description": "This is the fourth customer"
+    },
+    {
+      "id": "c7c9bebe-8c26-43ff-9bfc-cee3baa51771",
+      "name": "John Eoe",
+      "status": "paid",
+      "rate": "44",
+      "balance": "44",
+      "deposit": "55",
+      "description": "abc"
+    },
+    {
+      "id": "bc6ef3fc-d0e0-4650-ae02-7b5dfb1da940",
+      "name": "John Foe",
+      "status": "paid",
+      "rate": "50.25",
+      "balance": "230",
+      "deposit": "54",
+      "description": "This is new customer"
     }
   ]
 }
