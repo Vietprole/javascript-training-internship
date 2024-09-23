@@ -87,7 +87,7 @@
   text-align: right;
 }
 
-.table-row {
+.table-cell {
   height: 64px;
   min-width: 1020px;
   display: flex;
@@ -104,26 +104,26 @@
   background-color: var(--background-secondary-color);
 }
 
-.name-row {
+.name-cell {
   width: 150px;
   margin-right: 32px;
 }
 
-.name-row .name {
+.name-cell .name {
   font-weight: var(--font-weight-medium);
   font-size: var(--body-size-md);
   line-height: 20px;
   color: var(--text-primary-color);
 }
 
-.name-row .id {
+.name-cell .id {
   font-weight: var(--font-weight-regular);
   font-size: var(--body-size-sm);
   line-height: 18px;
   color: var(--text-secondary-color);
 }
 
-.description-row {
+.description-cell {
   width: 238px;
   height: 40px;
   margin-right: 100px;
@@ -139,52 +139,15 @@
   color: var(--text-default-color);
 }
 
-.status-row {
-  height: 20px;
-  font-weight: var(--font-weight-medium);
-  font-size: var(--body-size-sm);
-  line-height: 18px;
-  border-radius: var(--border-radius-lg);
-  text-align: center;
-}
-
-.status-open {
-  width: 52px;
-  margin-right: 38px;
-  color: var(--text-status-open-color);
-  background-color: var(--background-status-open-color);
-}
-
-.status-paid {
-  width: 47px;
-  margin-right: 43px;
-  color: var(--text-status-paid-color);
-  background-color: var(--background-status-paid-color);
-}
-
-.status-inactive {
-  width: 68px;
-  margin-right: 22px;
-  color: var(--text-status-inactive-color);
-  background-color: var(--background-status-inactive-color);
-}
-
-.status-due {
-  width: 44px;
-  margin-right: 46px;
-  color: var(--text-status-due-color);
-  background-color: var(--background-status-due-color);
-}
-
-.rate-row,
-.balance-row,
-.deposit-row {
+.rate-cell,
+.balance-cell,
+.deposit-cell {
   width: 100px;
   text-align: right;
   margin-right: 20px;
 }
 
-.deposit-row {
+.deposit-cell {
   margin-right: 30px;
 }
 
@@ -202,17 +165,9 @@
   color: var(--text-secondary-color);
 }
 
-.table-row .icon-wrapper {
+.table-cell .icon-wrapper {
   width: 5px;
   height: 20px;
-}
-
-.negative{
-  color: var(--text-danger-color);
-}
-
-.positive{
-  color: var(--text-positive-color);
 }
 
 .menu-button {

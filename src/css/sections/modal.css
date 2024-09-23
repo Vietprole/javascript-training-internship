@@ -7,8 +7,8 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  padding: 23px 40px 27px;
-  background-color: var(--modal-color);
+  padding: 25px 40px;
+  background-color: var(--white);
 }
 
 .modal h2 {
@@ -20,16 +20,21 @@
 }
 
 .modal hr {
-  border: 1px solid var(--modal-line-color);
+  border: 1px solid var(--black);
   margin-bottom: 19px;
 }
 
-.modal-form {
+.modal-form,
+.view-customer-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto auto;
   gap: 20px 30px;
   margin-bottom: 45px;
+}
+
+.view-customer-wrapper {
+  gap: 54px 90px;
 }
 
 .name-field,
@@ -42,12 +47,7 @@
   flex-direction: column;
 }
 
-.name-field label,
-.status-field label,
-.rate-field label,
-.balance-field label,
-.deposit-field label,
-.description-field label {
+.label {
   font-weight: var(--font-weight-semi-bold);
   font-size: var(--body-size-md);
   line-height: 17px;
@@ -55,21 +55,45 @@
   margin-bottom: 8px;
 }
 
+.view-customer-wrapper .label {
+  margin-bottom: 5px;
+}
+
 .name-field input,
 .status-field select,
 .rate-field input,
 .balance-field input,
 .deposit-field input,
-.description-field textarea {
-  padding: 15px;
-  border: 1px solid var(--text-secondary-color);
-  border-radius: var(--border-radius-sm);
+.description-field textarea,
+.name-content,
+.status-content,
+.rate-content,
+.balance-content,
+.deposit-content,
+.description-content {
   font-family: 'Inter';
   font-weight: var(--font-weight-regular);
   font-size: var(--body-size-md);
   line-height: 20px;
   color: var(--text-default-color);
   letter-spacing: 0.02em;
+}
+
+.description-content {
+  width: 312px;
+  height: 60px;
+  overflow: auto;
+}
+
+.name-field input,
+.status-field select,
+.rate-field input,
+.balance-field input,
+.deposit-field input,
+.description-field textarea{
+  padding: 15px;
+  border: 1px solid var(--text-secondary-color);
+  border-radius: var(--border-radius-sm);
 }
 
 .status-field select {

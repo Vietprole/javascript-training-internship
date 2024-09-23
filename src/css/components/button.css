@@ -10,24 +10,24 @@
 }
 
 .button-primary {
-  color: var(--text-light-color);
+  color: var(--white);
   background-color: var(--button-primary-color);
   border: none;
 }
 
 .button-primary:hover {
-  color: var(--text-light-color);
+  color: var(--white);
   background-color: var(--button-primary-hover-color);
 }
 
 .button-secondary {
   color: var(--text-danger-color);
-  background-color: var(--text-light-color);
+  background-color: var(--white);
   border: 1px solid var(--button-secondary-color);
 }
 
 .button-secondary:hover {
-  color: var(--text-light-color);
+  color: var(--white);
   background-color: var(--button-secondary-hover-color);
 }
 
