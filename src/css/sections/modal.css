@@ -33,6 +33,10 @@
   margin-bottom: 45px;
 }
 
+.view-customer-wrapper {
+  gap: 54px 90px;
+}
+
 .name-field,
 .status-field,
 .rate-field,
@@ -60,7 +64,7 @@
 .rate-field input,
 .balance-field input,
 .deposit-field input,
-.description-field textarea
+.description-field textarea,
 .name-content,
 .status-content,
 .rate-content,
@@ -75,6 +79,12 @@
   letter-spacing: 0.02em;
 }
 
+.description-content {
+  width: 312px;
+  height: 60px;
+  overflow: auto;
+}
+
 .name-field input,
 .status-field select,
 .rate-field input,
@@ -84,15 +94,6 @@
   padding: 15px;
   border: 1px solid var(--text-secondary-color);
   border-radius: var(--border-radius-sm);
-}
-
-.name-content,
-.status-content,
-.rate-content,
-.balance-content,
-.deposit-content,
-.description-content{
-  
 }
 
 .status-field select {
