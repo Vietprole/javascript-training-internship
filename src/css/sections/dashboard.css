@@ -87,7 +87,7 @@
   text-align: right;
 }
 
-.table-cell {
+.table-row {
   height: 64px;
   min-width: 1020px;
   display: flex;
@@ -165,7 +165,7 @@
   color: var(--text-secondary-color);
 }
 
-.table-cell .icon-wrapper {
+.table-row .icon-wrapper {
   width: 5px;
   height: 20px;
 }
