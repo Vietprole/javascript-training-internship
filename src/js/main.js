@@ -124,6 +124,78 @@ function closeModal(modal) {
   modalOverlay.classList.remove('open'); // Hide the overlay
 }
 
+//* Form validation
+// For Add customer modal
+const addNameInput = document.getElementById('add-name-input');
+const addRateInput = document.getElementById('add-rate-input');
+const addBalanceInput = document.getElementById('add-balance-input');
+const addDepositInput = document.getElementById('add-deposit-input');
+
+// Function to prevent numbers from being typed
+function preventNumbers(event) {
+  const { key } = event;
+  const isNumber = /^[0-9]$/.test(key);
+  if (isNumber) {
+    event.preventDefault();
+  }
+}
+
+// Function to enforce max length
+function enforceMaxLength(event) {
+  const input = event.target;
+  if (input.value.length >= 50) {
+    input.value = input.value.slice(0, 50);
+    event.preventDefault();
+  }
+}
+
+// Function to check if the rate, balance, deposit is valid
+function isValid(input) {
+  // Positive, max 7 digits, max 2 decimal places
+  return /^\d{1,7}(\.\d{1,2})?$/.test(input);
+}
+
+function enforceValidFormat(event) {
+  const { key } = event;
+  const isNumber = /^[0-9]$/.test(key);
+  const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', '.'];
+  if (!isNumber && !allowedKeys.includes(key)) {
+    event.preventDefault();
+  }
+  
+  if (event.target.value[input.value.length - 1] === '.' && key === '.') {
+  if (event.target.value.length === 7 && key !== '.') {
+    event.preventDefault();
+  } else if (event.target.value.includes('.') && key === '.') {
+    event.preventDefault();
+  } else if (event.target.value.length === 10) {
+    event.preventDefault();
+  }
+}
+
+// Function to check if all inputs are valid
+function checkAddFormValidity() {
+  const isFormValid =
+    addNameInput.value &&
+    isValid(addRateInput.value) &&
+    isValid(addBalanceInput.value) &&
+    isValid(addDepositInput.value);
+  createButton.disabled = !isFormValid;
+}
+
+addNameInput.addEventListener('keydown', preventNumbers);
+addNameInput.addEventListener('input', enforceMaxLength);
+addNameInput.addEventListener('input', checkAddFormValidity);
+
+addRateInput.addEventListener('keydown', onlyNumbers);
+addRateInput.addEventListener('input', checkAddFormValidity);
+
+addBalanceInput.addEventListener('keydown', onlyNumbers);
+addBalanceInput.addEventListener('input', checkAddFormValidity);
+
+addDepositInput.addEventListener('keydown', onlyNumbers);
+addDepositInput.addEventListener('input', checkAddFormValidity);
+
 //* For Add customer modal
 addButton.addEventListener('click', () => {
   openModal(addCustomerModal);
@@ -145,10 +217,8 @@ createButton.addEventListener('click', async () => {
   // Create a new Customer instance
   const newCustomer = new Customer(id, name, status, rate, balance, deposit, description);
   closeModal(addCustomerModal);
-  console.log('Before new customer added');
   // Send a POST request to the API
   await httpRequest(HTTP_METHODS.POST, newCustomer.toJSON());
-  console.log('New customer added');
   // LoadCustomers();
 });
 
