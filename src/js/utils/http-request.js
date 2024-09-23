@@ -12,6 +12,7 @@ async function httpRequest(method, body = null, url = API_BASE_URL) {
       throw new Error(`Network response was not ok: ${response.statusText}`);
     }
     const data = await response.json();
+    console.log('httpRequest is called');
     return data;
   } catch (error) {
     console.error('There was a problem with the fetch operation:', error);

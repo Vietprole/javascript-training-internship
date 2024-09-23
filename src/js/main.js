@@ -133,7 +133,7 @@ closeAddModalButton.addEventListener('click', () => {
   closeModal(addCustomerModal);
 });
 
-createButton.addEventListener('click', () => {
+createButton.addEventListener('click', async () => {
   const id = uuidv4();
   const name = document.getElementById('add-name-input').value;
   const status = document.getElementById('add-status-input').value;
@@ -144,11 +144,12 @@ createButton.addEventListener('click', () => {
 
   // Create a new Customer instance
   const newCustomer = new Customer(id, name, status, rate, balance, deposit, description);
-
-  // Send a POST request to the API
-  httpRequest(HTTP_METHODS.POST, newCustomer.toJSON());
-  // LoadCustomers();
   closeModal(addCustomerModal);
+  console.log('Before new customer added');
+  // Send a POST request to the API
+  await httpRequest(HTTP_METHODS.POST, newCustomer.toJSON());
+  console.log('New customer added');
+  // LoadCustomers();
 });
 
 //* For Edit customer modal
