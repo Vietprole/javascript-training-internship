@@ -175,7 +175,10 @@
       <form class="modal-form" action="">
         <div class="name-field">
           <label class="label" for="add-name-input">Name</label>
-          <input type="text" id="add-name-input" required/>
+          <div class="input-wrapper">
+            <input type="text" id="add-name-input" required/>
+          </div>
+          <div class="error-message"></div>
         </div>
         <div class="status-field">
           <label class="label" for="add-status-input">Status</label>
@@ -192,6 +195,7 @@
             <span>$</span>
             <input type="text" id="add-rate-input" required/>
           </div>
+          <div class="error-message"></div>
         </div>
         <div class="balance-field">
           <label class="label" for="add-balance-input">Balance</label>
@@ -199,6 +203,7 @@
             <span>$</span>
             <input type="text" id="add-balance-input" required/>
           </div>
+          <div class="error-message"></div>
         </div>
         <div class="deposit-field">
           <label class="label" for="add-deposit-input">Deposit</label>
@@ -206,6 +211,7 @@
             <span>$</span>
             <input type="text" id="add-deposit-input" required/>
           </div>
+          <div class="error-message"></div>
         </div>
         <div class="description-field">
           <label class="label" for="add-description-input">Description</label>

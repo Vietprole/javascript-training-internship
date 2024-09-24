@@ -29,7 +29,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto auto;
-  gap: 20px 30px;
+  gap: 0px 30px;
   margin-bottom: 45px;
 }
 
@@ -85,11 +85,8 @@
   overflow: auto;
 }
 
-.name-field input,
+.input-wrapper,
 .status-field select,
-.rate-field input,
-.balance-field input,
-.deposit-field input,
 .description-field textarea{
   padding: 15px;
   border: 1px solid var(--text-secondary-color);
@@ -102,6 +99,7 @@
   background-size: 13px;
 }
 
+.name-field input,
 .rate-field input,
 .balance-field input,
 .deposit-field input {
@@ -114,12 +112,6 @@
 .description-field textarea {
   height: 107px;
   resize: none;
-}
-
-.input-wrapper {
-  padding: 15px;
-  border: 1px solid var(--text-secondary-color);
-  border-radius: var(--border-radius-sm);
 }
 
 .input-wrapper span {
@@ -152,4 +144,17 @@
 
 .open {
   display: block;
+}
+
+.warning {
+  border: 1px solid var(--text-danger-color);
+}
+
+.error-message {
+  height: 20px;
+  padding-left: 15px;
+  color: var(--text-danger-color);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--body-size-md);
+  line-height: 20px;
 }

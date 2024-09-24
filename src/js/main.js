@@ -218,15 +218,26 @@ function checkAddFormValidity() {
   removeTrailingDecimalPoint(rate);
   removeTrailingDecimalPoint(balance);
   removeTrailingDecimalPoint(deposit);
-  const isFormValid =
-    addNameInput.value && isValid(rate) && isValid(balance) && isValid(deposit.value);
+  const isFormValid = addNameInput.value && isValid(rate) && isValid(balance) && isValid(deposit);
+  console.log(isValid(rate), isValid(balance), isValid(deposit));
   createButton.disabled = !isFormValid;
 }
 
 function showWarningIfEmpty(event) {
   const input = event.target;
+  const inputWrapper = input.closest('.input-wrapper');
+  const errorMessageDiv = inputWrapper ? inputWrapper.nextElementSibling : null;
+
   if (!input.value.trim()) {
-    input.classList.add('warning');
+    inputWrapper.classList.add('warning');
+    if (errorMessageDiv) {
+      errorMessageDiv.textContent = 'Field is required.';
+    }
+  } else {
+    inputWrapper.classList.remove('warning');
+    if (errorMessageDiv) {
+      errorMessageDiv.textContent = '';
+    }
   }
 }
 
@@ -237,15 +248,15 @@ addNameInput.addEventListener('blur', showWarningIfEmpty);
 
 addRateInput.addEventListener('keydown', enforceValidFormat);
 addRateInput.addEventListener('input', checkAddFormValidity);
-addNameInput.addEventListener('blur', showWarningIfEmpty);
+addRateInput.addEventListener('blur', showWarningIfEmpty);
 
 addBalanceInput.addEventListener('keydown', enforceValidFormat);
 addBalanceInput.addEventListener('input', checkAddFormValidity);
-addNameInput.addEventListener('blur', showWarningIfEmpty);
+addBalanceInput.addEventListener('blur', showWarningIfEmpty);
 
 addDepositInput.addEventListener('keydown', enforceValidFormat);
 addDepositInput.addEventListener('input', checkAddFormValidity);
-addNameInput.addEventListener('blur', showWarningIfEmpty);
+addDepositInput.addEventListener('blur', showWarningIfEmpty);
 
 //* For Add customer modal
 addButton.addEventListener('click', () => {
