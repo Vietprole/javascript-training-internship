@@ -151,50 +151,101 @@ function enforceMaxLength(event) {
 
 // Function to check if the rate, balance, deposit is valid
 function isValid(input) {
-  // Positive, max 7 digits, max 2 decimal places
-  return /^\d{1,7}(\.\d{1,2})?$/.test(input);
+  // Positive, max 7 digits, max 2 decimal places, allow trailing decimal point
+  return /^\d{1,7}(\.\d{0,2})?$/.test(input);
 }
 
 function enforceValidFormat(event) {
   const { key } = event;
-  const isNumber = /^[0-9]$/.test(key);
-  const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', '.'];
-  if (!isNumber && !allowedKeys.includes(key)) {
-    event.preventDefault();
+  const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'];
+
+  // Get the current value of the input and the cursor position
+  const input = event.target;
+  const start = input.selectionStart;
+  const end = input.selectionEnd;
+
+  let newValue;
+
+  if (key === 'Backspace') {
+    // If Backspace is pressed, remove the character before the cursor
+    if (start === end) {
+      newValue = input.value.slice(0, start - 1) + input.value.slice(end);
+    } else {
+      // If there is a selection, remove the selected text
+      newValue = input.value.slice(0, start) + input.value.slice(end);
+    }
+
+    // Prevent the user from deleting the decimal point if the input is longer than 7
+    if (!newValue.includes('.') && newValue.length > 7) {
+      event.preventDefault();
+    }
+  } else if (key === 'Delete') {
+    // If Delete is pressed, remove the character after the cursor
+    if (start === end) {
+      newValue = input.value.slice(0, start) + input.value.slice(end + 1);
+    } else {
+      // If there is a selection, remove the selected text
+      newValue = input.value.slice(0, start) + input.value.slice(end);
+    }
+
+    // Prevent the user from deleting the decimal point if the input is longer than 7
+    if (!newValue.includes('.') && newValue.length > 7) {
+      event.preventDefault();
+    }
+  } else {
+    // Construct the new value by inserting the key at the cursor position
+    newValue = input.value.slice(0, start) + key + input.value.slice(end);
   }
-  
-  if (event.target.value[input.value.length - 1] === '.' && key === '.') {
-  if (event.target.value.length === 7 && key !== '.') {
-    event.preventDefault();
-  } else if (event.target.value.includes('.') && key === '.') {
-    event.preventDefault();
-  } else if (event.target.value.length === 10) {
+
+  console.log(newValue, isValid(newValue), allowedKeys.includes(key));
+  if (!isValid(newValue) && !allowedKeys.includes(key)) {
     event.preventDefault();
   }
 }
 
+function removeTrailingDecimalPoint(value) {
+  if (value.endsWith('.')) {
+    return value.slice(0, -1);
+  }
+  return value;
+}
+
 // Function to check if all inputs are valid
 function checkAddFormValidity() {
+  const rate = addRateInput.value;
+  const balance = addBalanceInput.value;
+  const deposit = addDepositInput.value;
+  removeTrailingDecimalPoint(rate);
+  removeTrailingDecimalPoint(balance);
+  removeTrailingDecimalPoint(deposit);
   const isFormValid =
-    addNameInput.value &&
-    isValid(addRateInput.value) &&
-    isValid(addBalanceInput.value) &&
-    isValid(addDepositInput.value);
+    addNameInput.value && isValid(rate) && isValid(balance) && isValid(deposit.value);
   createButton.disabled = !isFormValid;
+}
+
+function showWarningIfEmpty(event) {
+  const input = event.target;
+  if (!input.value.trim()) {
+    input.classList.add('warning');
+  }
 }
 
 addNameInput.addEventListener('keydown', preventNumbers);
 addNameInput.addEventListener('input', enforceMaxLength);
 addNameInput.addEventListener('input', checkAddFormValidity);
+addNameInput.addEventListener('blur', showWarningIfEmpty);
 
-addRateInput.addEventListener('keydown', onlyNumbers);
+addRateInput.addEventListener('keydown', enforceValidFormat);
 addRateInput.addEventListener('input', checkAddFormValidity);
+addNameInput.addEventListener('blur', showWarningIfEmpty);
 
-addBalanceInput.addEventListener('keydown', onlyNumbers);
+addBalanceInput.addEventListener('keydown', enforceValidFormat);
 addBalanceInput.addEventListener('input', checkAddFormValidity);
+addNameInput.addEventListener('blur', showWarningIfEmpty);
 
-addDepositInput.addEventListener('keydown', onlyNumbers);
+addDepositInput.addEventListener('keydown', enforceValidFormat);
 addDepositInput.addEventListener('input', checkAddFormValidity);
+addNameInput.addEventListener('blur', showWarningIfEmpty);
 
 //* For Add customer modal
 addButton.addEventListener('click', () => {
