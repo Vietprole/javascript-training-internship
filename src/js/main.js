@@ -10,7 +10,7 @@ import {
   removeTrailingDecimalPoint,
   removeTrailingNegativeSign,
   showWarningIfEmpty,
-} from './utils/modal-validation';
+} from './utils/helpers';
 
 class Customer {
   constructor(id, name, status, rate, balance, deposit, description) {
