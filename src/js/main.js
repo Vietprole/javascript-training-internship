@@ -126,14 +126,17 @@ function checkAddFormValidity() {
   createButton.disabled = !isFormValid;
 }
 
+let previousNameValue = '';
+let previousRateValue = '';
+let previousBalanceValue = '';
+let previousDepositValue = '';
+
 addNameInput.addEventListener('input', enforceMaxLength);
 addNameInput.addEventListener('input', checkAddFormValidity);
 addNameInput.addEventListener('blur', showWarningIfEmpty);
-let previousNameValue = '';
 addNameInput.addEventListener('keydown', function () {
   previousNameValue = this.value;
 });
-
 addNameInput.addEventListener('input', function () {
   console.log(this.value, hasNumbers(this.value));
   if (this.value && hasNumbers(this.value)) {
@@ -143,11 +146,9 @@ addNameInput.addEventListener('input', function () {
 
 addRateInput.addEventListener('input', checkAddFormValidity);
 addRateInput.addEventListener('blur', showWarningIfEmpty);
-let previousRateValue = '';
 addRateInput.addEventListener('keydown', function () {
   previousRateValue = this.value;
 });
-
 addRateInput.addEventListener('input', function () {
   if (this.value && !isValid(this.value)) {
     this.value = previousRateValue;
@@ -156,11 +157,9 @@ addRateInput.addEventListener('input', function () {
 
 addBalanceInput.addEventListener('input', checkAddFormValidity);
 addBalanceInput.addEventListener('blur', showWarningIfEmpty);
-let previousBalanceValue = '';
 addBalanceInput.addEventListener('keydown', function () {
   previousBalanceValue = this.value;
 });
-
 addBalanceInput.addEventListener('input', function () {
   const regex = /^-?\d{0,7}(\.\d{0,2})?$/;
   console.log(regex.test(this.value));
@@ -171,11 +170,9 @@ addBalanceInput.addEventListener('input', function () {
 
 addDepositInput.addEventListener('input', checkAddFormValidity);
 addDepositInput.addEventListener('blur', showWarningIfEmpty);
-let previousDepositValue = '';
 addDepositInput.addEventListener('keydown', function () {
   previousDepositValue = this.value;
 });
-
 addDepositInput.addEventListener('input', function () {
   if (this.value && !isValid(this.value)) {
     this.value = previousDepositValue;
