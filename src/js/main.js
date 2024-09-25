@@ -199,9 +199,9 @@ createButton.addEventListener('click', async () => {
 
   // Create a new Customer instance
   const newCustomer = new Customer(id, name, status, rate, balance, deposit, description);
-  closeModal(addCustomerModal);
   // Send a POST request to the API
   await httpRequest(HTTP_METHODS.POST, newCustomer.toJSON());
+  closeModal(addCustomerModal);
   // LoadCustomers();
 });
 
