@@ -1,6 +1,6 @@
 .modal {
   width: 794px;
-  height: 598px;
+  height: 608px;
   display: none;
   position: fixed;
   z-index: 2; /* On top of overlay's 1 */

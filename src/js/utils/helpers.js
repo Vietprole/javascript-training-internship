@@ -1,10 +1,6 @@
-// Function to prevent numbers from being typed
-function preventNumbers(event) {
-  const { key } = event;
-  const isNumber = /^[0-9]$/.test(key);
-  if (isNumber) {
-    event.preventDefault();
-  }
+// Function to check for numbers
+function hasNumbers(value) {
+  return /\d/.test(value);
 }
 
 // Function to enforce max length
@@ -55,7 +51,7 @@ function showWarningIfEmpty(event) {
 }
 
 export {
-  preventNumbers,
+  hasNumbers,
   enforceMaxLength,
   isValid,
   removeTrailingDecimalPoint,

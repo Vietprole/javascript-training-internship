@@ -4,7 +4,7 @@ import httpRequest from './utils/http-request';
 import menuIcon from '../assets/icons/menu-icon.svg';
 
 import {
-  preventNumbers,
+  hasNumbers,
   enforceMaxLength,
   isValid,
   removeTrailingDecimalPoint,
@@ -152,10 +152,20 @@ function checkAddFormValidity() {
   createButton.disabled = !isFormValid;
 }
 
-addNameInput.addEventListener('keydown', preventNumbers);
 addNameInput.addEventListener('input', enforceMaxLength);
 addNameInput.addEventListener('input', checkAddFormValidity);
 addNameInput.addEventListener('blur', showWarningIfEmpty);
+let previousNameValue = '';
+addNameInput.addEventListener('keydown', function () {
+  previousNameValue = this.value;
+});
+
+addNameInput.addEventListener('input', function () {
+  console.log(this.value, hasNumbers(this.value));
+  if (this.value && hasNumbers(this.value)) {
+    this.value = previousNameValue;
+  }
+});
 
 addRateInput.addEventListener('input', checkAddFormValidity);
 addRateInput.addEventListener('blur', showWarningIfEmpty);
