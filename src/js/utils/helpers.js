@@ -23,7 +23,7 @@ function sanitizeInput(value) {
   // If the value ends with a single decimal digit, add '0'
   temp = /^-?\d+\.\d$/.test(temp) ? `${temp}0` : temp;
   // If the value not contains "." and end with a digit, add '.00'
-  temp = /^\d+$/.test(temp) ? `${temp}.00` : temp;
+  temp = /^-?\d+$/.test(temp) ? `${temp}.00` : temp;
   return temp.endsWith('-') ? '0.00' : temp;
 }
 
