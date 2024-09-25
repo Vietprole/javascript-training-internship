@@ -18,43 +18,31 @@ function isValid(input) {
   return /^\d{1,7}(\.\d{0,2})?$/.test(input);
 }
 
-function removeTrailingDecimalPoint(value) {
-  if (value.endsWith('.')) {
-    return value.slice(0, -1);
-  }
-  return value;
+function sanitizeInput(value) {
+  let temp = value.endsWith('.') ? `${value}00` : value;
+  // If the value ends with a single decimal digit, add '0'
+  temp = /^-?\d+\.\d$/.test(temp) ? `${temp}0` : temp;
+  // If the value not contains "." and end with a digit, add '.00'
+  temp = /^\d+$/.test(temp) ? `${temp}.00` : temp;
+  return temp.endsWith('-') ? '0.00' : temp;
 }
 
-function removeTrailingNegativeSign(value) {
-  if (value.endsWith('-')) {
-    return value.slice(0, -1);
-  }
-  return value;
-}
-
-function showWarningIfEmpty(event) {
+function showErrorIfEmpty(event) {
   const input = event.target;
   const inputWrapper = input.closest('.input-wrapper');
   const errorMessageDiv = inputWrapper ? inputWrapper.nextElementSibling : null;
 
   if (!input.value.trim()) {
-    inputWrapper.classList.add('warning');
+    inputWrapper.classList.add('error');
     if (errorMessageDiv) {
       errorMessageDiv.textContent = 'Field is required.';
     }
   } else {
-    inputWrapper.classList.remove('warning');
+    inputWrapper.classList.remove('error');
     if (errorMessageDiv) {
       errorMessageDiv.textContent = '';
     }
   }
 }
 
-export {
-  hasNumbers,
-  enforceMaxLength,
-  isValid,
-  removeTrailingDecimalPoint,
-  removeTrailingNegativeSign,
-  showWarningIfEmpty,
-};
+export { hasNumbers, enforceMaxLength, isValid, sanitizeInput, showErrorIfEmpty };

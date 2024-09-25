@@ -3,14 +3,7 @@ import { API_BASE_URL, HTTP_METHODS } from './constants/api';
 import httpRequest from './utils/http-request';
 import menuIcon from '../assets/icons/menu-icon.svg';
 
-import {
-  hasNumbers,
-  enforceMaxLength,
-  isValid,
-  removeTrailingDecimalPoint,
-  removeTrailingNegativeSign,
-  showWarningIfEmpty,
-} from './utils/helpers';
+import { hasNumbers, enforceMaxLength, isValid, showErrorIfEmpty, sanitizeInput } from './utils/helpers';
 
 class Customer {
   constructor(id, name, status, rate, balance, deposit, description) {
@@ -115,14 +108,8 @@ const addBalanceInput = document.getElementById('add-balance-input');
 const addDepositInput = document.getElementById('add-deposit-input');
 // Function to check if all inputs are valid
 function checkAddFormValidity() {
-  const rate = addRateInput.value;
-  const balance = addBalanceInput.value;
-  const deposit = addDepositInput.value;
-  removeTrailingDecimalPoint(rate);
-  removeTrailingDecimalPoint(balance);
-  removeTrailingNegativeSign(balance);
-  removeTrailingDecimalPoint(deposit);
-  const isFormValid = addNameInput.value && rate && balance && deposit;
+  const isFormValid =
+    addNameInput.value && addRateInput.value && addBalanceInput.value && addDepositInput.value;
   createButton.disabled = !isFormValid;
 }
 
@@ -133,19 +120,18 @@ let previousDepositValue = '';
 
 addNameInput.addEventListener('input', enforceMaxLength);
 addNameInput.addEventListener('input', checkAddFormValidity);
-addNameInput.addEventListener('blur', showWarningIfEmpty);
+addNameInput.addEventListener('blur', showErrorIfEmpty);
 addNameInput.addEventListener('keydown', function () {
   previousNameValue = this.value;
 });
 addNameInput.addEventListener('input', function () {
-  console.log(this.value, hasNumbers(this.value));
   if (this.value && hasNumbers(this.value)) {
     this.value = previousNameValue;
   }
 });
 
 addRateInput.addEventListener('input', checkAddFormValidity);
-addRateInput.addEventListener('blur', showWarningIfEmpty);
+addRateInput.addEventListener('blur', showErrorIfEmpty);
 addRateInput.addEventListener('keydown', function () {
   previousRateValue = this.value;
 });
@@ -156,20 +142,20 @@ addRateInput.addEventListener('input', function () {
 });
 
 addBalanceInput.addEventListener('input', checkAddFormValidity);
-addBalanceInput.addEventListener('blur', showWarningIfEmpty);
+addBalanceInput.addEventListener('blur', showErrorIfEmpty);
 addBalanceInput.addEventListener('keydown', function () {
   previousBalanceValue = this.value;
 });
 addBalanceInput.addEventListener('input', function () {
-  const regex = /^-?\d{0,7}(\.\d{0,2})?$/;
-  console.log(regex.test(this.value));
+  // Allow negative numbers
+  const regex = /^(-\d{0,7}(\.\d{0,2})?|\d{1,7}(\.\d{0,2})?)$/;
   if (this.value && !regex.test(this.value)) {
     this.value = previousBalanceValue;
   }
 });
 
 addDepositInput.addEventListener('input', checkAddFormValidity);
-addDepositInput.addEventListener('blur', showWarningIfEmpty);
+addDepositInput.addEventListener('blur', showErrorIfEmpty);
 addDepositInput.addEventListener('keydown', function () {
   previousDepositValue = this.value;
 });
@@ -192,11 +178,14 @@ createButton.addEventListener('click', async () => {
   const id = uuidv4();
   const name = document.getElementById('add-name-input').value;
   const status = document.getElementById('add-status-input').value;
-  const rate = document.getElementById('add-rate-input').value;
-  const balance = document.getElementById('add-balance-input').value;
-  const deposit = document.getElementById('add-deposit-input').value;
+  let rate = document.getElementById('add-rate-input').value;
+  let balance = document.getElementById('add-balance-input').value;
+  let deposit = document.getElementById('add-deposit-input').value;
   const description = document.getElementById('add-description-input').value;
-
+  // Remove any trailing decimal points or negative signs
+  rate = sanitizeInput(rate);
+  balance = sanitizeInput(balance);
+  deposit = sanitizeInput(deposit);
   // Create a new Customer instance
   const newCustomer = new Customer(id, name, status, rate, balance, deposit, description);
   // Send a POST request to the API

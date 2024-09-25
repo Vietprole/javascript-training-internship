@@ -103,6 +103,7 @@
 .rate-field input,
 .balance-field input,
 .deposit-field input {
+  width: 290px;
   padding: 0;
   border: none;
   border-radius: 0;
@@ -146,7 +147,7 @@
   display: block;
 }
 
-.warning {
+.error {
   border: 1px solid var(--text-danger-color);
 }
 

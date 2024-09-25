@@ -13,36 +13,36 @@
       "id": "7b78f5cd-3cb8-4295-be1b-7de3a282aede",
       "name": "John Boe",
       "status": "paid",
-      "rate": "500",
-      "balance": "-78",
-      "deposit": "45",
+      "rate": "500.00",
+      "balance": "-78.00",
+      "deposit": "45.00",
       "description": "This is the second customer"
     },
     {
       "id": "e4165870-4543-4b20-af5e-ebd1f01d8415",
       "name": "John Coe",
       "status": "inactive",
-      "rate": "56",
-      "balance": "33",
-      "deposit": "43",
+      "rate": "56.00",
+      "balance": "33.00",
+      "deposit": "43.00",
       "description": "This is the third customer"
     },
     {
       "id": "d3f2cc8a-25c1-459d-b995-d04f08430a7c",
       "name": "John Doe",
       "status": "due",
-      "rate": "54",
-      "balance": "-999",
-      "deposit": "222",
+      "rate": "54.00",
+      "balance": "-999.00",
+      "deposit": "222.00",
       "description": "This is the fourth customer"
     },
     {
       "id": "c7c9bebe-8c26-43ff-9bfc-cee3baa51771",
       "name": "John Eoe",
       "status": "paid",
-      "rate": "44",
-      "balance": "44",
-      "deposit": "55",
+      "rate": "44.00",
+      "balance": "44.00",
+      "deposit": "55.00",
       "description": "abc"
     },
     {
@@ -50,8 +50,8 @@
       "name": "John Foe",
       "status": "paid",
       "rate": "50.25",
-      "balance": "230",
-      "deposit": "54",
+      "balance": "230.00",
+      "deposit": "54.00",
       "description": "This is new customer"
     },
     {
@@ -59,8 +59,8 @@
       "name": "John Doe",
       "status": "open",
       "rate": "123.45",
-      "balance": "300",
-      "deposit": "234",
+      "balance": "300.00",
+      "deposit": "234.00",
       "description": "This is new custoer"
     },
     {
@@ -80,6 +80,33 @@
       "balance": "-270.50",
       "deposit": "2323232.33",
       "description": "sddaf"
+    },
+    {
+      "id": "06791179-daa3-49da-bef8-21c26e87f544",
+      "name": "df",
+      "status": "open",
+      "rate": "12.10",
+      "balance": "-212.20",
+      "deposit": "23.40",
+      "description": "2"
+    },
+    {
+      "id": "ba3242de-da62-4b01-903a-7eef2373fca8",
+      "name": "d",
+      "status": "open",
+      "rate": "45",
+      "balance": "-89",
+      "deposit": "67",
+      "description": "d"
+    },
+    {
+      "id": "632f8cf2-5e6d-4b02-9afc-f043209d1a5c",
+      "name": "ssdf",
+      "status": "open",
+      "rate": "34.00",
+      "balance": "-12.10",
+      "deposit": "34.00",
+      "description": ""
     }
   ]
 }
