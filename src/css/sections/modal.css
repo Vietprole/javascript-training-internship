@@ -151,8 +151,8 @@
 }
 
 .error-message {
-  height: 20px;
-  padding-left: 15px;
+  height: 25px;
+  padding: 5px 0px 0px 15px;
   color: var(--text-danger-color);
   font-weight: var(--font-weight-regular);
   font-size: var(--body-size-md);

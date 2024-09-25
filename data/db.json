@@ -53,6 +53,33 @@
       "balance": "230",
       "deposit": "54",
       "description": "This is new customer"
+    },
+    {
+      "id": "fa7db33b-344d-4e05-92a6-efb7cebcc65d",
+      "name": "John Doe",
+      "status": "open",
+      "rate": "123.45",
+      "balance": "300",
+      "deposit": "234",
+      "description": "This is new custoer"
+    },
+    {
+      "id": "b1608c9c-4c4a-43fe-8753-67589a0ce5a3",
+      "name": "John Doe",
+      "status": "open",
+      "rate": "1234567.12",
+      "balance": "1234567.12",
+      "deposit": "1234567.12",
+      "description": "New customer"
+    },
+    {
+      "id": "909fded4-eb58-484f-b244-22fb4cf9124c",
+      "name": "John Old",
+      "status": "paid",
+      "rate": "3232332.32",
+      "balance": "-270.50",
+      "deposit": "2323232.33",
+      "description": "sddaf"
     }
   ]
 }
