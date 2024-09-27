@@ -1,9 +1,15 @@
 import { v4 as uuidv4 } from 'uuid';
-import { API_BASE_URL, HTTP_METHODS } from './constants/api';
+import { HTTP_METHODS } from './constants/api';
 import httpRequest from './utils/http-request';
-import menuIcon from '../assets/icons/menu-icon.svg';
+import loadCustomers from './templates/templates';
 
-import { hasNumbers, enforceMaxLength, isValid, showErrorIfEmpty, sanitizeInput } from './utils/helpers';
+import {
+  hasNumbers,
+  enforceMaxLength,
+  isValid,
+  showErrorIfEmpty,
+  sanitizeInput,
+} from './utils/helpers';
 
 class Customer {
   constructor(id, name, status, rate, balance, deposit, description) {
@@ -31,26 +37,8 @@ class Customer {
 
 export default Customer;
 
-//* Action menu functionality
-const actionMenuButtons = document.querySelectorAll('.menu-button');
-const actionMenu = document.querySelector('.action-menu');
-
-actionMenuButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    const { top, left } = button.getBoundingClientRect();
-    actionMenu.style.top = `${top}px`;
-    actionMenu.style.left = `${left - 100}px`;
-    actionMenu.classList.add('open');
-  });
-});
-
-window.addEventListener('click', (event) => {
-  // Close the action menu if the user clicks outside of it
-  // Check if action menu's buttons is not the target to prevent closing the menu when clicking on them
-  if (!Array.from(actionMenuButtons).some((button) => button.contains(event.target))) {
-    actionMenu.classList.remove('open');
-  }
-});
+//* Load customers first before adding event listeners
+loadCustomers();
 
 //* Modal functionality
 const addButton = document.querySelector('.add-button');
@@ -191,7 +179,7 @@ createButton.addEventListener('click', async () => {
   // Send a POST request to the API
   await httpRequest(HTTP_METHODS.POST, newCustomer.toJSON());
   closeModal(addCustomerModal);
-  // LoadCustomers();
+  loadCustomers();
 });
 
 //* For Edit customer modal
@@ -211,3 +199,35 @@ viewButton.addEventListener('click', () => {
 closeViewModalButton.addEventListener('click', () => {
   closeModal(viewCustomerModal);
 });
+
+//* Search functionality
+const searchInput = document.querySelector('.search-input');
+
+// debounce function to reset timeout when the mainFunction is called again
+function debounce(mainFunction, delay) {
+  let timeoutId;
+  return function (...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      mainFunction(...args);
+    }, delay);
+  };
+}
+
+function searchCustomers() {
+  const searchValue = searchInput.value.toLowerCase();
+  const tableRows = document.querySelectorAll('.table-row');
+  tableRows.forEach((row) => {
+    const currentRow = row;
+    const name = row.querySelector('.name').textContent.toLowerCase();
+    const status = row.querySelector('.status-cell').textContent.toLowerCase();
+    if (name.includes(searchValue) || status.includes(searchValue)) {
+      currentRow.style.display = '';
+    } else {
+      currentRow.style.display = 'none';
+    }
+  });
+}
+
+// Attach the debounce function to the search input
+searchInput.addEventListener('input', debounce(searchCustomers, 1000));
