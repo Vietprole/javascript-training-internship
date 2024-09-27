@@ -1,6 +1,9 @@
-// import { v4 as uuidv4 } from 'uuid';
-// import { API_BASE_URL, HTTP_METHODS } from './constants/api';
-// import httpRequest from './utils/http-request';
+import { v4 as uuidv4 } from 'uuid';
+import { API_BASE_URL, HTTP_METHODS } from './constants/api';
+import httpRequest from './utils/http-request';
+import menuIcon from '../assets/icons/menu-icon.svg';
+
+import { hasNumbers, enforceMaxLength, isValid, showErrorIfEmpty, sanitizeInput } from './utils/helpers';
 
 class Customer {
   constructor(id, name, status, rate, balance, deposit, description) {
@@ -28,34 +31,6 @@ class Customer {
 
 export default Customer;
 
-// httpRequest(HTTP_METHODS.GET);
-
-// const newUuid = uuidv4();
-// const newCustomer = new Customer(
-//   newUuid,
-//   'John Boe',
-//   'Due',
-//   0.05,
-//   2000,
-//   600,
-//   'A new test customer'
-// );
-// httpRequest(HTTP_METHODS.POST, newCustomer.toJSON());
-
-// const putUrl = `${API_BASE_URL}/8434960a-b06b-4dc9-98b9-d6306de7cdad`;
-// const updatedCustomer = new Customer(
-//   newUuid,
-//   'John Doe',
-//   'Open',
-//   0.05,
-//   2000,
-//   600,
-//   'An updated test customer'
-// );
-
-// httpRequest(HTTP_METHODS.PUT, updatedCustomer.toJSON(), putUrl);
-// httpRequest(HTTP_METHODS.DELETE, null, `${API_BASE_URL}/5b4f0c09-6f57-4467-8cad-23c11a65afe1`);
-
 //* Action menu functionality
 const actionMenuButtons = document.querySelectorAll('.menu-button');
 const actionMenu = document.querySelector('.action-menu');
@@ -81,6 +56,8 @@ window.addEventListener('click', (event) => {
 const addButton = document.querySelector('.add-button');
 const editButton = document.querySelector('.edit-button');
 const viewButton = document.querySelector('.view-button');
+const createButton = document.querySelector('.create-button');
+// const saveButton = document.querySelector('.save-button');
 const closeAddModalButton = document.querySelector('.add-customer-modal .close-button');
 const closeEditModalButton = document.querySelector('.edit-customer-modal .close-button');
 const closeViewModalButton = document.querySelector('.view-customer-modal .close-button');
@@ -123,6 +100,71 @@ function closeModal(modal) {
   modalOverlay.classList.remove('open'); // Hide the overlay
 }
 
+//* Form validation
+// For Add customer modal
+const addNameInput = document.getElementById('add-name-input');
+const addRateInput = document.getElementById('add-rate-input');
+const addBalanceInput = document.getElementById('add-balance-input');
+const addDepositInput = document.getElementById('add-deposit-input');
+// Function to check if all inputs are valid
+function checkAddFormValidity() {
+  const isFormValid =
+    addNameInput.value && addRateInput.value && addBalanceInput.value && addDepositInput.value;
+  createButton.disabled = !isFormValid;
+}
+
+let previousNameValue = '';
+let previousRateValue = '';
+let previousBalanceValue = '';
+let previousDepositValue = '';
+
+addNameInput.addEventListener('input', enforceMaxLength);
+addNameInput.addEventListener('input', checkAddFormValidity);
+addNameInput.addEventListener('blur', showErrorIfEmpty);
+addNameInput.addEventListener('keydown', function () {
+  previousNameValue = this.value;
+});
+addNameInput.addEventListener('input', function () {
+  if (this.value && hasNumbers(this.value)) {
+    this.value = previousNameValue;
+  }
+});
+
+addRateInput.addEventListener('input', checkAddFormValidity);
+addRateInput.addEventListener('blur', showErrorIfEmpty);
+addRateInput.addEventListener('keydown', function () {
+  previousRateValue = this.value;
+});
+addRateInput.addEventListener('input', function () {
+  if (this.value && !isValid(this.value)) {
+    this.value = previousRateValue;
+  }
+});
+
+addBalanceInput.addEventListener('input', checkAddFormValidity);
+addBalanceInput.addEventListener('blur', showErrorIfEmpty);
+addBalanceInput.addEventListener('keydown', function () {
+  previousBalanceValue = this.value;
+});
+addBalanceInput.addEventListener('input', function () {
+  // Allow negative numbers
+  const regex = /^(-\d{0,7}(\.\d{0,2})?|\d{1,7}(\.\d{0,2})?)$/;
+  if (this.value && !regex.test(this.value)) {
+    this.value = previousBalanceValue;
+  }
+});
+
+addDepositInput.addEventListener('input', checkAddFormValidity);
+addDepositInput.addEventListener('blur', showErrorIfEmpty);
+addDepositInput.addEventListener('keydown', function () {
+  previousDepositValue = this.value;
+});
+addDepositInput.addEventListener('input', function () {
+  if (this.value && !isValid(this.value)) {
+    this.value = previousDepositValue;
+  }
+});
+
 //* For Add customer modal
 addButton.addEventListener('click', () => {
   openModal(addCustomerModal);
@@ -130,6 +172,26 @@ addButton.addEventListener('click', () => {
 
 closeAddModalButton.addEventListener('click', () => {
   closeModal(addCustomerModal);
+});
+
+createButton.addEventListener('click', async () => {
+  const id = uuidv4();
+  const name = document.getElementById('add-name-input').value;
+  const status = document.getElementById('add-status-input').value;
+  let rate = document.getElementById('add-rate-input').value;
+  let balance = document.getElementById('add-balance-input').value;
+  let deposit = document.getElementById('add-deposit-input').value;
+  const description = document.getElementById('add-description-input').value;
+  // Remove any trailing decimal points or negative signs
+  rate = sanitizeInput(rate);
+  balance = sanitizeInput(balance);
+  deposit = sanitizeInput(deposit);
+  // Create a new Customer instance
+  const newCustomer = new Customer(id, name, status, rate, balance, deposit, description);
+  // Send a POST request to the API
+  await httpRequest(HTTP_METHODS.POST, newCustomer.toJSON());
+  closeModal(addCustomerModal);
+  // LoadCustomers();
 });
 
 //* For Edit customer modal

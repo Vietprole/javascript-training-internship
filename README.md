@@ -58,7 +58,7 @@ npm install
 - Initialize the json-server
 
 ```bash
-npx json-server data/db.json
+npm run json-server
 ```
 - Run the server in another terminal
 

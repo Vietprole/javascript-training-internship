@@ -1,157 +1,112 @@
 {
   "customers": [
     {
-      "id": "8434960a-b06b-4dc9-98b9-d6306de7cdad",
+      "id": "14526a5b-ce26-45f4-bdfe-936d1cbbc5cc",
+      "name": "John Aoe",
+      "status": "open",
+      "rate": "50.00",
+      "balance": "500.00",
+      "deposit": "67.00",
+      "description": "This is the first customer"
+    },
+    {
+      "id": "7b78f5cd-3cb8-4295-be1b-7de3a282aede",
+      "name": "John Boe",
+      "status": "paid",
+      "rate": "500.00",
+      "balance": "-78.00",
+      "deposit": "45.00",
+      "description": "This is the second customer"
+    },
+    {
+      "id": "e4165870-4543-4b20-af5e-ebd1f01d8415",
+      "name": "John Coe",
+      "status": "inactive",
+      "rate": "56.00",
+      "balance": "33.00",
+      "deposit": "43.00",
+      "description": "This is the third customer"
+    },
+    {
+      "id": "d3f2cc8a-25c1-459d-b995-d04f08430a7c",
       "name": "John Doe",
-      "status": "Open",
-      "rate": 0.05,
-      "balance": 2000,
-      "deposit": 600,
-      "description": "An updated test customer"
+      "status": "due",
+      "rate": "54.00",
+      "balance": "-999.00",
+      "deposit": "222.00",
+      "description": "This is the fourth customer"
     },
     {
-      "id": "f4d3707e-852c-4307-8186-7088444d4ba4",
-      "name": "John Boe",
-      "status": "Due",
-      "rate": 0.05,
-      "balance": 2000,
-      "deposit": 600,
-      "description": "A new test customer"
+      "id": "c7c9bebe-8c26-43ff-9bfc-cee3baa51771",
+      "name": "John Eoe",
+      "status": "paid",
+      "rate": "44.00",
+      "balance": "44.00",
+      "deposit": "55.00",
+      "description": "abc"
     },
     {
-      "id": "e2f23473-62b9-4285-9f1a-f013eba68518",
-      "name": "John Boe",
-      "status": "Due",
-      "rate": 0.05,
-      "balance": 2000,
-      "deposit": 600,
-      "description": "A new test customer"
+      "id": "bc6ef3fc-d0e0-4650-ae02-7b5dfb1da940",
+      "name": "John Foe",
+      "status": "paid",
+      "rate": "50.25",
+      "balance": "230.00",
+      "deposit": "54.00",
+      "description": "This is new customer"
     },
     {
-      "id": "428b4499-4791-4ec4-a952-5749248b08ec",
-      "name": "John Boe",
-      "status": "Due",
-      "rate": 0.05,
-      "balance": 2000,
-      "deposit": 600,
-      "description": "A new test customer"
+      "id": "fa7db33b-344d-4e05-92a6-efb7cebcc65d",
+      "name": "John Doe",
+      "status": "open",
+      "rate": "123.45",
+      "balance": "300.00",
+      "deposit": "234.00",
+      "description": "This is new custoer"
     },
     {
-      "id": "53f52b0b-5ae4-4161-8649-aafea9178c73",
-      "name": "John Boe",
-      "status": "Due",
-      "rate": 0.05,
-      "balance": 2000,
-      "deposit": 600,
-      "description": "A new test customer"
+      "id": "b1608c9c-4c4a-43fe-8753-67589a0ce5a3",
+      "name": "John Doe",
+      "status": "open",
+      "rate": "1234567.12",
+      "balance": "1234567.12",
+      "deposit": "1234567.12",
+      "description": "New customer"
     },
     {
-      "id": "1089b739-6cdf-4c98-bbaa-5bd7d6e4ad7f",
-      "name": "John Boe",
-      "status": "Due",
-      "rate": 0.05,
-      "balance": 2000,
-      "deposit": 600,
-      "description": "A new test customer"
+      "id": "909fded4-eb58-484f-b244-22fb4cf9124c",
+      "name": "John Old",
+      "status": "paid",
+      "rate": "3232332.32",
+      "balance": "-270.50",
+      "deposit": "2323232.33",
+      "description": "sddaf"
     },
     {
-      "id": "d92bf0ff-1a41-4681-8d97-5be33d7afcfa",
-      "name": "John Boe",
-      "status": "Due",
-      "rate": 0.05,
-      "balance": 2000,
-      "deposit": 600,
-      "description": "A new test customer"
+      "id": "06791179-daa3-49da-bef8-21c26e87f544",
+      "name": "df",
+      "status": "open",
+      "rate": "12.10",
+      "balance": "-212.20",
+      "deposit": "23.40",
+      "description": "2"
     },
     {
-      "id": "6ff4e8a0-a8ac-4a8b-8fec-63799b82dbb1",
-      "name": "John Boe",
-      "status": "Due",
-      "rate": 0.05,
-      "balance": 2000,
-      "deposit": 600,
-      "description": "A new test customer"
+      "id": "ba3242de-da62-4b01-903a-7eef2373fca8",
+      "name": "d",
+      "status": "open",
+      "rate": "45",
+      "balance": "-89",
+      "deposit": "67",
+      "description": "d"
     },
     {
-      "id": "86618956-149f-4b02-9c25-bdfcc5d72bb0",
-      "name": "John Boe",
-      "status": "Due",
-      "rate": 0.05,
-      "balance": 2000,
-      "deposit": 600,
-      "description": "A new test customer"
-    },
-    {
-      "id": "1c5ca8bd-85b3-4d82-93ed-16c2e6462dc6",
-      "name": "John Boe",
-      "status": "Due",
-      "rate": 0.05,
-      "balance": 2000,
-      "deposit": 600,
-      "description": "A new test customer"
-    },
-    {
-      "id": "b7aec5e7-072f-4a3b-9027-18b8a8b80291",
-      "name": "John Boe",
-      "status": "Due",
-      "rate": 0.05,
-      "balance": 2000,
-      "deposit": 600,
-      "description": "A new test customer"
-    },
-    {
-      "id": "185400ca-0a46-4988-a120-71399f5cb2eb",
-      "name": "John Boe",
-      "status": "Due",
-      "rate": 0.05,
-      "balance": 2000,
-      "deposit": 600,
-      "description": "A new test customer"
-    },
-    {
-      "id": "256122ce-6796-4408-b831-4fefc84ecab6",
-      "name": "John Boe",
-      "status": "Due",
-      "rate": 0.05,
-      "balance": 2000,
-      "deposit": 600,
-      "description": "A new test customer"
-    },
-    {
-      "id": "7a48dd1f-8cd8-4dab-b943-069ceb76bd79",
-      "name": "John Boe",
-      "status": "Due",
-      "rate": 0.05,
-      "balance": 2000,
-      "deposit": 600,
-      "description": "A new test customer"
-    },
-    {
-      "id": "a56787d2-b57c-4f24-a378-d6a06af5a41e",
-      "name": "John Boe",
-      "status": "Due",
-      "rate": 0.05,
-      "balance": 2000,
-      "deposit": 600,
-      "description": "A new test customer"
-    },
-    {
-      "id": "ff993c60-25de-4439-acec-4ff7bfd9c5ec",
-      "name": "John Boe",
-      "status": "Due",
-      "rate": 0.05,
-      "balance": 2000,
-      "deposit": 600,
-      "description": "A new test customer"
-    },
-    {
-      "id": "92bed055-8f43-448c-ae69-d47e0c0fcf0e",
-      "name": "John Boe",
-      "status": "Due",
-      "rate": 0.05,
-      "balance": 2000,
-      "deposit": 600,
-      "description": "A new test customer"
+      "id": "632f8cf2-5e6d-4b02-9afc-f043209d1a5c",
+      "name": "ssdf",
+      "status": "open",
+      "rate": "34.00",
+      "balance": "-12.10",
+      "deposit": "34.00",
+      "description": ""
     }
   ]
 }
