@@ -161,6 +161,15 @@
       "balance": "70.00",
       "deposit": "90.00",
       "description": "h"
+    },
+    {
+      "id": "5c85943f-a299-44f9-afa4-5a3e5f87cb99",
+      "name": "New",
+      "status": "paid",
+      "rate": "40.00",
+      "balance": "60.00",
+      "deposit": "50.00",
+      "description": "new"
     }
   ]
 }

@@ -138,7 +138,6 @@ function generateTableRows(customers) {
     menuImg.src = menuIcon;
     menuImg.alt = 'Menu icon';
     menuButton.appendChild(menuImg);
-    console.log(menuButton);
 
     // Append all cells to the new row
     newRow.appendChild(nameCell);
