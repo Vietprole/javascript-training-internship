@@ -23,7 +23,8 @@
   outline: 2px solid blue;
 }
 
-.search-bar input {
+.search-input {
+  width: 272px;
   border: none;
   outline: none;
   font-family: 'Inter';
@@ -33,7 +34,7 @@
   color: var(--text-default-color);
 }
 
-.search-bar input::placeholder {
+.search-input::placeholder {
   color: var(--search-placeholder-color);
 }
 
