@@ -2,7 +2,12 @@ import { v4 as uuidv4 } from 'uuid';
 import searchInterval from './constants/search';
 import { HTTP_METHODS } from './constants/api';
 import httpRequest from './utils/http-request';
-import { generateTableRows, removeAllTableRows, setRowsColor } from './templates/templates';
+import {
+  generateTableRows,
+  removeAllTableRows,
+  addNewTableRow,
+  setRowsColor,
+} from './templates/templates';
 
 import {
   hasNumbers,
@@ -40,7 +45,6 @@ export default Customer;
 
 async function loadCustomers() {
   const customers = await httpRequest(HTTP_METHODS.GET);
-  console.log(customers);
   removeAllTableRows();
   generateTableRows(customers);
   setRowsColor();
@@ -187,7 +191,7 @@ createButton.addEventListener('click', async () => {
   // Send a POST request to the API
   await httpRequest(HTTP_METHODS.POST, newCustomer.toJSON());
   closeModal(addCustomerModal);
-  loadCustomers();
+  addNewTableRow(newCustomer);
 });
 
 //* For Edit customer modal
