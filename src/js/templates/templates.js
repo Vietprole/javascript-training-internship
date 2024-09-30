@@ -1,5 +1,7 @@
 import menuIcon from '../../assets/icons/menu-icon.svg';
 
+let currentCustomerID;
+
 //* Action menu functionality
 function closeActionMenuWhenClickedOutside(event) {
   const actionMenuButtons = document.querySelectorAll('.menu-button');
@@ -16,9 +18,13 @@ function loadActionMenu() {
   const actionMenu = document.querySelector('.action-menu');
   actionMenuButtons.forEach((button) => {
     button.addEventListener('click', () => {
+      currentCustomerID = button.id;
       const { top, left } = button.getBoundingClientRect();
-      actionMenu.style.top = `${top}px`;
-      actionMenu.style.left = `${left - 100}px`;
+      // Get the current scroll position
+      const scrollTop = window.scrollY || document.documentElement.scrollTop; // scrollTop for older browsers
+      const scrollLeft = window.scrollX || document.documentElement.scrollLeft; // scrollLeft for older browsers
+      actionMenu.style.top = `${top + scrollTop}px`;
+      actionMenu.style.left = `${left + scrollLeft - 100}px`;
       actionMenu.classList.add('open');
     });
   });
@@ -144,6 +150,7 @@ function createTableRow(customer) {
   // Create a menu button
   const menuButton = document.createElement('div');
   menuButton.classList.add('menu-button', 'icon-wrapper');
+  menuButton.id = customer.id;
   const menuImg = document.createElement('img');
   menuImg.src = menuIcon;
   menuImg.alt = 'Menu icon';
@@ -179,4 +186,4 @@ function addNewTableRow(customer) {
   setRowsColor();
 }
 
-export { generateTableRows, removeAllTableRows, addNewTableRow, setRowsColor };
+export { generateTableRows, removeAllTableRows, addNewTableRow, setRowsColor, currentCustomerID };
