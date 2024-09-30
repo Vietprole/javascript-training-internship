@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import searchInterval from './constants/search';
 import { HTTP_METHODS } from './constants/api';
 import httpRequest from './utils/http-request';
 import { generateTableRows, removeAllTableRows, setRowsColor } from './templates/templates';
@@ -39,6 +40,7 @@ export default Customer;
 
 async function loadCustomers() {
   const customers = await httpRequest(HTTP_METHODS.GET);
+  console.log(customers);
   removeAllTableRows();
   generateTableRows(customers);
   setRowsColor();
@@ -220,20 +222,30 @@ function debounce(mainFunction, delay) {
   };
 }
 
-function searchCustomers() {
+async function searchCustomers() {
   const searchValue = searchInput.value.toLowerCase();
-  const tableRows = document.querySelectorAll('.table-row');
-  tableRows.forEach((row) => {
-    const currentRow = row;
-    const name = row.querySelector('.name').textContent.toLowerCase();
-    const status = row.querySelector('.status-cell').textContent.toLowerCase();
-    if (name.includes(searchValue) || status.includes(searchValue)) {
-      currentRow.style.display = '';
-    } else {
-      currentRow.style.display = 'none';
+  // Fetch customers by name
+  const nameResponse = await fetch(`http://localhost:3000/customers?name_like=${searchValue}`);
+  const nameCustomers = await nameResponse.json();
+
+  // Fetch customers by status
+  const statusResponse = await fetch(`http://localhost:3000/customers?status_like=${searchValue}`);
+  const statusCustomers = await statusResponse.json();
+
+  // Combine the results and remove duplicates
+  const customers = [...nameCustomers, ...statusCustomers].reduce((acc, customer) => {
+    if (!acc.some((item) => item.id === customer.id)) {
+      acc.push(customer);
     }
-  });
+    return acc;
+  }, []); // acc is the accumulator
+
+  // Clear existing table rows
+  removeAllTableRows();
+
+  // Populate table with filtered customers
+  generateTableRows(customers);
 }
 
 // Attach the debounce function to the search input
-searchInput.addEventListener('input', debounce(searchCustomers, 1000));
+searchInput.addEventListener('input', debounce(searchCustomers, searchInterval));
