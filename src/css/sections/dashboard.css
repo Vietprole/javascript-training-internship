@@ -23,7 +23,8 @@
   outline: 2px solid blue;
 }
 
-.search-bar input {
+.search-input {
+  width: 272px;
   border: none;
   outline: none;
   font-family: 'Inter';
@@ -33,7 +34,7 @@
   color: var(--text-default-color);
 }
 
-.search-bar input::placeholder {
+.search-input::placeholder {
   color: var(--search-placeholder-color);
 }
 
@@ -97,11 +98,11 @@
 }
 
 .odd {
-  background-color: var(--background-primary-color);
+  background-color: var(--background-secondary-color);
 }
 
 .even {
-  background-color: var(--background-secondary-color);
+  background-color: var(--background-primary-color);
 }
 
 .name-cell {
@@ -171,5 +172,9 @@
 }
 
 .menu-button {
+  cursor: pointer;
+}
+
+.sort-button {
   cursor: pointer;
 }

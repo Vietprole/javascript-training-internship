@@ -1,9 +1,26 @@
 import { v4 as uuidv4 } from 'uuid';
+import searchInterval from './constants/search';
 import { API_BASE_URL, HTTP_METHODS } from './constants/api';
 import httpRequest from './utils/http-request';
-import menuIcon from '../assets/icons/menu-icon.svg';
+import debounce from './utils/debounce';
+import sortIconDefault from '../assets/icons/sort-default-icon.svg';
+import sortIconAsc from '../assets/icons/sort-asc-icon.svg';
+import sortIconDesc from '../assets/icons/sort-desc-icon.svg';
+import {
+  generateTableRows,
+  removeAllTableRows,
+  addNewTableRow,
+  setRowsColor,
+} from './templates/templates';
 
-import { hasNumbers, enforceMaxLength, isValid, showErrorIfEmpty, sanitizeInput } from './utils/helpers';
+import {
+  hasNumbers,
+  enforceMaxLength,
+  isValid,
+  showErrorIfEmpty,
+  sanitizeInput,
+  combineAndRemoveDuplicates,
+} from './utils/helpers';
 
 class Customer {
   constructor(id, name, status, rate, balance, deposit, description) {
@@ -31,26 +48,14 @@ class Customer {
 
 export default Customer;
 
-//* Action menu functionality
-const actionMenuButtons = document.querySelectorAll('.menu-button');
-const actionMenu = document.querySelector('.action-menu');
+async function loadCustomers() {
+  const customers = await httpRequest(HTTP_METHODS.GET);
+  removeAllTableRows();
+  generateTableRows(customers);
+  setRowsColor();
+}
 
-actionMenuButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    const { top, left } = button.getBoundingClientRect();
-    actionMenu.style.top = `${top}px`;
-    actionMenu.style.left = `${left - 100}px`;
-    actionMenu.classList.add('open');
-  });
-});
-
-window.addEventListener('click', (event) => {
-  // Close the action menu if the user clicks outside of it
-  // Check if action menu's buttons is not the target to prevent closing the menu when clicking on them
-  if (!Array.from(actionMenuButtons).some((button) => button.contains(event.target))) {
-    actionMenu.classList.remove('open');
-  }
-});
+loadCustomers();
 
 //* Modal functionality
 const addButton = document.querySelector('.add-button');
@@ -191,7 +196,7 @@ createButton.addEventListener('click', async () => {
   // Send a POST request to the API
   await httpRequest(HTTP_METHODS.POST, newCustomer.toJSON());
   closeModal(addCustomerModal);
-  // LoadCustomers();
+  addNewTableRow(newCustomer);
 });
 
 //* For Edit customer modal
@@ -210,4 +215,61 @@ viewButton.addEventListener('click', () => {
 
 closeViewModalButton.addEventListener('click', () => {
   closeModal(viewCustomerModal);
+});
+
+//* Search functionality
+const searchInput = document.querySelector('.search-input');
+
+async function searchCustomers() {
+  const searchValue = searchInput.value.toLowerCase();
+  // Fetch customers by name
+  const nameCustomers = await httpRequest(
+    HTTP_METHODS.GET,
+    null,
+    `${API_BASE_URL}?name_like=${searchValue}`
+  );
+
+  // Fetch customers by status
+  const statusCustomers = await httpRequest(
+    HTTP_METHODS.GET,
+    null,
+    `${API_BASE_URL}?status_like=${searchValue}`
+  );
+
+  // Combine and remove duplicates
+  const customers = combineAndRemoveDuplicates(nameCustomers, statusCustomers);
+
+  // Clear existing table rows
+  removeAllTableRows();
+
+  // Populate table with filtered customers
+  generateTableRows(customers);
+}
+
+// Attach the debounce function to the search input
+searchInput.addEventListener('input', debounce(searchCustomers, searchInterval));
+
+//* Sort functionality
+const sortButton = document.querySelector('.sort-button');
+const sortButtonIcon = document.querySelector('.sort-button img');
+
+const sortingStates = ['default', 'asc', 'desc'];
+let currentSortingState = 0;
+
+sortButton.addEventListener('click', async () => {
+  currentSortingState = (currentSortingState + 1) % 3;
+  if (currentSortingState === 0) {
+    sortButtonIcon.src = sortIconDefault;
+    loadCustomers();
+  } else {
+    sortButtonIcon.src = currentSortingState === 1 ? sortIconAsc : sortIconDesc;
+    const customers = await httpRequest(
+      HTTP_METHODS.GET,
+      null,
+      `${API_BASE_URL}?_sort=name&_order=${sortingStates[currentSortingState]}`
+    );
+    removeAllTableRows();
+    generateTableRows(customers);
+    setRowsColor();
+  }
 });

@@ -45,4 +45,21 @@ function showErrorIfEmpty(event) {
   }
 }
 
-export { hasNumbers, enforceMaxLength, isValid, sanitizeInput, showErrorIfEmpty };
+// Function to combine the results and remove duplicates
+function combineAndRemoveDuplicates(firstArray, secondArray) {
+  return [...firstArray, ...secondArray].reduce((acc, item) => {
+    if (!acc.some((accItem) => accItem.id === item.id)) {
+      acc.push(item);
+    }
+    return acc;
+  }, []); // acc is the accumulator
+}
+
+export {
+  hasNumbers,
+  enforceMaxLength,
+  isValid,
+  sanitizeInput,
+  showErrorIfEmpty,
+  combineAndRemoveDuplicates,
+};
