@@ -3,6 +3,9 @@ import searchInterval from './constants/search';
 import { API_BASE_URL, HTTP_METHODS } from './constants/api';
 import httpRequest from './utils/http-request';
 import debounce from './utils/debounce';
+import sortIconDefault from '../assets/icons/sort-default-icon.svg';
+import sortIconAsc from '../assets/icons/sort-asc-icon.svg';
+import sortIconDesc from '../assets/icons/sort-desc-icon.svg';
 import {
   generateTableRows,
   removeAllTableRows,
@@ -220,11 +223,19 @@ const searchInput = document.querySelector('.search-input');
 async function searchCustomers() {
   const searchValue = searchInput.value.toLowerCase();
   // Fetch customers by name
-  const nameResponse = await fetch(`${API_BASE_URL}?name_like=${searchValue}`);
+  const nameResponse = await httpRequest(
+    HTTP_METHODS.GET,
+    null,
+    `${API_BASE_URL}?name_like=${searchValue}`
+  );
   const nameCustomers = await nameResponse.json();
 
   // Fetch customers by status
-  const statusResponse = await fetch(`${API_BASE_URL}?status_like=${searchValue}`);
+  const statusResponse = await httpRequest(
+    HTTP_METHODS.GET,
+    null,
+    `${API_BASE_URL}?status_like=${searchValue}`
+  );
   const statusCustomers = await statusResponse.json();
 
   // Combine and remove duplicates
@@ -242,3 +253,25 @@ searchInput.addEventListener('input', debounce(searchCustomers, searchInterval))
 
 //* Sort functionality
 const sortButton = document.querySelector('.sort-button');
+const sortButtonIcon = document.querySelector('.sort-button img');
+
+const sortingStates = ['default', 'asc', 'desc'];
+let currentSortingState = 0;
+
+sortButton.addEventListener('click', async () => {
+  currentSortingState = (currentSortingState + 1) % 3;
+  if (currentSortingState === 0) {
+    sortButtonIcon.src = sortIconDefault;
+    loadCustomers();
+  } else {
+    sortButtonIcon.src = currentSortingState === 1 ? sortIconAsc : sortIconDesc;
+    const customers = await httpRequest(
+      HTTP_METHODS.GET,
+      null,
+      `${API_BASE_URL}?_sort=name&_order=${sortingStates[currentSortingState]}`
+    );
+    removeAllTableRows();
+    generateTableRows(customers);
+    setRowsColor();
+  }
+});
