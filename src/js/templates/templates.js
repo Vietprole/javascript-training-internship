@@ -160,8 +160,8 @@ function generateTableRows(customers) {
     newRow.appendChild(depositCell);
     newRow.appendChild(menuButton);
 
-    const tableHeader = document.querySelector('.table-header');
-    tableHeader.insertAdjacentElement('afterend', newRow);
+    const tableBody = document.querySelector('.table-body');
+    tableBody.appendChild(newRow);
   });
   window.removeEventListener('click', closeActionMenuWhenClickedOutside);
   loadActionMenu();
