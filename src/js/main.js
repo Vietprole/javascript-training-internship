@@ -223,20 +223,18 @@ const searchInput = document.querySelector('.search-input');
 async function searchCustomers() {
   const searchValue = searchInput.value.toLowerCase();
   // Fetch customers by name
-  const nameResponse = await httpRequest(
+  const nameCustomers = await httpRequest(
     HTTP_METHODS.GET,
     null,
     `${API_BASE_URL}?name_like=${searchValue}`
   );
-  const nameCustomers = await nameResponse.json();
 
   // Fetch customers by status
-  const statusResponse = await httpRequest(
+  const statusCustomers = await httpRequest(
     HTTP_METHODS.GET,
     null,
     `${API_BASE_URL}?status_like=${searchValue}`
   );
-  const statusCustomers = await statusResponse.json();
 
   // Combine and remove duplicates
   const customers = combineAndRemoveDuplicates(nameCustomers, statusCustomers);
