@@ -32,6 +32,18 @@ function removeAllTableRows() {
   tableRows.forEach((row) => row.remove());
 }
 
+// Function to set color of row based on their odd or even index
+function setRowsColor() {
+  const tableRows = document.querySelectorAll('.table-row');
+  tableRows.forEach((row, index) => {
+    if (index % 2 === 0) {
+      row.classList.add('even');
+    } else {
+      row.classList.add('odd');
+    }
+  });
+}
+
 //* Get customers to view on Dashboard
 function generateTableRows(customers) {
   customers.forEach((customer) => {
@@ -155,4 +167,4 @@ function generateTableRows(customers) {
   loadActionMenu();
 }
 
-export { generateTableRows, removeAllTableRows };
+export { generateTableRows, removeAllTableRows, setRowsColor };

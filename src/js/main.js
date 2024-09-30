@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { HTTP_METHODS } from './constants/api';
 import httpRequest from './utils/http-request';
-import { generateTableRows, removeAllTableRows } from './templates/templates';
+import { generateTableRows, removeAllTableRows, setRowsColor } from './templates/templates';
 
 import {
   hasNumbers,
@@ -41,6 +41,7 @@ async function loadCustomers() {
   const customers = await httpRequest(HTTP_METHODS.GET);
   removeAllTableRows();
   generateTableRows(customers);
+  setRowsColor();
 }
 
 loadCustomers();

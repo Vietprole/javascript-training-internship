@@ -98,11 +98,11 @@
 }
 
 .odd {
-  background-color: var(--background-primary-color);
+  background-color: var(--background-secondary-color);
 }
 
 .even {
-  background-color: var(--background-secondary-color);
+  background-color: var(--background-primary-color);
 }
 
 .name-cell {
