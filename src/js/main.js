@@ -253,3 +253,6 @@ async function searchCustomers() {
 
 // Attach the debounce function to the search input
 searchInput.addEventListener('input', debounce(searchCustomers, searchInterval));
+
+//* Sort functionality
+const sortButton = document.querySelector('.sort-button');
