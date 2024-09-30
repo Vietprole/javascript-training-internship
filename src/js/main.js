@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import searchInterval from './constants/search';
 import { API_BASE_URL, HTTP_METHODS } from './constants/api';
 import httpRequest from './utils/http-request';
+import debounce from './utils/debounce';
 import {
   generateTableRows,
   removeAllTableRows,
@@ -15,6 +16,7 @@ import {
   isValid,
   showErrorIfEmpty,
   sanitizeInput,
+  combineAndRemoveDuplicates,
 } from './utils/helpers';
 
 class Customer {
@@ -215,17 +217,6 @@ closeViewModalButton.addEventListener('click', () => {
 //* Search functionality
 const searchInput = document.querySelector('.search-input');
 
-// debounce function to reset timeout when the mainFunction is called again
-function debounce(mainFunction, delay) {
-  let timeoutId;
-  return function (...args) {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => {
-      mainFunction(...args);
-    }, delay);
-  };
-}
-
 async function searchCustomers() {
   const searchValue = searchInput.value.toLowerCase();
   // Fetch customers by name
@@ -236,13 +227,8 @@ async function searchCustomers() {
   const statusResponse = await fetch(`${API_BASE_URL}?status_like=${searchValue}`);
   const statusCustomers = await statusResponse.json();
 
-  // Combine the results and remove duplicates
-  const customers = [...nameCustomers, ...statusCustomers].reduce((acc, customer) => {
-    if (!acc.some((item) => item.id === customer.id)) {
-      acc.push(customer);
-    }
-    return acc;
-  }, []); // acc is the accumulator
+  // Combine and remove duplicates
+  const customers = combineAndRemoveDuplicates(nameCustomers, statusCustomers);
 
   // Clear existing table rows
   removeAllTableRows();
