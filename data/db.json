@@ -3,11 +3,11 @@
     {
       "id": "14526a5b-ce26-45f4-bdfe-936d1cbbc5cc",
       "name": "John Aoe",
-      "status": "open",
-      "rate": "50.00",
-      "balance": "500.00",
-      "deposit": "67.00",
-      "description": "This is the first customer"
+      "status": "due",
+      "rate": "50.25",
+      "balance": "-500.80",
+      "deposit": "67.35",
+      "description": "This is the first customer, edited"
     },
     {
       "id": "7b78f5cd-3cb8-4295-be1b-7de3a282aede",
@@ -75,11 +75,11 @@
     {
       "id": "909fded4-eb58-484f-b244-22fb4cf9124c",
       "name": "John Old",
-      "status": "paid",
-      "rate": "3232332.32",
-      "balance": "-270.50",
-      "deposit": "2323232.33",
-      "description": "abcde"
+      "status": "inactive",
+      "rate": "3500.30",
+      "balance": "270.00",
+      "deposit": "2300.30",
+      "description": "abcdedit"
     },
     {
       "id": "4d44e5ed-0d72-43b0-9534-d1524f9d8a7b",
@@ -92,12 +92,12 @@
     },
     {
       "id": "2ba9a319-02f9-47c4-a889-d4581c287c7c",
-      "name": "Anaa",
-      "status": "paid",
-      "rate": "500.30",
-      "balance": "-370.00",
-      "deposit": "350.00",
-      "description": "New"
+      "name": "Alpha",
+      "status": "open",
+      "rate": "350.00",
+      "balance": "-1000.00",
+      "deposit": "0.00",
+      "description": "Edited from Anaa"
     },
     {
       "id": "27877cce-008e-41f0-8e84-de57333c6ea2",
