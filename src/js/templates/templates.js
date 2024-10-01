@@ -1,4 +1,5 @@
 import menuIcon from '../../assets/icons/menu-icon.svg';
+import { getActionMenuPosition } from '../utils/helpers';
 
 let currentCustomerID;
 
@@ -19,12 +20,9 @@ function loadActionMenu() {
   actionMenuButtons.forEach((button) => {
     button.addEventListener('click', () => {
       currentCustomerID = button.id;
-      const { top, left } = button.getBoundingClientRect();
-      // Get the current scroll position
-      const scrollTop = window.scrollY || document.documentElement.scrollTop; // scrollTop for older browsers
-      const scrollLeft = window.scrollX || document.documentElement.scrollLeft; // scrollLeft for older browsers
-      actionMenu.style.top = `${top + scrollTop}px`;
-      actionMenu.style.left = `${left + scrollLeft - 100}px`;
+      const { top, left } = getActionMenuPosition(button);
+      actionMenu.style.top = top;
+      actionMenu.style.left = left;
       actionMenu.classList.add('open');
     });
   });
