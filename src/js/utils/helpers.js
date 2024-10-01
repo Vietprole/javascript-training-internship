@@ -55,6 +55,14 @@ function combineAndRemoveDuplicates(firstArray, secondArray) {
   }, []); // acc is the accumulator
 }
 
+// Get action menu position
+function getActionMenuPosition(button) {
+  const { top, left } = button.getBoundingClientRect();
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
+  return { top: `${top + scrollTop}px`, left: `${left + scrollLeft - 100}px` };
+}
+
 export {
   hasNumbers,
   enforceMaxLength,
@@ -62,4 +70,5 @@ export {
   sanitizeInput,
   showErrorIfEmpty,
   combineAndRemoveDuplicates,
+  getActionMenuPosition,
 };

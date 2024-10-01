@@ -1,4 +1,7 @@
 import menuIcon from '../../assets/icons/menu-icon.svg';
+import { getActionMenuPosition } from '../utils/helpers';
+
+let currentCustomerID;
 
 //* Action menu functionality
 function closeActionMenuWhenClickedOutside(event) {
@@ -16,9 +19,10 @@ function loadActionMenu() {
   const actionMenu = document.querySelector('.action-menu');
   actionMenuButtons.forEach((button) => {
     button.addEventListener('click', () => {
-      const { top, left } = button.getBoundingClientRect();
-      actionMenu.style.top = `${top}px`;
-      actionMenu.style.left = `${left - 100}px`;
+      currentCustomerID = button.id;
+      const { top, left } = getActionMenuPosition(button);
+      actionMenu.style.top = top;
+      actionMenu.style.left = left;
       actionMenu.classList.add('open');
     });
   });
@@ -144,6 +148,7 @@ function createTableRow(customer) {
   // Create a menu button
   const menuButton = document.createElement('div');
   menuButton.classList.add('menu-button', 'icon-wrapper');
+  menuButton.id = customer.id;
   const menuImg = document.createElement('img');
   menuImg.src = menuIcon;
   menuImg.alt = 'Menu icon';
@@ -179,4 +184,4 @@ function addNewTableRow(customer) {
   setRowsColor();
 }
 
-export { generateTableRows, removeAllTableRows, addNewTableRow, setRowsColor };
+export { generateTableRows, removeAllTableRows, addNewTableRow, setRowsColor, currentCustomerID };

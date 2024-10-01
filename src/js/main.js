@@ -11,7 +11,10 @@ import {
   removeAllTableRows,
   addNewTableRow,
   setRowsColor,
-} from './templates/templates';
+  currentCustomerID,
+} from './templates/dashboard';
+
+import fillViewModal from './templates/view-modal';
 
 import {
   hasNumbers,
@@ -100,6 +103,13 @@ function closeModal(modal) {
   textareas.forEach((textarea) => {
     const temp = textarea;
     temp.value = '';
+  });
+
+  // Reset all content for view modal
+  const contentFields = document.querySelectorAll('[id$="-content"]');
+  contentFields.forEach((field) => {
+    const temp = field;
+    temp.textContent = '';
   });
 
   modalOverlay.classList.remove('open'); // Hide the overlay
@@ -209,9 +219,17 @@ closeEditModalButton.addEventListener('click', () => {
 });
 
 //* For View customer modal
-viewButton.addEventListener('click', () => {
+async function viewCustomer() {
+  const customer = await httpRequest(
+    HTTP_METHODS.GET,
+    null,
+    `${API_BASE_URL}/${currentCustomerID}`
+  );
+  fillViewModal(customer);
   openModal(viewCustomerModal);
-});
+}
+
+viewButton.addEventListener('click', viewCustomer);
 
 closeViewModalButton.addEventListener('click', () => {
   closeModal(viewCustomerModal);
