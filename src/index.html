@@ -61,21 +61,21 @@
     </div>
     <!--* Modal Overlay -->
     <div class="modal-overlay"></div>
-    <!--* Add Customer Modal -->
-    <div class="modal add-customer-modal">
+    <!--* Customer Modal -->
+    <div class="modal customer-modal">
       <h2>Add Customer</h2>
       <hr />
       <form class="modal-form" action="">
         <div class="name-field">
-          <label class="label" for="add-name-input">Name</label>
+          <label class="label" for="name-input">Name</label>
           <div class="input-wrapper">
-            <input type="text" id="add-name-input" required/>
+            <input type="text" id="name-input" required/>
           </div>
           <div class="error-message"></div>
         </div>
         <div class="status-field">
-          <label class="label" for="add-status-input">Status</label>
-          <select name="add-status-input" id="add-status-input">
+          <label class="label" for="status-input">Status</label>
+          <select name="status-input" id="status-input">
             <option value="open">Open</option>
             <option value="paid">Paid</option>
             <option value="inactive">Inactive</option>
@@ -83,91 +83,36 @@
           </select>
         </div>
         <div class="rate-field">
-          <label class="label" for="add-rate-input">Rate</label>
+          <label class="label" for="rate-input">Rate</label>
           <div class="input-wrapper">
             <span>$</span>
-            <input type="text" id="add-rate-input" required/>
+            <input type="text" id="rate-input" required/>
           </div>
           <div class="error-message"></div>
         </div>
         <div class="balance-field">
-          <label class="label" for="add-balance-input">Balance</label>
+          <label class="label" for="balance-input">Balance</label>
           <div class="input-wrapper">
             <span>$</span>
-            <input type="text" id="add-balance-input" required/>
+            <input type="text" id="balance-input" required/>
           </div>
           <div class="error-message"></div>
         </div>
         <div class="deposit-field">
-          <label class="label" for="add-deposit-input">Deposit</label>
+          <label class="label" for="deposit-input">Deposit</label>
           <div class="input-wrapper">
             <span>$</span>
-            <input type="text" id="add-deposit-input" required/>
+            <input type="text" id="deposit-input" required/>
           </div>
           <div class="error-message"></div>
         </div>
         <div class="description-field">
-          <label class="label" for="add-description-input">Description</label>
-          <textarea id="add-description-input"></textarea>
+          <label class="label" for="description-input">Description</label>
+          <textarea id="description-input"></textarea>
         </div>
       </form>
       <div class="button-group">
-        <button class="button-primary create-button" disabled>Create</button>
-        <button class="button-secondary close-button">Close</button>
-      </div>
-    </div>
-    <!--* Edit Customer Modal -->
-    <div class="modal edit-customer-modal">
-      <h2>Edit Customer</h2>
-      <hr />
-      <form class="modal-form" action="">
-        <div class="name-field">
-          <label class="label" for="edit-name-input">Name</label>
-          <div class="input-wrapper">
-            <input type="text" id="edit-name-input" required/>
-          </div>
-          <div class="error-message"></div>
-        </div>
-        <div class="status-field">
-          <label class="label" for="edit-status-input">Status</label>
-          <select name="edit-status-input" id="edit-status-input">
-            <option value="open">Open</option>
-            <option value="paid">Paid</option>
-            <option value="inactive">Inactive</option>
-            <option value="due">Due</option>
-          </select>
-        </div>
-        <div class="rate-field">
-          <label class="label" for="edit-rate-input">Rate</label>
-          <div class="input-wrapper">
-            <span>$</span>
-            <input type="text" id="edit-rate-input" required/>
-          </div>
-          <div class="error-message"></div>
-        </div>
-        <div class="balance-field">
-          <label class="label" for="edit-balance-input">Balance</label>
-          <div class="input-wrapper">
-            <span>$</span>
-            <input type="text" id="edit-balance-input" required/>
-          </div>
-          <div class="error-message"></div>
-        </div>
-        <div class="deposit-field">
-          <label class="label" for="edit-deposit-input">Deposit</label>
-          <div class="input-wrapper">
-            <span>$</span>
-            <input type="text" id="edit-deposit-input" required/>
-          </div>
-          <div class="error-message"></div>
-        </div>
-        <div class="description-field">
-          <label class="label" for="edit-description-input">Description</label>
-          <textarea id="edit-description-input"></textarea>
-        </div>
-      </form>
-      <div class="button-group">
-        <button class="button-primary save-button" disabled>Save</button>
+        <button class="button-primary confirm-button" disabled>Create</button>
         <button class="button-secondary close-button">Close</button>
       </div>
     </div>

@@ -2,12 +2,12 @@
   "customers": [
     {
       "id": "14526a5b-ce26-45f4-bdfe-936d1cbbc5cc",
-      "name": "John Aoe",
+      "name": "John Aoe edited",
       "status": "due",
-      "rate": "50.25",
-      "balance": "-500.80",
-      "deposit": "67.35",
-      "description": "This is the first customer, edited"
+      "rate": "56.55",
+      "balance": "701.00",
+      "deposit": "78.99",
+      "description": "This is the first customer, editedx2"
     },
     {
       "id": "7b78f5cd-3cb8-4295-be1b-7de3a282aede",
@@ -179,6 +179,33 @@
       "balance": "44.00",
       "deposit": "33.00",
       "description": ""
+    },
+    {
+      "id": "9a0b35ef-315c-4fde-a7f3-160f3ef9bdc6",
+      "name": "This is an experiment",
+      "status": "due",
+      "rate": "56.78",
+      "balance": "45.00",
+      "deposit": "12.34",
+      "description": "Test add"
+    },
+    {
+      "id": "6ca97777-ea01-4734-8126-8739336320c1",
+      "name": "Newest cus",
+      "status": "inactive",
+      "rate": "55.00",
+      "balance": "58.00",
+      "deposit": "5.56",
+      "description": "newest"
+    },
+    {
+      "id": "fb791b6b-1699-420a-93d9-f5ddb0fb3c76",
+      "name": "Added then Edited",
+      "status": "open",
+      "rate": "50.00",
+      "balance": "-700.00",
+      "deposit": "60.00",
+      "description": "This is after add+edited"
     }
   ]
 }
