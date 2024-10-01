@@ -11,9 +11,10 @@ import {
   removeAllTableRows,
   addNewTableRow,
   setRowsColor,
-  fillViewModal,
   currentCustomerID,
-} from './templates/templates';
+} from './templates/dashboard';
+
+import fillViewModal from './templates/view-modal';
 
 import {
   hasNumbers,
