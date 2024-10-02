@@ -159,3 +159,16 @@
   font-size: var(--body-size-md);
   line-height: 20px;
 }
+
+.delete-confirmation-modal{
+  width: 395px;
+  height: 236px;
+}
+
+.delete-confirmation-modal p {
+  font-weight: var(--font-weight-regular);
+  font-size: var(--body-size-md);
+  color: var(--text-default-color);
+  line-height: 17px;
+  margin-bottom: 45px;
+}

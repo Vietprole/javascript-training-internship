@@ -55,33 +55,6 @@
       "description": "This is new customer"
     },
     {
-      "id": "fa7db33b-344d-4e05-92a6-efb7cebcc65d",
-      "name": "John Doe",
-      "status": "open",
-      "rate": "123.45",
-      "balance": "300.00",
-      "deposit": "234.00",
-      "description": "This is new custoer"
-    },
-    {
-      "id": "b1608c9c-4c4a-43fe-8753-67589a0ce5a3",
-      "name": "John Doe",
-      "status": "open",
-      "rate": "1234567.12",
-      "balance": "1234567.12",
-      "deposit": "1234567.12",
-      "description": "New customer"
-    },
-    {
-      "id": "909fded4-eb58-484f-b244-22fb4cf9124c",
-      "name": "John Old",
-      "status": "inactive",
-      "rate": "3500.30",
-      "balance": "270.00",
-      "deposit": "2300.30",
-      "description": "abcdedit"
-    },
-    {
       "id": "2ba9a319-02f9-47c4-a889-d4581c287c7c",
       "name": "Alpha",
       "status": "open",

@@ -349,8 +349,16 @@ sortButton.addEventListener('click', async () => {
 
 //* Delete functionality
 const deleteButton = document.querySelector('.delete-button');
+const deleteConfirmationModal = document.querySelector('.delete-confirmation-modal');
+const deleteConfirmButton = document.querySelector('.delete-confirmation-modal .confirm-button');
+const deleteCloseButton = document.querySelector('.delete-confirmation-modal .close-button');
+
 function removeCustomer() {
   httpRequest(HTTP_METHODS.DELETE, null, `${API_BASE_URL}/${currentCustomerID}`);
   removeTableRow(currentCustomerID);
+  closeModal(deleteConfirmationModal);
 }
-deleteButton.addEventListener('click', removeCustomer);
+
+deleteButton.addEventListener('click', () => openModal(deleteConfirmationModal));
+deleteCloseButton.addEventListener('click', () => closeModal(deleteConfirmationModal));
+deleteConfirmButton.addEventListener('click', removeCustomer);
