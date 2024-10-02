@@ -74,12 +74,11 @@ const modalOverlay = document.querySelector('.modal-overlay');
 
 //* Open and close modal functions
 function openModal(modal, isAddMode = false) {
+  const heading = customerModal.querySelector('h2');
   if (isAddMode) {
-    const heading = customerModal.querySelector('h2');
     heading.textContent = 'Add Customer';
     confirmButton.textContent = 'Create';
   } else {
-    const heading = customerModal.querySelector('h2');
     heading.textContent = 'Edit Customer';
     confirmButton.textContent = 'Save';
   }
@@ -234,10 +233,10 @@ closeCustomerModalButton.addEventListener('click', () => {
 confirmButton.addEventListener('click', async () => {
   const name = nameInput.value;
   const status = statusInput.value;
+  const description = descriptionInput.value;
   let rate = rateInput.value;
   let balance = balanceInput.value;
   let deposit = depositInput.value;
-  const description = descriptionInput.value;
   // Remove any trailing decimal points or negative signs
   rate = sanitizeInput(rate);
   balance = sanitizeInput(balance);
