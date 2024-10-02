@@ -147,8 +147,6 @@ function addEventListenersForModalButtons() {
       case depositInput:
         previousDepositValue = event.target.value;
         break;
-      default:
-        break;
     }
   }
 
@@ -176,8 +174,6 @@ function addEventListenersForModalButtons() {
         if (event.target.value && !isValid(event.target.value)) {
           event.target.value = previousDepositValue;
         }
-        break;
-      default:
         break;
     }
   }
