@@ -36,6 +36,13 @@ function removeAllTableRows() {
   tableRows.forEach((row) => row.remove());
 }
 
+// Function to remove a table-row div element
+function removeTableRow(customerID) {
+  const menuButton = document.getElementById(customerID);
+  const tableRow = menuButton.closest('.table-row');
+  tableRow.remove();
+}
+
 // Function to set color of row based on their odd or even index
 function setRowsColor() {
   const tableRows = document.querySelectorAll('.table-row');
@@ -186,4 +193,11 @@ function addNewTableRow(customer) {
   setRowsColor();
 }
 
-export { generateTableRows, removeAllTableRows, addNewTableRow, setRowsColor, currentCustomerID };
+export {
+  generateTableRows,
+  removeAllTableRows,
+  removeTableRow,
+  addNewTableRow,
+  setRowsColor,
+  currentCustomerID,
+};

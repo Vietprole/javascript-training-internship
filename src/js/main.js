@@ -12,10 +12,12 @@ import {
   addNewTableRow,
   setRowsColor,
   currentCustomerID,
+  removeTableRow,
 } from './templates/dashboard';
 
 import fillViewModal from './templates/view-modal';
 import createCustomerModal from './templates/customer-modal';
+import createDeleteConfirmationModal from './templates/delete-confimation-modal';
 
 import {
   hasNumbers,
@@ -78,7 +80,10 @@ function openModal(modal) {
 
 function closeModal(modal) {
   const modalElement = modal;
-  if (modalElement.classList.contains('customer-modal')) {
+  if (
+    modalElement.classList.contains('customer-modal') ||
+    modalElement.classList.contains('delete-confirmation-modal')
+  ) {
     modalElement.classList.remove('open'); // Hide the modal
     while (modalElement.firstChild) {
       modalElement.removeChild(modalElement.firstChild);
@@ -345,3 +350,29 @@ sortButton.addEventListener('click', async () => {
     setRowsColor();
   }
 });
+
+//* Delete functionality
+const deleteButton = document.querySelector('.delete-button');
+
+function closeDeleteConfirmationModal() {
+  const deleteConfirmationModal = document.querySelector('.delete-confirmation-modal');
+  closeModal(deleteConfirmationModal);
+}
+
+function removeCustomer() {
+  httpRequest(HTTP_METHODS.DELETE, null, `${API_BASE_URL}/${currentCustomerID}`);
+  removeTableRow(currentCustomerID);
+  closeDeleteConfirmationModal();
+}
+
+function createAndOpenDeleteConfirmationModal() {
+  createDeleteConfirmationModal();
+  const deleteConfirmationModal = document.querySelector('.delete-confirmation-modal');
+  const deleteConfirmButton = document.querySelector('.delete-confirmation-modal .confirm-button');
+  const deleteCloseButton = document.querySelector('.delete-confirmation-modal .close-button');
+  deleteCloseButton.addEventListener('click', closeDeleteConfirmationModal);
+  deleteConfirmButton.addEventListener('click', removeCustomer);
+  openModal(deleteConfirmationModal);
+}
+
+deleteButton.addEventListener('click', createAndOpenDeleteConfirmationModal);
