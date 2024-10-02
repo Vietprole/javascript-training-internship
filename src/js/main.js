@@ -138,60 +138,71 @@ function addEventListenersForModalButtons() {
   let previousBalanceValue = '';
   let previousDepositValue = '';
 
+  function setPreviousValue(event) {
+    if (event.target === nameInput) {
+      previousNameValue = event.target.value;
+    } else if (event.target === rateInput) {
+      previousRateValue = event.target.value;
+    } else if (event.target === balanceInput) {
+      previousBalanceValue = event.target.value;
+    } else if (event.target === depositInput) {
+      previousDepositValue = event.target.value;
+    }
+  }
+
+  function validateAndRevertInput(event) {
+    if (event.target === nameInput) {
+      if (event.target.value && hasNumbers(event.target.value)) {
+        event.target.value = previousNameValue;
+      }
+    } else if (event.target === rateInput) {
+      if (event.target.value && !isValid(event.target.value)) {
+        event.target.value = previousRateValue;
+      }
+    } else if (event.target === balanceInput) {
+      // Allow negative numbers
+      const regex = /^(-\d{0,7}(\.\d{0,2})?|\d{1,7}(\.\d{0,2})?)$/;
+      if (event.target.value && !regex.test(event.target.value)) {
+        event.target.value = previousBalanceValue;
+      }
+    } else if (event.target === depositInput) {
+      if (event.target.value && !isValid(event.target.value)) {
+        event.target.value = previousDepositValue;
+      }
+    }
+  }
   nameInput.addEventListener('input', enforceMaxLength);
   nameInput.addEventListener('input', checkFormValidity);
   nameInput.addEventListener('blur', showErrorIfEmpty);
 
-  nameInput.addEventListener('keydown', function () {
-    previousNameValue = this.value;
-  });
+  nameInput.addEventListener('keydown', (event) =>
+    setPreviousValue(event, { value: previousNameValue })
+  );
 
-  nameInput.addEventListener('input', function () {
-    if (this.value && hasNumbers(this.value)) {
-      this.value = previousNameValue;
-    }
-  });
+  nameInput.addEventListener('input', (event) =>
+    validateAndRevertInput(event, { value: previousNameValue })
+  );
 
   rateInput.addEventListener('input', checkFormValidity);
   rateInput.addEventListener('blur', showErrorIfEmpty);
 
-  rateInput.addEventListener('keydown', function () {
-    previousRateValue = this.value;
-  });
+  rateInput.addEventListener('keydown', (event) => setPreviousValue(event));
 
-  rateInput.addEventListener('input', function () {
-    if (this.value && !isValid(this.value)) {
-      this.value = previousRateValue;
-    }
-  });
+  rateInput.addEventListener('input', (event) => validateAndRevertInput(event));
 
   balanceInput.addEventListener('input', checkFormValidity);
   balanceInput.addEventListener('blur', showErrorIfEmpty);
 
-  balanceInput.addEventListener('keydown', function () {
-    previousBalanceValue = this.value;
-  });
+  balanceInput.addEventListener('keydown', (event) => setPreviousValue(event));
 
-  balanceInput.addEventListener('input', function () {
-    // Allow negative numbers
-    const regex = /^(-\d{0,7}(\.\d{0,2})?|\d{1,7}(\.\d{0,2})?)$/;
-    if (this.value && !regex.test(this.value)) {
-      this.value = previousBalanceValue;
-    }
-  });
+  balanceInput.addEventListener('input', (event) => validateAndRevertInput(event));
 
   depositInput.addEventListener('input', checkFormValidity);
   depositInput.addEventListener('blur', showErrorIfEmpty);
 
-  depositInput.addEventListener('keydown', function () {
-    previousDepositValue = this.value;
-  });
+  depositInput.addEventListener('keydown', (event) => setPreviousValue(event));
 
-  depositInput.addEventListener('input', function () {
-    if (this.value && !isValid(this.value)) {
-      this.value = previousDepositValue;
-    }
-  });
+  depositInput.addEventListener('input', (event) => validateAndRevertInput(event));
 
   // Add a new customer with create button
   confirmButton.addEventListener('click', async () => {
