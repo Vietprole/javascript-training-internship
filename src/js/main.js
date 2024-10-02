@@ -219,7 +219,6 @@ async function fillEditModal() {
   balanceInput.value = customer.balance;
   depositInput.value = customer.deposit;
   descriptionInput.value = customer.description;
-
   openModal(customerModal, isAddMode);
 }
 
