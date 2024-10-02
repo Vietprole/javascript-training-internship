@@ -82,15 +82,6 @@
       "description": "abcdedit"
     },
     {
-      "id": "4d44e5ed-0d72-43b0-9534-d1524f9d8a7b",
-      "name": "sd",
-      "status": "open",
-      "rate": "12.00",
-      "balance": "0.00",
-      "deposit": "12.10",
-      "description": "a"
-    },
-    {
       "id": "2ba9a319-02f9-47c4-a889-d4581c287c7c",
       "name": "Alpha",
       "status": "open",
@@ -163,15 +154,6 @@
       "description": "h"
     },
     {
-      "id": "5c85943f-a299-44f9-afa4-5a3e5f87cb99",
-      "name": "New",
-      "status": "paid",
-      "rate": "40.00",
-      "balance": "60.00",
-      "deposit": "50.00",
-      "description": "new"
-    },
-    {
       "id": "9a0b35ef-315c-4fde-a7f3-160f3ef9bdc6",
       "name": "This is an experiment",
       "status": "due",
@@ -181,42 +163,6 @@
       "description": "Test add"
     },
     {
-      "id": "6ca97777-ea01-4734-8126-8739336320c1",
-      "name": "Newest cus",
-      "status": "inactive",
-      "rate": "55.00",
-      "balance": "58.00",
-      "deposit": "5.56",
-      "description": "newest"
-    },
-    {
-      "id": "fb791b6b-1699-420a-93d9-f5ddb0fb3c76",
-      "name": "Added then Edited",
-      "status": "open",
-      "rate": "50.00",
-      "balance": "-700.00",
-      "deposit": "60.00",
-      "description": "This is after add+edited"
-    },
-    {
-      "id": "cdbb3cd4-bee1-4a0f-9e38-c78b5bf26ea9",
-      "name": "John new",
-      "status": "due",
-      "rate": "44.00",
-      "balance": "44.00",
-      "deposit": "44.00",
-      "description": "new John edited"
-    },
-    {
-      "id": "c3ba5b45-600a-429d-ac8c-08fe9cd01b92",
-      "name": "John the Newest",
-      "status": "due",
-      "rate": "123.50",
-      "balance": "1234567.12",
-      "deposit": "500.00",
-      "description": "The newest John, edited"
-    },
-    {
       "id": "173a91ff-88ac-438c-ae1e-43b83a698f15",
       "name": "Viet Le",
       "status": "due",
@@ -224,15 +170,6 @@
       "balance": "123.00",
       "deposit": "500.00",
       "description": "New New Edited"
-    },
-    {
-      "id": "faf63fec-1c9b-4435-8edc-43bc55636762",
-      "name": "New Viet Le",
-      "status": "due",
-      "rate": "2.01",
-      "balance": "2344444.12",
-      "deposit": "111.00",
-      "description": "New "
     },
     {
       "id": "afd688d9-4d97-45e5-b6a3-15fe4d336721",

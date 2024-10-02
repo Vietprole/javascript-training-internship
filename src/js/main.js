@@ -12,6 +12,7 @@ import {
   addNewTableRow,
   setRowsColor,
   currentCustomerID,
+  removeTableRow,
 } from './templates/dashboard';
 
 import fillViewModal from './templates/view-modal';
@@ -345,3 +346,11 @@ sortButton.addEventListener('click', async () => {
     setRowsColor();
   }
 });
+
+//* Delete functionality
+const deleteButton = document.querySelector('.delete-button');
+function removeCustomer() {
+  httpRequest(HTTP_METHODS.DELETE, null, `${API_BASE_URL}/${currentCustomerID}`);
+  removeTableRow(currentCustomerID);
+}
+deleteButton.addEventListener('click', removeCustomer);
