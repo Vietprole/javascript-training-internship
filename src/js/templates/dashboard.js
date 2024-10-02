@@ -181,6 +181,8 @@ function addNewTableRow(customer) {
   const newRow = createTableRow(customer);
   const tableBody = document.querySelector('.table-body');
   tableBody.appendChild(newRow);
+  window.removeEventListener('click', closeActionMenuWhenClickedOutside);
+  loadActionMenu();
   setRowsColor();
 }
 
