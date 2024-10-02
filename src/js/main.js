@@ -15,6 +15,7 @@ import {
 } from './templates/dashboard';
 
 import fillViewModal from './templates/view-modal';
+import createCustomerModal from './templates/customer-modal';
 
 import {
   hasNumbers,
@@ -64,25 +65,16 @@ loadCustomers();
 const addButton = document.querySelector('.add-button');
 const editButton = document.querySelector('.edit-button');
 const viewButton = document.querySelector('.view-button');
-const confirmButton = document.querySelector('.confirm-button');
-// const saveButton = document.querySelector('.save-button');
-const closeCustomerModalButton = document.querySelector('.customer-modal .close-button');
+// const confirmButton = document.querySelector('.confirm-button');
+
+// const closeCustomerModalButton = document.querySelector('.customer-modal .close-button');
 const closeViewModalButton = document.querySelector('.view-customer-modal .close-button');
-const customerModal = document.querySelector('.customer-modal');
+// const customerModal = document.querySelector('.customer-modal');
 const viewCustomerModal = document.querySelector('.view-customer-modal');
 const modalOverlay = document.querySelector('.modal-overlay');
 
 //* Open and close modal functions
-function openModal(modal, isAddMode = false) {
-  const heading = customerModal.querySelector('h2');
-  if (isAddMode) {
-    heading.textContent = 'Add Customer';
-    confirmButton.textContent = 'Create';
-  } else {
-    heading.textContent = 'Edit Customer';
-    confirmButton.textContent = 'Save';
-  }
-
+function openModal(modal) {
   const modalElement = modal;
   modalElement.classList.add('open'); // Show the modal
   modalOverlay.classList.add('open'); // Show the overlay
@@ -90,124 +82,173 @@ function openModal(modal, isAddMode = false) {
 
 function closeModal(modal) {
   const modalElement = modal;
-  modalElement.classList.remove('open'); // Hide the modal
-  // Reset all input fields within the modal
-  const inputs = modalElement.querySelectorAll('input');
-  inputs.forEach((input) => {
-    const temp = input;
-    temp.value = '';
-  });
-
-  // Reset all select fields within the modal
-  const selects = modalElement.querySelectorAll('select');
-  selects.forEach((select) => {
-    const temp = select;
-    temp.selectedIndex = 0;
-  });
-
-  // Reset all textarea fields within the modal
-  const textareas = modalElement.querySelectorAll('textarea');
-  textareas.forEach((textarea) => {
-    const temp = textarea;
-    temp.value = '';
-  });
-
-  // Reset all content for view modal
-  const contentFields = document.querySelectorAll('[id$="-content"]');
-  contentFields.forEach((field) => {
-    const temp = field;
-    temp.textContent = '';
-  });
+  if (modalElement.classList.contains('customer-modal')) {
+    modalElement.classList.remove('open'); // Hide the modal
+    while (modalElement.firstChild) {
+      modalElement.removeChild(modalElement.firstChild);
+    }
+  } else {
+    modalElement.classList.remove('open'); // Hide the modal
+    // Reset all content for view modal
+    const contentFields = document.querySelectorAll('[id$="-content"]');
+    contentFields.forEach((field) => {
+      const temp = field;
+      temp.textContent = '';
+    });
+  }
 
   modalOverlay.classList.remove('open'); // Hide the overlay
 }
 
 //* For Customer modal
-const nameInput = document.getElementById('name-input');
-const statusInput = document.getElementById('status-input');
-const rateInput = document.getElementById('rate-input');
-const balanceInput = document.getElementById('balance-input');
-const depositInput = document.getElementById('deposit-input');
-const descriptionInput = document.getElementById('description-input');
+
 // Mode of the modal: add or edit
 let isAddMode = false;
 
-// Add form validation
-function checkAddFormValidity() {
+// Add/Edit form validation
+function checkFormValidity() {
+  const confirmButton = document.querySelector('.confirm-button');
+  const nameInput = document.getElementById('name-input');
+  const rateInput = document.getElementById('rate-input');
+  const balanceInput = document.getElementById('balance-input');
+  const depositInput = document.getElementById('deposit-input');
   const isFormValid =
     nameInput.value && rateInput.value && balanceInput.value && depositInput.value;
   confirmButton.disabled = !isFormValid;
 }
 
-let previousNameValue = '';
-let previousRateValue = '';
-let previousBalanceValue = '';
-let previousDepositValue = '';
+function addEventListenersForModalButtons() {
+  const customerModal = document.querySelector('.customer-modal');
+  const closeCustomerModalButton = document.querySelector('.customer-modal .close-button');
+  const confirmButton = document.querySelector('.confirm-button');
 
-nameInput.addEventListener('input', enforceMaxLength);
-nameInput.addEventListener('input', checkAddFormValidity);
-nameInput.addEventListener('blur', showErrorIfEmpty);
+  const nameInput = document.getElementById('name-input');
+  const statusInput = document.getElementById('status-input');
+  const rateInput = document.getElementById('rate-input');
+  const balanceInput = document.getElementById('balance-input');
+  const depositInput = document.getElementById('deposit-input');
+  const descriptionInput = document.getElementById('description-input');
 
-nameInput.addEventListener('keydown', function () {
-  previousNameValue = this.value;
-});
+  closeCustomerModalButton.addEventListener('click', () => {
+    closeModal(customerModal);
+  });
 
-nameInput.addEventListener('input', function () {
-  if (this.value && hasNumbers(this.value)) {
-    this.value = previousNameValue;
-  }
-});
+  let previousNameValue = '';
+  let previousRateValue = '';
+  let previousBalanceValue = '';
+  let previousDepositValue = '';
 
-rateInput.addEventListener('input', checkAddFormValidity);
-rateInput.addEventListener('blur', showErrorIfEmpty);
+  nameInput.addEventListener('input', enforceMaxLength);
+  nameInput.addEventListener('input', checkFormValidity);
+  nameInput.addEventListener('blur', showErrorIfEmpty);
 
-rateInput.addEventListener('keydown', function () {
-  previousRateValue = this.value;
-});
+  nameInput.addEventListener('keydown', function () {
+    previousNameValue = this.value;
+  });
 
-rateInput.addEventListener('input', function () {
-  if (this.value && !isValid(this.value)) {
-    this.value = previousRateValue;
-  }
-});
+  nameInput.addEventListener('input', function () {
+    if (this.value && hasNumbers(this.value)) {
+      this.value = previousNameValue;
+    }
+  });
 
-balanceInput.addEventListener('input', checkAddFormValidity);
-balanceInput.addEventListener('blur', showErrorIfEmpty);
+  rateInput.addEventListener('input', checkFormValidity);
+  rateInput.addEventListener('blur', showErrorIfEmpty);
 
-balanceInput.addEventListener('keydown', function () {
-  previousBalanceValue = this.value;
-});
+  rateInput.addEventListener('keydown', function () {
+    previousRateValue = this.value;
+  });
 
-balanceInput.addEventListener('input', function () {
-  // Allow negative numbers
-  const regex = /^(-\d{0,7}(\.\d{0,2})?|\d{1,7}(\.\d{0,2})?)$/;
-  if (this.value && !regex.test(this.value)) {
-    this.value = previousBalanceValue;
-  }
-});
+  rateInput.addEventListener('input', function () {
+    if (this.value && !isValid(this.value)) {
+      this.value = previousRateValue;
+    }
+  });
 
-depositInput.addEventListener('input', checkAddFormValidity);
-depositInput.addEventListener('blur', showErrorIfEmpty);
+  balanceInput.addEventListener('input', checkFormValidity);
+  balanceInput.addEventListener('blur', showErrorIfEmpty);
 
-depositInput.addEventListener('keydown', function () {
-  previousDepositValue = this.value;
-});
+  balanceInput.addEventListener('keydown', function () {
+    previousBalanceValue = this.value;
+  });
 
-depositInput.addEventListener('input', function () {
-  if (this.value && !isValid(this.value)) {
-    this.value = previousDepositValue;
-  }
-});
+  balanceInput.addEventListener('input', function () {
+    // Allow negative numbers
+    const regex = /^(-\d{0,7}(\.\d{0,2})?|\d{1,7}(\.\d{0,2})?)$/;
+    if (this.value && !regex.test(this.value)) {
+      this.value = previousBalanceValue;
+    }
+  });
+
+  depositInput.addEventListener('input', checkFormValidity);
+  depositInput.addEventListener('blur', showErrorIfEmpty);
+
+  depositInput.addEventListener('keydown', function () {
+    previousDepositValue = this.value;
+  });
+
+  depositInput.addEventListener('input', function () {
+    if (this.value && !isValid(this.value)) {
+      this.value = previousDepositValue;
+    }
+  });
+
+  // Add a new customer with create button
+  confirmButton.addEventListener('click', async () => {
+    const name = nameInput.value;
+    const status = statusInput.value;
+    const description = descriptionInput.value;
+    let rate = rateInput.value;
+    let balance = balanceInput.value;
+    let deposit = depositInput.value;
+    // Remove any trailing decimal points or negative signs
+    rate = sanitizeInput(rate);
+    balance = sanitizeInput(balance);
+    deposit = sanitizeInput(deposit);
+
+    if (isAddMode) {
+      const id = uuidv4();
+      // Create a new Customer instance
+      const newCustomer = new Customer(id, name, status, rate, balance, deposit, description);
+      // Send a POST request to the API
+      await httpRequest(HTTP_METHODS.POST, newCustomer.toJSON());
+      addNewTableRow(newCustomer);
+    } else {
+      const id = currentCustomerID;
+      // Create an updated Customer instance
+      const updatedCustomer = new Customer(id, name, status, rate, balance, deposit, description);
+      // Send a POST request to the API
+      await httpRequest(HTTP_METHODS.PUT, updatedCustomer.toJSON(), `${API_BASE_URL}/${id}`);
+      loadCustomers();
+    }
+    closeModal(customerModal);
+  });
+  checkFormValidity();
+}
 
 // Customer modal open and close
 addButton.addEventListener('click', () => {
   isAddMode = true;
-  openModal(customerModal, isAddMode);
+  createCustomerModal(isAddMode);
+  const customerModal = document.querySelector('.customer-modal');
+  addEventListenersForModalButtons();
+  openModal(customerModal);
 });
 
 // Fill the edit form with the current customer's data
 async function fillEditModal() {
   isAddMode = false;
+  createCustomerModal(isAddMode);
+  const customerModal = document.querySelector('.customer-modal');
+  addEventListenersForModalButtons();
+
+  const nameInput = document.getElementById('name-input');
+  const statusInput = document.getElementById('status-input');
+  const rateInput = document.getElementById('rate-input');
+  const balanceInput = document.getElementById('balance-input');
+  const depositInput = document.getElementById('deposit-input');
+  const descriptionInput = document.getElementById('description-input');
+
   const customer = await httpRequest(
     HTTP_METHODS.GET,
     null,
@@ -219,45 +260,12 @@ async function fillEditModal() {
   balanceInput.value = customer.balance;
   depositInput.value = customer.deposit;
   descriptionInput.value = customer.description;
-  openModal(customerModal, isAddMode);
+
+  checkFormValidity();
+  openModal(customerModal);
 }
 
 editButton.addEventListener('click', fillEditModal);
-
-closeCustomerModalButton.addEventListener('click', () => {
-  closeModal(customerModal);
-});
-
-// Add a new customer with create button
-confirmButton.addEventListener('click', async () => {
-  const name = nameInput.value;
-  const status = statusInput.value;
-  const description = descriptionInput.value;
-  let rate = rateInput.value;
-  let balance = balanceInput.value;
-  let deposit = depositInput.value;
-  // Remove any trailing decimal points or negative signs
-  rate = sanitizeInput(rate);
-  balance = sanitizeInput(balance);
-  deposit = sanitizeInput(deposit);
-
-  if (isAddMode) {
-    const id = uuidv4();
-    // Create a new Customer instance
-    const newCustomer = new Customer(id, name, status, rate, balance, deposit, description);
-    // Send a POST request to the API
-    await httpRequest(HTTP_METHODS.POST, newCustomer.toJSON());
-    addNewTableRow(newCustomer);
-  } else {
-    const id = currentCustomerID;
-    // Create an updated Customer instance
-    const updatedCustomer = new Customer(id, name, status, rate, balance, deposit, description);
-    // Send a POST request to the API
-    await httpRequest(HTTP_METHODS.PUT, updatedCustomer.toJSON(), `${API_BASE_URL}/${id}`);
-    loadCustomers();
-  }
-  closeModal(customerModal);
-});
 
 //* For View customer modal
 async function viewCustomer() {

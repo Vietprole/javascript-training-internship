@@ -61,7 +61,7 @@ function createCustomerModal(isAddMode) {
   const rateInputWrapper = inputWrapper.cloneNode(false);
   const rateDollarSign = dollarSign.cloneNode(false);
   const rateInput = document.createElement('input');
-  rateInput.setAttribute('type', 'number');
+  rateInput.setAttribute('type', 'text');
   rateInput.setAttribute('id', 'rate-input');
   rateInput.setAttribute('required', 'true');
   rateInputWrapper.append(rateDollarSign, rateInput);
@@ -77,7 +77,7 @@ function createCustomerModal(isAddMode) {
   const balanceInputWrapper = inputWrapper.cloneNode(false);
   const balanceDollarSign = dollarSign.cloneNode(false);
   const balanceInput = document.createElement('input');
-  balanceInput.setAttribute('type', 'number');
+  balanceInput.setAttribute('type', 'text');
   balanceInput.setAttribute('id', 'balance-input');
   balanceInput.setAttribute('required', 'true');
   balanceInputWrapper.append(balanceDollarSign, balanceInput);
@@ -93,7 +93,7 @@ function createCustomerModal(isAddMode) {
   const depositInputWrapper = inputWrapper.cloneNode(false);
   const depositDollarSign = dollarSign.cloneNode(false);
   const depositInput = document.createElement('input');
-  depositInput.setAttribute('type', 'number');
+  depositInput.setAttribute('type', 'text');
   depositInput.setAttribute('id', 'deposit-input');
   depositInput.setAttribute('required', 'true');
   depositInputWrapper.append(depositDollarSign, depositInput);
