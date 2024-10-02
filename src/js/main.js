@@ -65,11 +65,7 @@ loadCustomers();
 const addButton = document.querySelector('.add-button');
 const editButton = document.querySelector('.edit-button');
 const viewButton = document.querySelector('.view-button');
-// const confirmButton = document.querySelector('.confirm-button');
-
-// const closeCustomerModalButton = document.querySelector('.customer-modal .close-button');
 const closeViewModalButton = document.querySelector('.view-customer-modal .close-button');
-// const customerModal = document.querySelector('.customer-modal');
 const viewCustomerModal = document.querySelector('.view-customer-modal');
 const modalOverlay = document.querySelector('.modal-overlay');
 
@@ -101,7 +97,6 @@ function closeModal(modal) {
 }
 
 //* For Customer modal
-
 // Mode of the modal: add or edit
 let isAddMode = false;
 
@@ -139,73 +134,75 @@ function addEventListenersForModalButtons() {
   let previousDepositValue = '';
 
   function setPreviousValue(event) {
-    if (event.target === nameInput) {
-      previousNameValue = event.target.value;
-    } else if (event.target === rateInput) {
-      previousRateValue = event.target.value;
-    } else if (event.target === balanceInput) {
-      previousBalanceValue = event.target.value;
-    } else if (event.target === depositInput) {
-      previousDepositValue = event.target.value;
+    switch (event.target) {
+      case nameInput:
+        previousNameValue = event.target.value;
+        break;
+      case rateInput:
+        previousRateValue = event.target.value;
+        break;
+      case balanceInput:
+        previousBalanceValue = event.target.value;
+        break;
+      case depositInput:
+        previousDepositValue = event.target.value;
+        break;
+      default:
+        break;
     }
   }
 
   function validateAndRevertInput(event) {
-    if (event.target === nameInput) {
-      if (event.target.value && hasNumbers(event.target.value)) {
-        event.target.value = previousNameValue;
+    switch (event.target) {
+      case nameInput:
+        if (event.target.value && hasNumbers(event.target.value)) {
+          event.target.value = previousNameValue;
+        }
+        break;
+      case rateInput:
+        if (event.target.value && !isValid(event.target.value)) {
+          event.target.value = previousRateValue;
+        }
+        break;
+      case balanceInput: {
+        // Allow negative numbers
+        const regex = /^(-\d{0,7}(\.\d{0,2})?|\d{1,7}(\.\d{0,2})?)$/;
+        if (event.target.value && !regex.test(event.target.value)) {
+          event.target.value = previousBalanceValue;
+        }
+        break;
       }
-    } else if (event.target === rateInput) {
-      if (event.target.value && !isValid(event.target.value)) {
-        event.target.value = previousRateValue;
-      }
-    } else if (event.target === balanceInput) {
-      // Allow negative numbers
-      const regex = /^(-\d{0,7}(\.\d{0,2})?|\d{1,7}(\.\d{0,2})?)$/;
-      if (event.target.value && !regex.test(event.target.value)) {
-        event.target.value = previousBalanceValue;
-      }
-    } else if (event.target === depositInput) {
-      if (event.target.value && !isValid(event.target.value)) {
-        event.target.value = previousDepositValue;
-      }
+      case depositInput:
+        if (event.target.value && !isValid(event.target.value)) {
+          event.target.value = previousDepositValue;
+        }
+        break;
+      default:
+        break;
     }
   }
   nameInput.addEventListener('input', enforceMaxLength);
   nameInput.addEventListener('input', checkFormValidity);
   nameInput.addEventListener('blur', showErrorIfEmpty);
-
-  nameInput.addEventListener('keydown', (event) =>
-    setPreviousValue(event, { value: previousNameValue })
-  );
-
-  nameInput.addEventListener('input', (event) =>
-    validateAndRevertInput(event, { value: previousNameValue })
-  );
+  nameInput.addEventListener('keydown', (event) => setPreviousValue(event));
+  nameInput.addEventListener('input', (event) => validateAndRevertInput(event));
 
   rateInput.addEventListener('input', checkFormValidity);
   rateInput.addEventListener('blur', showErrorIfEmpty);
-
   rateInput.addEventListener('keydown', (event) => setPreviousValue(event));
-
   rateInput.addEventListener('input', (event) => validateAndRevertInput(event));
 
   balanceInput.addEventListener('input', checkFormValidity);
   balanceInput.addEventListener('blur', showErrorIfEmpty);
-
   balanceInput.addEventListener('keydown', (event) => setPreviousValue(event));
-
   balanceInput.addEventListener('input', (event) => validateAndRevertInput(event));
 
   depositInput.addEventListener('input', checkFormValidity);
   depositInput.addEventListener('blur', showErrorIfEmpty);
-
   depositInput.addEventListener('keydown', (event) => setPreviousValue(event));
-
   depositInput.addEventListener('input', (event) => validateAndRevertInput(event));
 
-  // Add a new customer with create button
-  confirmButton.addEventListener('click', async () => {
+  async function handleAddorEditCustomer() {
     const name = nameInput.value;
     const status = statusInput.value;
     const description = descriptionInput.value;
@@ -233,7 +230,8 @@ function addEventListenersForModalButtons() {
       loadCustomers();
     }
     closeModal(customerModal);
-  });
+  }
+  confirmButton.addEventListener('click', handleAddorEditCustomer);
   checkFormValidity();
 }
 
