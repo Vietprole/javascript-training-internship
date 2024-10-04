@@ -143,6 +143,15 @@
       "balance": "700.00",
       "deposit": "600.00",
       "description": "Newly edited"
+    },
+    {
+      "id": "fa50175a-727c-413f-9bee-652b5d94a84f",
+      "name": "Loong",
+      "status": "open",
+      "rate": "500.00",
+      "balance": "700.00",
+      "deposit": "600.00",
+      "description": "A really really long text that overflow two line on the description row. This is to test out if the ellipsis is there in the 2nd row."
     }
   ]
 }

@@ -203,7 +203,7 @@ function addEventListenersForModalButtons() {
   depositInput.addEventListener('keydown', (event) => setPreviousValue(event));
   depositInput.addEventListener('input', (event) => validateAndRevertInput(event));
 
-  async function handleAddorEditCustomer() {
+  async function handleAddOrEditCustomer() {
     const name = nameInput.value;
     const status = statusInput.value;
     const description = descriptionInput.value;
@@ -232,7 +232,7 @@ function addEventListenersForModalButtons() {
     }
     closeModal(customerModal);
   }
-  confirmButton.addEventListener('click', handleAddorEditCustomer);
+  confirmButton.addEventListener('click', handleAddOrEditCustomer);
   checkFormValidity();
 }
 
