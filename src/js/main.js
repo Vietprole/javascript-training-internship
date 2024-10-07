@@ -26,6 +26,7 @@ import {
   showErrorIfEmpty,
   sanitizeInput,
   combineAndRemoveDuplicates,
+  sortCustomersByName,
 } from './utils/helpers';
 
 class Customer {
@@ -62,6 +63,47 @@ async function loadCustomers() {
 }
 
 loadCustomers();
+
+//* Sorting states use for search functionality
+const sortingStates = ['default', 'asc', 'desc'];
+let currentSortingState = 0;
+
+//* Search functionality
+const searchInput = document.querySelector('.search-input');
+
+async function searchCustomers() {
+  const searchValue = searchInput.value.toLowerCase();
+  // Fetch customers by name
+  const nameCustomers = await httpRequest(
+    HTTP_METHODS.GET,
+    null,
+    `${API_BASE_URL}?name_like=${searchValue}`
+  );
+
+  // Fetch customers by status
+  const statusCustomers = await httpRequest(
+    HTTP_METHODS.GET,
+    null,
+    `${API_BASE_URL}?status_like=${searchValue}`
+  );
+
+  // Combine and remove duplicates
+  const customers = combineAndRemoveDuplicates(nameCustomers, statusCustomers);
+
+  // Sort the customers by name
+  sortCustomersByName(customers, sortingStates[currentSortingState]);
+
+  // Clear existing table rows
+  removeAllTableRows();
+
+  // Populate table with filtered customers
+  generateTableRows(customers);
+
+  setRowsColor();
+}
+
+// Attach the debounce function to the search input
+searchInput.addEventListener('input', debounce(searchCustomers, searchInterval));
 
 //* Modal functionality
 const addButton = document.querySelector('.add-button');
@@ -230,6 +272,7 @@ function addEventListenersForModalButtons() {
       await httpRequest(HTTP_METHODS.PUT, updatedCustomer.toJSON(), `${API_BASE_URL}/${id}`);
       loadCustomers();
     }
+    searchCustomers(); // Update the search results
     closeModal(customerModal);
   }
   confirmButton.addEventListener('click', handleAddOrEditCustomer);
@@ -285,62 +328,21 @@ closeViewModalButton.addEventListener('click', () => {
   closeModal(viewCustomerModal);
 });
 
-//* Search functionality
-const searchInput = document.querySelector('.search-input');
-
-async function searchCustomers() {
-  const searchValue = searchInput.value.toLowerCase();
-  // Fetch customers by name
-  const nameCustomers = await httpRequest(
-    HTTP_METHODS.GET,
-    null,
-    `${API_BASE_URL}?name_like=${searchValue}`
-  );
-
-  // Fetch customers by status
-  const statusCustomers = await httpRequest(
-    HTTP_METHODS.GET,
-    null,
-    `${API_BASE_URL}?status_like=${searchValue}`
-  );
-
-  // Combine and remove duplicates
-  const customers = combineAndRemoveDuplicates(nameCustomers, statusCustomers);
-
-  // Clear existing table rows
-  removeAllTableRows();
-
-  // Populate table with filtered customers
-  generateTableRows(customers);
-}
-
-// Attach the debounce function to the search input
-searchInput.addEventListener('input', debounce(searchCustomers, searchInterval));
-
 //* Sort functionality
 const sortButton = document.querySelector('.sort-button');
 const sortButtonIcon = document.querySelector('.sort-button img');
 
-const sortingStates = ['default', 'asc', 'desc'];
-let currentSortingState = 0;
-
-sortButton.addEventListener('click', async () => {
+function sortCustomers() {
   currentSortingState = (currentSortingState + 1) % 3;
   if (currentSortingState === 0) {
     sortButtonIcon.src = sortIconDefault;
-    loadCustomers();
   } else {
     sortButtonIcon.src = currentSortingState === 1 ? sortIconAsc : sortIconDesc;
-    const customers = await httpRequest(
-      HTTP_METHODS.GET,
-      null,
-      `${API_BASE_URL}?_sort=name&_order=${sortingStates[currentSortingState]}`
-    );
-    removeAllTableRows();
-    generateTableRows(customers);
-    setRowsColor();
   }
-});
+  searchCustomers();
+}
+
+sortButton.addEventListener('click', sortCustomers);
 
 //* Delete functionality
 const deleteButton = document.querySelector('.delete-button');

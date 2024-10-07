@@ -63,6 +63,17 @@ function getActionMenuPosition(button) {
   return { top: `${top + scrollTop}px`, left: `${left + scrollLeft - 100}px` };
 }
 
+// Sort the customers by name
+function sortCustomersByName(customers, sortingState) {
+  if (sortingState === 'asc') {
+    return customers.sort((a, b) => a.name.localeCompare(b.name));
+  }
+  if (sortingState === 'desc') {
+    return customers.sort((a, b) => b.name.localeCompare(a.name));
+  }
+  return customers;
+}
+
 export {
   hasNumbers,
   enforceMaxLength,
@@ -71,4 +82,5 @@ export {
   showErrorIfEmpty,
   combineAndRemoveDuplicates,
   getActionMenuPosition,
+  sortCustomersByName,
 };

@@ -93,7 +93,7 @@
     {
       "id": "5aefc58b-27ef-4b21-ad14-2d2ec2379d34",
       "name": "Hotel",
-      "status": "Open",
+      "status": "Paid",
       "rate": "80.00",
       "balance": "70.00",
       "deposit": "90.00",
@@ -120,7 +120,7 @@
     {
       "id": "f8903d21-1346-44bc-a98e-53f1f80c7e33",
       "name": "Juliet",
-      "status": "Inactive",
+      "status": "Due",
       "rate": "500.00",
       "balance": "768.00",
       "deposit": "555.00",
@@ -134,6 +134,24 @@
       "balance": "-78.00",
       "deposit": "900.00",
       "description": "K"
+    },
+    {
+      "id": "de0449e0-ccf8-4b20-a44b-933cde408f9e",
+      "name": "Lima",
+      "status": "Paid",
+      "rate": "332.00",
+      "balance": "99.00",
+      "deposit": "23.00",
+      "description": "L"
+    },
+    {
+      "id": "20aa7222-a52e-4fe5-811a-b45798f89235",
+      "name": "Apple",
+      "status": "Open",
+      "rate": "22.00",
+      "balance": "11.00",
+      "deposit": "33.00",
+      "description": "A1"
     }
   ]
 }
