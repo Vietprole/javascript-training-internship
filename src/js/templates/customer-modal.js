@@ -1,3 +1,10 @@
+const Status = {
+  OPEN: 'Open',
+  PAID: 'Paid',
+  INACTIVE: 'Inactive',
+  DUE: 'Due',
+};
+
 function createCustomerModal(isAddMode) {
   const customerModal = document.querySelector('.customer-modal');
 
@@ -34,17 +41,17 @@ function createCustomerModal(isAddMode) {
   const statusInput = document.createElement('select');
   statusInput.setAttribute('id', 'status-input');
   const openOption = document.createElement('option');
-  openOption.setAttribute('value', 'Open');
-  openOption.textContent = 'Open';
+  openOption.setAttribute('value', Status.OPEN);
+  openOption.textContent = Status.OPEN;
   const paidOption = document.createElement('option');
-  paidOption.setAttribute('value', 'Paid');
-  paidOption.textContent = 'Paid';
+  paidOption.setAttribute('value', Status.PAID);
+  paidOption.textContent = Status.PAID;
   const inactiveOption = document.createElement('option');
-  inactiveOption.setAttribute('value', 'Inactive');
-  inactiveOption.textContent = 'Inactive';
+  inactiveOption.setAttribute('value', Status.INACTIVE);
+  inactiveOption.textContent = Status.INACTIVE;
   const dueOption = document.createElement('option');
-  dueOption.setAttribute('value', 'Due');
-  dueOption.textContent = 'Due';
+  dueOption.setAttribute('value', Status.DUE);
+  dueOption.textContent = Status.DUE;
   statusInput.append(openOption, paidOption, inactiveOption, dueOption);
   statusField.append(statusLabel, statusInput);
 

@@ -187,7 +187,7 @@
   justify-content: center;
   align-items: center;
   display: none;
-  z-index: 3; /* On top of the page and modals */
+  z-index: 2; /* On top of the page, the action menu, below the modals */
 }
 
 .loader {

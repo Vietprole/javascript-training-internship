@@ -1,7 +1,7 @@
 .action-menu {
   position: absolute;
   display: none;
-  z-index: 3;
+  z-index: 1; /* On top of the table, below the loader */
   width: 120px;
   padding: 8px 6px;
   background-color: var(--background-primary-color);
