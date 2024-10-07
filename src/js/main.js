@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import searchInterval from './constants/search';
+import sortingStates from './constants/sort';
 import { API_BASE_URL, HTTP_METHODS } from './constants/api';
 import httpRequest from './utils/http-request';
 import debounce from './utils/debounce';
@@ -17,7 +18,7 @@ import {
 
 import fillViewModal from './templates/view-modal';
 import createCustomerModal from './templates/customer-modal';
-import createDeleteConfirmationModal from './templates/delete-confimation-modal';
+import createDeleteConfirmationModal from './templates/delete-confirmation-modal';
 
 import {
   hasNumbers,
@@ -82,9 +83,7 @@ async function loadCustomers() {
 
 loadCustomers();
 
-//* Sorting states use for search functionality
-const sortingStates = ['default', 'asc', 'desc'];
-let currentSortingState = 0;
+let currentSortingState = sortingStates.DEFAULT;
 
 //* Search functionality
 const searchInput = document.querySelector('.search-input');
@@ -109,7 +108,7 @@ async function searchCustomers() {
   const customers = combineAndRemoveDuplicates(nameCustomers, statusCustomers);
 
   // Sort the customers by name
-  sortCustomersByName(customers, sortingStates[currentSortingState]);
+  sortCustomersByName(customers, currentSortingState);
 
   // Clear existing table rows
   removeAllTableRows();
@@ -353,10 +352,10 @@ const sortButtonIcon = document.querySelector('.sort-button img');
 
 function sortCustomers() {
   currentSortingState = (currentSortingState + 1) % 3;
-  if (currentSortingState === 0) {
+  if (currentSortingState === sortingStates.DEFAULT) {
     sortButtonIcon.src = sortIconDefault;
   } else {
-    sortButtonIcon.src = currentSortingState === 1 ? sortIconAsc : sortIconDesc;
+    sortButtonIcon.src = currentSortingState === sortingStates.ASC ? sortIconAsc : sortIconDesc;
   }
   searchCustomers();
 }

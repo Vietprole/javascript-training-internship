@@ -25,15 +25,7 @@ function loadMenuButton(customer, button) {
   menuButton.dataset.customerDeposit = customer.deposit;
   menuButton.dataset.customerDescription = customer.description;
   menuButton.addEventListener('click', () => {
-    currentCustomer = {
-      id: button.dataset.customerId,
-      name: button.dataset.customerName,
-      status: button.dataset.customerStatus,
-      rate: button.dataset.customerRate,
-      balance: button.dataset.customerBalance,
-      deposit: button.dataset.customerDeposit,
-      description: button.dataset.customerDescription,
-    };
+    currentCustomer = customer;
     const { top, left } = getActionMenuPosition(button);
     actionMenu.style.top = top;
     actionMenu.style.left = left;

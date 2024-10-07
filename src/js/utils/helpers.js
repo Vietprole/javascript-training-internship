@@ -1,3 +1,5 @@
+import sortingStates from '../constants/sort';
+
 // Function to check for numbers
 function hasNumbers(value) {
   return /\d/.test(value);
@@ -65,10 +67,10 @@ function getActionMenuPosition(button) {
 
 // Sort the customers by name
 function sortCustomersByName(customers, sortingState) {
-  if (sortingState === 'asc') {
+  if (sortingState === sortingStates.ASC) {
     return customers.sort((a, b) => a.name.localeCompare(b.name));
   }
-  if (sortingState === 'desc') {
+  if (sortingState === sortingStates.DESC) {
     return customers.sort((a, b) => b.name.localeCompare(a.name));
   }
   return customers;
