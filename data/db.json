@@ -3,7 +3,7 @@
     {
       "id": "d3f2cc8a-25c1-459d-b995-d04f08430a7c",
       "name": "John Doe",
-      "status": "due",
+      "status": "Due",
       "rate": "54.00",
       "balance": "-999.00",
       "deposit": "222.00",
@@ -12,7 +12,7 @@
     {
       "id": "c7c9bebe-8c26-43ff-9bfc-cee3baa51771",
       "name": "John Eoe",
-      "status": "paid",
+      "status": "Paid",
       "rate": "44.44",
       "balance": "44.00",
       "deposit": "55.00",
@@ -21,7 +21,7 @@
     {
       "id": "bc6ef3fc-d0e0-4650-ae02-7b5dfb1da940",
       "name": "John Foe",
-      "status": "paid",
+      "status": "Paid",
       "rate": "50.25",
       "balance": "230.00",
       "deposit": "54.00",
@@ -30,7 +30,7 @@
     {
       "id": "2ba9a319-02f9-47c4-a889-d4581c287c7c",
       "name": "Alpha",
-      "status": "open",
+      "status": "Open",
       "rate": "350.00",
       "balance": "-1000.00",
       "deposit": "0.00",
@@ -39,7 +39,7 @@
     {
       "id": "27877cce-008e-41f0-8e84-de57333c6ea2",
       "name": "Beta",
-      "status": "open",
+      "status": "Open",
       "rate": "123.00",
       "balance": "23.00",
       "deposit": "55.00",
@@ -48,7 +48,7 @@
     {
       "id": "876d1f5f-9789-458a-a09e-6105f68ccba5",
       "name": "Charlie",
-      "status": "open",
+      "status": "Due",
       "rate": "50.00",
       "balance": "70.00",
       "deposit": "60.00",
@@ -57,7 +57,7 @@
     {
       "id": "602878db-4952-4184-a421-f235bb0faf08",
       "name": "Delta",
-      "status": "open",
+      "status": "Open",
       "rate": "21.00",
       "balance": "33.00",
       "deposit": "34.00",
@@ -66,7 +66,7 @@
     {
       "id": "4cdb0efe-24be-4364-9c95-840c6aab8536",
       "name": "Echo",
-      "status": "open",
+      "status": "Open",
       "rate": "1.00",
       "balance": "3.00",
       "deposit": "2.00",
@@ -75,7 +75,7 @@
     {
       "id": "275de7a9-f444-44c4-9da9-8e7d03a7658b",
       "name": "Foxtrot",
-      "status": "open",
+      "status": "Due",
       "rate": "50.00",
       "balance": "60.00",
       "deposit": "30.00",
@@ -84,7 +84,7 @@
     {
       "id": "b6783d15-7693-4e87-9c4d-05a13dd8d6f5",
       "name": "Golf",
-      "status": "open",
+      "status": "Open",
       "rate": "60.00",
       "balance": "80.00",
       "deposit": "70.00",
@@ -93,7 +93,7 @@
     {
       "id": "5aefc58b-27ef-4b21-ad14-2d2ec2379d34",
       "name": "Hotel",
-      "status": "open",
+      "status": "Open",
       "rate": "80.00",
       "balance": "70.00",
       "deposit": "90.00",
@@ -102,7 +102,7 @@
     {
       "id": "afd688d9-4d97-45e5-b6a3-15fe4d336721",
       "name": "India",
-      "status": "inactive",
+      "status": "Inactive",
       "rate": "500.00",
       "balance": "700.00",
       "deposit": "600.00",
@@ -111,7 +111,7 @@
     {
       "id": "fa50175a-727c-413f-9bee-652b5d94a84f",
       "name": "Loong",
-      "status": "open",
+      "status": "Open",
       "rate": "500.00",
       "balance": "700.00",
       "deposit": "600.00",
@@ -120,7 +120,7 @@
     {
       "id": "f8903d21-1346-44bc-a98e-53f1f80c7e33",
       "name": "Juliet",
-      "status": "inactive",
+      "status": "Inactive",
       "rate": "500.00",
       "balance": "768.00",
       "deposit": "555.00",
@@ -129,7 +129,7 @@
     {
       "id": "d46c5b41-6e0b-4a12-861d-18a407a96c16",
       "name": "Kilo",
-      "status": "open",
+      "status": "Inactive",
       "rate": "1000.00",
       "balance": "-78.00",
       "deposit": "900.00",
