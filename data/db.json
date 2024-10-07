@@ -1,24 +1,6 @@
 {
   "customers": [
     {
-      "id": "7b78f5cd-3cb8-4295-be1b-7de3a282aede",
-      "name": "John Boe",
-      "status": "paid",
-      "rate": "500.00",
-      "balance": "-78.00",
-      "deposit": "45.00",
-      "description": "This is the second customer"
-    },
-    {
-      "id": "e4165870-4543-4b20-af5e-ebd1f01d8415",
-      "name": "John Coe",
-      "status": "inactive",
-      "rate": "56.00",
-      "balance": "33.00",
-      "deposit": "43.00",
-      "description": "This is the third customer"
-    },
-    {
       "id": "d3f2cc8a-25c1-459d-b995-d04f08430a7c",
       "name": "John Doe",
       "status": "due",
@@ -31,10 +13,10 @@
       "id": "c7c9bebe-8c26-43ff-9bfc-cee3baa51771",
       "name": "John Eoe",
       "status": "paid",
-      "rate": "44.00",
+      "rate": "44.44",
       "balance": "44.00",
       "deposit": "55.00",
-      "description": "abc"
+      "description": "abc Edited"
     },
     {
       "id": "bc6ef3fc-d0e0-4650-ae02-7b5dfb1da940",
@@ -118,24 +100,6 @@
       "description": "h"
     },
     {
-      "id": "9a0b35ef-315c-4fde-a7f3-160f3ef9bdc6",
-      "name": "This is an experiment",
-      "status": "due",
-      "rate": "56.78",
-      "balance": "45.00",
-      "deposit": "12.34",
-      "description": "Test add"
-    },
-    {
-      "id": "173a91ff-88ac-438c-ae1e-43b83a698f15",
-      "name": "Viet Le",
-      "status": "due",
-      "rate": "1234512.00",
-      "balance": "123.00",
-      "deposit": "500.00",
-      "description": "New New Edited"
-    },
-    {
       "id": "afd688d9-4d97-45e5-b6a3-15fe4d336721",
       "name": "India",
       "status": "inactive",
@@ -152,6 +116,24 @@
       "balance": "700.00",
       "deposit": "600.00",
       "description": "A really really long text that overflow two line on the description row. This is to test out if the ellipsis is there in the 2nd row."
+    },
+    {
+      "id": "f8903d21-1346-44bc-a98e-53f1f80c7e33",
+      "name": "Juliet",
+      "status": "inactive",
+      "rate": "500.00",
+      "balance": "768.00",
+      "deposit": "555.00",
+      "description": "J"
+    },
+    {
+      "id": "d46c5b41-6e0b-4a12-861d-18a407a96c16",
+      "name": "Kilo",
+      "status": "open",
+      "rate": "1000.00",
+      "balance": "-78.00",
+      "deposit": "900.00",
+      "description": "K"
     }
   ]
 }

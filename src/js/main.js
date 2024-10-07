@@ -9,10 +9,10 @@ import sortIconDesc from '../assets/icons/sort-desc-icon.svg';
 import {
   generateTableRows,
   removeAllTableRows,
+  removeTableRow,
   addNewTableRow,
   setRowsColor,
-  currentCustomerID,
-  removeTableRow,
+  currentCustomer,
 } from './templates/dashboard';
 
 import fillViewModal from './templates/view-modal';
@@ -223,7 +223,7 @@ function addEventListenersForModalButtons() {
       await httpRequest(HTTP_METHODS.POST, newCustomer.toJSON());
       addNewTableRow(newCustomer);
     } else {
-      const id = currentCustomerID;
+      const { id } = currentCustomer;
       // Create an updated Customer instance
       const updatedCustomer = new Customer(id, name, status, rate, balance, deposit, description);
       // Send a POST request to the API
@@ -259,11 +259,7 @@ async function fillEditModal() {
   const depositInput = document.getElementById('deposit-input');
   const descriptionInput = document.getElementById('description-input');
 
-  const customer = await httpRequest(
-    HTTP_METHODS.GET,
-    null,
-    `${API_BASE_URL}/${currentCustomerID}`
-  );
+  const customer = currentCustomer;
   nameInput.value = customer.name;
   statusInput.value = customer.status;
   rateInput.value = customer.rate;
@@ -279,12 +275,7 @@ editButton.addEventListener('click', fillEditModal);
 
 //* For View customer modal
 async function viewCustomer() {
-  const customer = await httpRequest(
-    HTTP_METHODS.GET,
-    null,
-    `${API_BASE_URL}/${currentCustomerID}`
-  );
-  fillViewModal(customer);
+  fillViewModal(currentCustomer);
   openModal(viewCustomerModal);
 }
 
@@ -360,8 +351,8 @@ function closeDeleteConfirmationModal() {
 }
 
 function removeCustomer() {
-  httpRequest(HTTP_METHODS.DELETE, null, `${API_BASE_URL}/${currentCustomerID}`);
-  removeTableRow(currentCustomerID);
+  httpRequest(HTTP_METHODS.DELETE, null, `${API_BASE_URL}/${currentCustomer.id}`);
+  removeTableRow(currentCustomer.id);
   closeDeleteConfirmationModal();
 }
 

@@ -1,7 +1,7 @@
 import menuIcon from '../../assets/icons/menu-icon.svg';
 import { getActionMenuPosition } from '../utils/helpers';
 
-let currentCustomerID;
+let currentCustomer = {};
 
 //* Action menu functionality
 function closeActionMenuWhenClickedOutside(event) {
@@ -14,17 +14,39 @@ function closeActionMenuWhenClickedOutside(event) {
   }
 }
 
-function loadActionMenu() {
-  const actionMenuButtons = document.querySelectorAll('.menu-button');
+function loadMenuButton(customer, button) {
   const actionMenu = document.querySelector('.action-menu');
-  actionMenuButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      currentCustomerID = button.id;
-      const { top, left } = getActionMenuPosition(button);
-      actionMenu.style.top = top;
-      actionMenu.style.left = left;
-      actionMenu.classList.add('open');
-    });
+  const menuButton = button;
+  menuButton.dataset.customerId = customer.id;
+  menuButton.dataset.customerName = customer.name;
+  menuButton.dataset.customerStatus = customer.status;
+  menuButton.dataset.customerRate = customer.rate;
+  menuButton.dataset.customerBalance = customer.balance;
+  menuButton.dataset.customerDeposit = customer.deposit;
+  menuButton.dataset.customerDescription = customer.description;
+  menuButton.addEventListener('click', () => {
+    currentCustomer = {
+      id: button.dataset.customerId,
+      name: button.dataset.customerName,
+      status: button.dataset.customerStatus,
+      rate: button.dataset.customerRate,
+      balance: button.dataset.customerBalance,
+      deposit: button.dataset.customerDeposit,
+      description: button.dataset.customerDescription,
+    };
+    const { top, left } = getActionMenuPosition(button);
+    actionMenu.style.top = top;
+    actionMenu.style.left = left;
+    actionMenu.classList.add('open');
+  });
+}
+
+function loadActionMenu(customers) {
+  const actionMenuButtons = document.querySelectorAll('.menu-button');
+  actionMenuButtons.forEach((button, index) => {
+    // Store customer information in data-* attributes
+    const customer = customers[index];
+    loadMenuButton(customer, button);
   });
 
   window.addEventListener('click', closeActionMenuWhenClickedOutside);
@@ -38,7 +60,9 @@ function removeAllTableRows() {
 
 // Function to remove a table-row div element
 function removeTableRow(customerID) {
-  const menuButton = document.getElementById(customerID);
+  console.log('Removing customer with ID:', customerID);
+  const menuButton = document.querySelector(`div[data-customer-id="${customerID}"]`);
+  console.log('Menu button:', menuButton);
   const tableRow = menuButton.closest('.table-row');
   tableRow.remove();
 }
@@ -155,7 +179,6 @@ function createTableRow(customer) {
   // Create a menu button
   const menuButton = document.createElement('div');
   menuButton.classList.add('menu-button', 'icon-wrapper');
-  menuButton.id = customer.id;
   const menuImg = document.createElement('img');
   menuImg.src = menuIcon;
   menuImg.alt = 'Menu icon';
@@ -181,7 +204,7 @@ function generateTableRows(customers) {
     tableBody.appendChild(newRow);
   });
   window.removeEventListener('click', closeActionMenuWhenClickedOutside);
-  loadActionMenu();
+  loadActionMenu(customers);
 }
 
 function addNewTableRow(customer) {
@@ -189,7 +212,7 @@ function addNewTableRow(customer) {
   const tableBody = document.querySelector('.table-body');
   tableBody.appendChild(newRow);
   window.removeEventListener('click', closeActionMenuWhenClickedOutside);
-  loadActionMenu();
+  loadMenuButton(customer, newRow.querySelector('.menu-button'));
   setRowsColor();
 }
 
@@ -199,5 +222,5 @@ export {
   removeTableRow,
   addNewTableRow,
   setRowsColor,
-  currentCustomerID,
+  currentCustomer,
 };
