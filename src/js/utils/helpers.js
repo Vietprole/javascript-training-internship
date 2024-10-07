@@ -66,14 +66,15 @@ function getActionMenuPosition(button) {
 }
 
 // Sort the customers by name
-function sortCustomersByName(customers, sortingState) {
-  if (sortingState === sortingStates.ASC) {
-    return customers.sort((a, b) => a.name.localeCompare(b.name));
+function sortCustomersByName(customers, currentSortingState) {
+  switch (currentSortingState) {
+    case sortingStates.ASC:
+      return customers.sort((a, b) => a.name.localeCompare(b.name));
+    case sortingStates.DESC:
+      return customers.sort((a, b) => b.name.localeCompare(a.name));
+    default:
+      return customers;
   }
-  if (sortingState === sortingStates.DESC) {
-    return customers.sort((a, b) => b.name.localeCompare(a.name));
-  }
-  return customers;
 }
 
 export {
