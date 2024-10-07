@@ -1,24 +1,6 @@
 {
   "customers": [
     {
-      "id": "d3f2cc8a-25c1-459d-b995-d04f08430a7c",
-      "name": "John Doe",
-      "status": "Due",
-      "rate": "54.00",
-      "balance": "-999.00",
-      "deposit": "222.00",
-      "description": "This is the fourth customer"
-    },
-    {
-      "id": "c7c9bebe-8c26-43ff-9bfc-cee3baa51771",
-      "name": "John Eoe",
-      "status": "Paid",
-      "rate": "44.44",
-      "balance": "44.00",
-      "deposit": "55.00",
-      "description": "abc Edited"
-    },
-    {
       "id": "bc6ef3fc-d0e0-4650-ae02-7b5dfb1da940",
       "name": "John Foe",
       "status": "Paid",
@@ -152,6 +134,15 @@
       "balance": "11.00",
       "deposit": "33.00",
       "description": "A1"
+    },
+    {
+      "id": "77f1ac69-2ac7-4727-bed6-7293dacc2e2f",
+      "name": "Mike",
+      "status": "Open",
+      "rate": "333.00",
+      "balance": "333.00",
+      "deposit": "333.00",
+      "description": "M"
     }
   ]
 }

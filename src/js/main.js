@@ -55,11 +55,29 @@ class Customer {
 
 export default Customer;
 
+//* Loader functionality
+const loader = document.querySelector('.loader-container');
+
+function showLoader() {
+  loader.style.display = 'flex';
+}
+
+function hideLoader() {
+  loader.style.display = 'none';
+}
+
 async function loadCustomers() {
-  const customers = await httpRequest(HTTP_METHODS.GET);
-  removeAllTableRows();
-  generateTableRows(customers);
-  setRowsColor();
+  showLoader();
+  try {
+    const customers = await httpRequest(HTTP_METHODS.GET);
+    removeAllTableRows();
+    generateTableRows(customers);
+    setRowsColor();
+  } catch (error) {
+    console.error('Failed to load customers:', error);
+  } finally {
+    hideLoader();
+  }
 }
 
 loadCustomers();
@@ -245,7 +263,8 @@ function addEventListenersForModalButtons() {
   depositInput.addEventListener('keydown', (event) => setPreviousValue(event));
   depositInput.addEventListener('input', (event) => validateAndRevertInput(event));
 
-  async function handleAddOrEditCustomer() {
+  async function handleAddOrEditCustomer(event) {
+    event.target.disabled = true;
     const name = nameInput.value;
     const status = statusInput.value;
     const description = descriptionInput.value;
@@ -352,8 +371,9 @@ function closeDeleteConfirmationModal() {
   closeModal(deleteConfirmationModal);
 }
 
-function removeCustomer() {
-  httpRequest(HTTP_METHODS.DELETE, null, `${API_BASE_URL}/${currentCustomer.id}`);
+async function removeCustomer(event) {
+  event.target.disabled = true;
+  await httpRequest(HTTP_METHODS.DELETE, null, `${API_BASE_URL}/${currentCustomer.id}`);
   removeTableRow(currentCustomer.id);
   closeDeleteConfirmationModal();
 }

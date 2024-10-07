@@ -60,9 +60,7 @@ function removeAllTableRows() {
 
 // Function to remove a table-row div element
 function removeTableRow(customerID) {
-  console.log('Removing customer with ID:', customerID);
   const menuButton = document.querySelector(`div[data-customer-id="${customerID}"]`);
-  console.log('Menu button:', menuButton);
   const tableRow = menuButton.closest('.table-row');
   tableRow.remove();
 }
