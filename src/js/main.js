@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 import searchInterval from './constants/search';
 import sortingStates from './constants/sort';
-import { API_BASE_URL, HTTP_METHODS } from './constants/api';
-import httpRequest from './utils/http-request';
+import { API_BASE_URL } from './constants/api';
+import { Get, Post, Put, Delete } from './utils/http-request';
 import debounce from './utils/debounce';
 import sortIconDefault from '../assets/icons/sort-default-icon.svg';
 import sortIconAsc from '../assets/icons/sort-asc-icon.svg';
@@ -70,7 +70,7 @@ function hideLoader() {
 async function loadCustomers() {
   showLoader();
   try {
-    const customers = await httpRequest(HTTP_METHODS.GET);
+    const customers = await Get();
     removeAllTableRows();
     generateTableRows(customers);
     setRowsColor();
@@ -91,18 +91,10 @@ const searchInput = document.querySelector('.search-input');
 async function searchCustomers() {
   const searchValue = searchInput.value.toLowerCase();
   // Fetch customers by name
-  const nameCustomers = await httpRequest(
-    HTTP_METHODS.GET,
-    null,
-    `${API_BASE_URL}?name_like=${searchValue}`
-  );
+  const nameCustomers = await Get(`${API_BASE_URL}?name_like=${searchValue}`);
 
   // Fetch customers by status
-  const statusCustomers = await httpRequest(
-    HTTP_METHODS.GET,
-    null,
-    `${API_BASE_URL}?status_like=${searchValue}`
-  );
+  const statusCustomers = await Get(`${API_BASE_URL}?status_like=${searchValue}`);
 
   // Combine and remove duplicates
   const customers = combineAndRemoveDuplicates(nameCustomers, statusCustomers);
@@ -331,14 +323,14 @@ function addEventListenersForModalButtons() {
       // Create a new Customer instance
       const newCustomer = new Customer(id, name, status, rate, balance, deposit, description);
       // Send a POST request to the API
-      await httpRequest(HTTP_METHODS.POST, newCustomer.toJSON());
+      await Post(newCustomer.toJSON());
       addNewTableRow(newCustomer);
     } else {
       const { id } = currentCustomer;
       // Create an updated Customer instance
       const updatedCustomer = new Customer(id, name, status, rate, balance, deposit, description);
-      // Send a POST request to the API
-      await httpRequest(HTTP_METHODS.PUT, updatedCustomer.toJSON(), `${API_BASE_URL}/${id}`);
+      // Send a PUT request to the API
+      await Put(updatedCustomer.toJSON(), `${API_BASE_URL}/${id}`);
       editCurrentCustomerRow(updatedCustomer);
     }
     closeModal(customerModal);
@@ -424,7 +416,7 @@ function closeDeleteConfirmationModal() {
 
 async function removeCustomer(event) {
   event.target.disabled = true;
-  await httpRequest(HTTP_METHODS.DELETE, null, `${API_BASE_URL}/${currentCustomer.id}`);
+  await Delete(`${API_BASE_URL}/${currentCustomer.id}`);
   removeTableRow(currentCustomer.id);
   closeDeleteConfirmationModal();
 }

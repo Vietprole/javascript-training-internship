@@ -1,6 +1,6 @@
-import { API_BASE_URL } from '../constants/api';
+import { API_BASE_URL, HTTP_METHODS } from '../constants/api';
 
-async function httpRequest(method, body = null, url = API_BASE_URL) {
+async function httpRequest(method, body, url) {
   const options = { method };
   if (body) {
     options.headers = { 'Content-Type': 'application/json' };
@@ -19,4 +19,20 @@ async function httpRequest(method, body = null, url = API_BASE_URL) {
   }
 }
 
-export default httpRequest;
+async function Get(url = API_BASE_URL) {
+  return httpRequest(HTTP_METHODS.GET, null, url);
+}
+
+async function Post(body, url = API_BASE_URL) {
+  return httpRequest(HTTP_METHODS.POST, body, url);
+}
+
+async function Put(body, url) {
+  return httpRequest(HTTP_METHODS.PUT, body, url);
+}
+
+async function Delete(url) {
+  return httpRequest(HTTP_METHODS.DELETE, null, url);
+}
+
+export { Get, Post, Put, Delete };
