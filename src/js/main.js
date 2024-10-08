@@ -16,7 +16,7 @@ import {
   currentCustomer,
 } from './templates/dashboard';
 
-import fillViewModal from './templates/view-modal';
+import createViewCustomerModal from './templates/view-modal';
 import createCustomerModal from './templates/customer-modal';
 import createDeleteConfirmationModal from './templates/delete-confirmation-modal';
 
@@ -118,8 +118,6 @@ searchInput.addEventListener('input', debounce(searchCustomers, searchInterval))
 const addButton = document.querySelector('.add-button');
 const editButton = document.querySelector('.edit-button');
 const viewButton = document.querySelector('.view-button');
-const closeViewModalButton = document.querySelector('.view-customer-modal .close-button');
-const viewCustomerModal = document.querySelector('.view-customer-modal');
 const modalOverlay = document.querySelector('.modal-overlay');
 
 //* Open and close modal functions
@@ -131,22 +129,9 @@ function openModal(modal) {
 
 function closeModal(modal) {
   const modalElement = modal;
-  if (
-    modalElement.classList.contains('customer-modal') ||
-    modalElement.classList.contains('delete-confirmation-modal')
-  ) {
-    modalElement.classList.remove('open'); // Hide the modal
-    while (modalElement.firstChild) {
-      modalElement.removeChild(modalElement.firstChild);
-    }
-  } else {
-    modalElement.classList.remove('open'); // Hide the modal
-    // Reset all content for view modal
-    const contentFields = document.querySelectorAll('[id$="-content"]');
-    contentFields.forEach((field) => {
-      const temp = field;
-      temp.textContent = '';
-    });
+  modalElement.classList.remove('open'); // Hide the modal
+  while (modalElement.firstChild) {
+    modalElement.removeChild(modalElement.firstChild);
   }
 
   modalOverlay.classList.remove('open'); // Hide the overlay
@@ -377,18 +362,19 @@ async function fillEditModal() {
 }
 
 editButton.addEventListener('click', fillEditModal);
-
+let viewCustomerModal;
 //* For View customer modal
-async function viewCustomer() {
-  fillViewModal(currentCustomer);
+function viewCustomer() {
+  createViewCustomerModal(currentCustomer);
+  viewCustomerModal = document.querySelector('.view-customer-modal');
+  const closeViewModalButton = document.querySelector('.view-customer-modal .close-button');
+  closeViewModalButton.addEventListener('click', () => {
+    closeModal(viewCustomerModal);
+  });
   openModal(viewCustomerModal);
 }
 
 viewButton.addEventListener('click', viewCustomer);
-
-closeViewModalButton.addEventListener('click', () => {
-  closeModal(viewCustomerModal);
-});
 
 //* Sort functionality
 const sortButton = document.querySelector('.sort-button');
