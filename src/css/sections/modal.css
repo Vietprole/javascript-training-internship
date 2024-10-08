@@ -3,7 +3,7 @@
   height: 608px;
   display: none;
   position: fixed;
-  z-index: 2; /* On top of overlay's 1 */
+  z-index: 4; /* On top of overlay's 3 */
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -140,7 +140,7 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1; /* On top of the page, below the modal */
+  z-index: 3; /* On top of the page, below the modal */
 }
 
 .open {

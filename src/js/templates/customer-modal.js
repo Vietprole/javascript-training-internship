@@ -1,3 +1,10 @@
+const Status = {
+  OPEN: 'Open',
+  PAID: 'Paid',
+  INACTIVE: 'Inactive',
+  DUE: 'Due',
+};
+
 function createCustomerModal(isAddMode) {
   const customerModal = document.querySelector('.customer-modal');
 
@@ -34,17 +41,17 @@ function createCustomerModal(isAddMode) {
   const statusInput = document.createElement('select');
   statusInput.setAttribute('id', 'status-input');
   const openOption = document.createElement('option');
-  openOption.setAttribute('value', 'open');
-  openOption.textContent = 'Open';
+  openOption.setAttribute('value', Status.OPEN);
+  openOption.textContent = Status.OPEN;
   const paidOption = document.createElement('option');
-  paidOption.setAttribute('value', 'paid');
-  paidOption.textContent = 'Paid';
+  paidOption.setAttribute('value', Status.PAID);
+  paidOption.textContent = Status.PAID;
   const inactiveOption = document.createElement('option');
-  inactiveOption.setAttribute('value', 'inactive');
-  inactiveOption.textContent = 'Inactive';
+  inactiveOption.setAttribute('value', Status.INACTIVE);
+  inactiveOption.textContent = Status.INACTIVE;
   const dueOption = document.createElement('option');
-  dueOption.setAttribute('value', 'due');
-  dueOption.textContent = 'Due';
+  dueOption.setAttribute('value', Status.DUE);
+  dueOption.textContent = Status.DUE;
   statusInput.append(openOption, paidOption, inactiveOption, dueOption);
   statusField.append(statusLabel, statusInput);
 
@@ -59,7 +66,7 @@ function createCustomerModal(isAddMode) {
   rateLabel.classList.add('label');
   rateLabel.textContent = 'Rate';
   const rateInputWrapper = inputWrapper.cloneNode(false);
-  const rateDollarSign = dollarSign.cloneNode(false);
+  const rateDollarSign = dollarSign.cloneNode(true);
   const rateInput = document.createElement('input');
   rateInput.setAttribute('type', 'text');
   rateInput.setAttribute('id', 'rate-input');
@@ -75,7 +82,7 @@ function createCustomerModal(isAddMode) {
   balanceLabel.classList.add('label');
   balanceLabel.textContent = 'Balance';
   const balanceInputWrapper = inputWrapper.cloneNode(false);
-  const balanceDollarSign = dollarSign.cloneNode(false);
+  const balanceDollarSign = dollarSign.cloneNode(true);
   const balanceInput = document.createElement('input');
   balanceInput.setAttribute('type', 'text');
   balanceInput.setAttribute('id', 'balance-input');
@@ -91,7 +98,7 @@ function createCustomerModal(isAddMode) {
   depositLabel.classList.add('label');
   depositLabel.textContent = 'Deposit';
   const depositInputWrapper = inputWrapper.cloneNode(false);
-  const depositDollarSign = dollarSign.cloneNode(false);
+  const depositDollarSign = dollarSign.cloneNode(true);
   const depositInput = document.createElement('input');
   depositInput.setAttribute('type', 'text');
   depositInput.setAttribute('id', 'deposit-input');

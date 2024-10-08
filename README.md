@@ -33,35 +33,26 @@ git clone https://github.com/Vietprole/javascript-training-internship.git
 ```
 
 - Move to the cloned repository folder
-
 ```bash
 cd javascript-training-internship
 ```
 
 - Checkout to branch `feat/practice`
-
 ```bash
 git checkout feat/practice
 ```
 
-- Move to folder `practice`
-
-```bash
-cd practice
-```
-
 - Install packages
-
 ```bash
 npm install
 ```
-- Initialize the json-server
 
+- Initialize the json-server
 ```bash
 npm run json-server
 ```
-- Run the server in another terminal
 
+- Run the server in another terminal
 ```bash
 npm start
 ```

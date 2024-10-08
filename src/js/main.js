@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import searchInterval from './constants/search';
+import sortingStates from './constants/sort';
 import { API_BASE_URL, HTTP_METHODS } from './constants/api';
 import httpRequest from './utils/http-request';
 import debounce from './utils/debounce';
@@ -9,15 +10,15 @@ import sortIconDesc from '../assets/icons/sort-desc-icon.svg';
 import {
   generateTableRows,
   removeAllTableRows,
+  removeTableRow,
   addNewTableRow,
   setRowsColor,
-  currentCustomerID,
-  removeTableRow,
+  currentCustomer,
 } from './templates/dashboard';
 
 import fillViewModal from './templates/view-modal';
 import createCustomerModal from './templates/customer-modal';
-import createDeleteConfirmationModal from './templates/delete-confimation-modal';
+import createDeleteConfirmationModal from './templates/delete-confirmation-modal';
 
 import {
   hasNumbers,
@@ -26,6 +27,7 @@ import {
   showErrorIfEmpty,
   sanitizeInput,
   combineAndRemoveDuplicates,
+  sortCustomersByName,
 } from './utils/helpers';
 
 class Customer {
@@ -54,14 +56,71 @@ class Customer {
 
 export default Customer;
 
+//* Loader functionality
+const loader = document.querySelector('.loader-container');
+
+function showLoader() {
+  loader.style.display = 'flex';
+}
+
+function hideLoader() {
+  loader.style.display = 'none';
+}
+
 async function loadCustomers() {
-  const customers = await httpRequest(HTTP_METHODS.GET);
-  removeAllTableRows();
-  generateTableRows(customers);
-  setRowsColor();
+  showLoader();
+  try {
+    const customers = await httpRequest(HTTP_METHODS.GET);
+    removeAllTableRows();
+    generateTableRows(customers);
+    setRowsColor();
+  } catch (error) {
+    console.error('Failed to load customers:', error);
+  } finally {
+    hideLoader();
+  }
 }
 
 loadCustomers();
+
+let currentSortingState = sortingStates.DEFAULT;
+
+//* Search functionality
+const searchInput = document.querySelector('.search-input');
+
+async function searchCustomers() {
+  const searchValue = searchInput.value.toLowerCase();
+  // Fetch customers by name
+  const nameCustomers = await httpRequest(
+    HTTP_METHODS.GET,
+    null,
+    `${API_BASE_URL}?name_like=${searchValue}`
+  );
+
+  // Fetch customers by status
+  const statusCustomers = await httpRequest(
+    HTTP_METHODS.GET,
+    null,
+    `${API_BASE_URL}?status_like=${searchValue}`
+  );
+
+  // Combine and remove duplicates
+  const customers = combineAndRemoveDuplicates(nameCustomers, statusCustomers);
+
+  // Sort the customers by name
+  sortCustomersByName(customers, currentSortingState);
+
+  // Clear existing table rows
+  removeAllTableRows();
+
+  // Populate table with filtered customers
+  generateTableRows(customers);
+
+  setRowsColor();
+}
+
+// Attach the debounce function to the search input
+searchInput.addEventListener('input', debounce(searchCustomers, searchInterval));
 
 //* Modal functionality
 const addButton = document.querySelector('.add-button');
@@ -115,6 +174,57 @@ function checkFormValidity() {
   const isFormValid =
     nameInput.value && rateInput.value && balanceInput.value && depositInput.value;
   confirmButton.disabled = !isFormValid;
+}
+
+function editCurrentCustomerRow(updatedCustomer) {
+  const menuButton = document.querySelector(`div[data-customer-id="${updatedCustomer.id}"]`);
+  let sibling = menuButton.previousElementSibling;
+  while (sibling) {
+    switch (sibling.classList[0]) {
+      case 'name-cell':
+        const nameCell = sibling;
+        const nameField = nameCell.querySelector('.name');
+        nameField.textContent = updatedCustomer.name;
+        const idField = nameCell.querySelector('.id');
+        idField.textContent = updatedCustomer.id;
+        sibling = null;
+        break;
+      case 'description-cell':
+        sibling.textContent = updatedCustomer.description;
+        sibling = sibling.previousElementSibling;
+        break;
+      case 'status-cell':
+        sibling.textContent = updatedCustomer.status;
+        // Add class based on status
+        sibling.classList.add(`status-${updatedCustomer.status.toLowerCase()}`);
+        sibling = sibling.previousElementSibling;
+        break;
+      case 'rate-cell':
+        sibling.querySelector('.amount').querySelectorAll('span')[1].textContent = updatedCustomer.rate;
+        sibling = sibling.previousElementSibling;
+        break;
+      case 'balance-cell':
+        const balanceDollarSign = sibling.querySelector('.amount').querySelectorAll('span')[0];
+        const balance = sibling.querySelector('.amount').querySelectorAll('span')[1];
+        const balanceAmount = sibling.querySelector('.amount');
+        balance.textContent = updatedCustomer.balance;
+        if (updatedCustomer.balance < 0) {
+          balanceDollarSign.textContent = '-$';
+          balance.textContent = Math.abs(updatedCustomer.balance);
+          balanceAmount.classList.remove('positive');
+          balanceAmount.classList.add('negative');
+        }
+        sibling = sibling.previousElementSibling;
+        break;
+      case 'deposit-cell':
+        sibling.querySelector('.amount').querySelectorAll('span')[1].textContent = updatedCustomer.deposit;
+        sibling = sibling.previousElementSibling;
+        break;
+      default:
+        sibling = null;
+        break;
+    }
+  }
 }
 
 function addEventListenersForModalButtons() {
@@ -203,7 +313,8 @@ function addEventListenersForModalButtons() {
   depositInput.addEventListener('keydown', (event) => setPreviousValue(event));
   depositInput.addEventListener('input', (event) => validateAndRevertInput(event));
 
-  async function handleAddorEditCustomer() {
+  async function handleAddOrEditCustomer(event) {
+    event.target.disabled = true;
     const name = nameInput.value;
     const status = statusInput.value;
     const description = descriptionInput.value;
@@ -223,16 +334,16 @@ function addEventListenersForModalButtons() {
       await httpRequest(HTTP_METHODS.POST, newCustomer.toJSON());
       addNewTableRow(newCustomer);
     } else {
-      const id = currentCustomerID;
+      const { id } = currentCustomer;
       // Create an updated Customer instance
       const updatedCustomer = new Customer(id, name, status, rate, balance, deposit, description);
       // Send a POST request to the API
       await httpRequest(HTTP_METHODS.PUT, updatedCustomer.toJSON(), `${API_BASE_URL}/${id}`);
-      loadCustomers();
+      editCurrentCustomerRow(updatedCustomer);
     }
     closeModal(customerModal);
   }
-  confirmButton.addEventListener('click', handleAddorEditCustomer);
+  confirmButton.addEventListener('click', handleAddOrEditCustomer);
   checkFormValidity();
 }
 
@@ -259,11 +370,7 @@ async function fillEditModal() {
   const depositInput = document.getElementById('deposit-input');
   const descriptionInput = document.getElementById('description-input');
 
-  const customer = await httpRequest(
-    HTTP_METHODS.GET,
-    null,
-    `${API_BASE_URL}/${currentCustomerID}`
-  );
+  const customer = currentCustomer;
   nameInput.value = customer.name;
   statusInput.value = customer.status;
   rateInput.value = customer.rate;
@@ -279,12 +386,7 @@ editButton.addEventListener('click', fillEditModal);
 
 //* For View customer modal
 async function viewCustomer() {
-  const customer = await httpRequest(
-    HTTP_METHODS.GET,
-    null,
-    `${API_BASE_URL}/${currentCustomerID}`
-  );
-  fillViewModal(customer);
+  fillViewModal(currentCustomer);
   openModal(viewCustomerModal);
 }
 
@@ -294,62 +396,21 @@ closeViewModalButton.addEventListener('click', () => {
   closeModal(viewCustomerModal);
 });
 
-//* Search functionality
-const searchInput = document.querySelector('.search-input');
-
-async function searchCustomers() {
-  const searchValue = searchInput.value.toLowerCase();
-  // Fetch customers by name
-  const nameCustomers = await httpRequest(
-    HTTP_METHODS.GET,
-    null,
-    `${API_BASE_URL}?name_like=${searchValue}`
-  );
-
-  // Fetch customers by status
-  const statusCustomers = await httpRequest(
-    HTTP_METHODS.GET,
-    null,
-    `${API_BASE_URL}?status_like=${searchValue}`
-  );
-
-  // Combine and remove duplicates
-  const customers = combineAndRemoveDuplicates(nameCustomers, statusCustomers);
-
-  // Clear existing table rows
-  removeAllTableRows();
-
-  // Populate table with filtered customers
-  generateTableRows(customers);
-}
-
-// Attach the debounce function to the search input
-searchInput.addEventListener('input', debounce(searchCustomers, searchInterval));
-
 //* Sort functionality
 const sortButton = document.querySelector('.sort-button');
 const sortButtonIcon = document.querySelector('.sort-button img');
 
-const sortingStates = ['default', 'asc', 'desc'];
-let currentSortingState = 0;
-
-sortButton.addEventListener('click', async () => {
+function sortCustomers() {
   currentSortingState = (currentSortingState + 1) % 3;
-  if (currentSortingState === 0) {
+  if (currentSortingState === sortingStates.DEFAULT) {
     sortButtonIcon.src = sortIconDefault;
-    loadCustomers();
   } else {
-    sortButtonIcon.src = currentSortingState === 1 ? sortIconAsc : sortIconDesc;
-    const customers = await httpRequest(
-      HTTP_METHODS.GET,
-      null,
-      `${API_BASE_URL}?_sort=name&_order=${sortingStates[currentSortingState]}`
-    );
-    removeAllTableRows();
-    generateTableRows(customers);
-    setRowsColor();
+    sortButtonIcon.src = currentSortingState === sortingStates.ASC ? sortIconAsc : sortIconDesc;
   }
-});
+  searchCustomers();
+}
+
+sortButton.addEventListener('click', sortCustomers);
 
 //* Delete functionality
 const deleteButton = document.querySelector('.delete-button');
@@ -359,9 +420,10 @@ function closeDeleteConfirmationModal() {
   closeModal(deleteConfirmationModal);
 }
 
-function removeCustomer() {
-  httpRequest(HTTP_METHODS.DELETE, null, `${API_BASE_URL}/${currentCustomerID}`);
-  removeTableRow(currentCustomerID);
+async function removeCustomer(event) {
+  event.target.disabled = true;
+  await httpRequest(HTTP_METHODS.DELETE, null, `${API_BASE_URL}/${currentCustomer.id}`);
+  removeTableRow(currentCustomer.id);
   closeDeleteConfirmationModal();
 }
 

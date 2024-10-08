@@ -1,3 +1,5 @@
+import sortingStates from '../constants/sort';
+
 // Function to check for numbers
 function hasNumbers(value) {
   return /\d/.test(value);
@@ -63,6 +65,18 @@ function getActionMenuPosition(button) {
   return { top: `${top + scrollTop}px`, left: `${left + scrollLeft - 100}px` };
 }
 
+// Sort the customers by name
+function sortCustomersByName(customers, currentSortingState) {
+  switch (currentSortingState) {
+    case sortingStates.ASC:
+      return customers.sort((a, b) => a.name.localeCompare(b.name));
+    case sortingStates.DESC:
+      return customers.sort((a, b) => b.name.localeCompare(a.name));
+    default:
+      return customers;
+  }
+}
+
 export {
   hasNumbers,
   enforceMaxLength,
@@ -71,4 +85,5 @@ export {
   showErrorIfEmpty,
   combineAndRemoveDuplicates,
   getActionMenuPosition,
+  sortCustomersByName,
 };
