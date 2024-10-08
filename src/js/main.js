@@ -176,6 +176,57 @@ function checkFormValidity() {
   confirmButton.disabled = !isFormValid;
 }
 
+function editCurrentCustomerRow(updatedCustomer) {
+  const menuButton = document.querySelector(`div[data-customer-id="${updatedCustomer.id}"]`);
+  let sibling = menuButton.previousElementSibling;
+  while (sibling) {
+    switch (sibling.classList[0]) {
+      case 'name-cell':
+        const nameCell = sibling;
+        const nameField = nameCell.querySelector('.name');
+        nameField.textContent = updatedCustomer.name;
+        const idField = nameCell.querySelector('.id');
+        idField.textContent = updatedCustomer.id;
+        sibling = null;
+        break;
+      case 'description-cell':
+        sibling.textContent = updatedCustomer.description;
+        sibling = sibling.previousElementSibling;
+        break;
+      case 'status-cell':
+        sibling.textContent = updatedCustomer.status;
+        // Add class based on status
+        sibling.classList.add(`status-${updatedCustomer.status.toLowerCase()}`);
+        sibling = sibling.previousElementSibling;
+        break;
+      case 'rate-cell':
+        sibling.querySelector('.amount').querySelectorAll('span')[1].textContent = updatedCustomer.rate;
+        sibling = sibling.previousElementSibling;
+        break;
+      case 'balance-cell':
+        const balanceDollarSign = sibling.querySelector('.amount').querySelectorAll('span')[0];
+        const balance = sibling.querySelector('.amount').querySelectorAll('span')[1];
+        const balanceAmount = sibling.querySelector('.amount');
+        balance.textContent = updatedCustomer.balance;
+        if (updatedCustomer.balance < 0) {
+          balanceDollarSign.textContent = '-$';
+          balance.textContent = Math.abs(updatedCustomer.balance);
+          balanceAmount.classList.remove('positive');
+          balanceAmount.classList.add('negative');
+        }
+        sibling = sibling.previousElementSibling;
+        break;
+      case 'deposit-cell':
+        sibling.querySelector('.amount').querySelectorAll('span')[1].textContent = updatedCustomer.deposit;
+        sibling = sibling.previousElementSibling;
+        break;
+      default:
+        sibling = null;
+        break;
+    }
+  }
+}
+
 function addEventListenersForModalButtons() {
   const customerModal = document.querySelector('.customer-modal');
   const closeCustomerModalButton = document.querySelector('.customer-modal .close-button');
@@ -288,9 +339,8 @@ function addEventListenersForModalButtons() {
       const updatedCustomer = new Customer(id, name, status, rate, balance, deposit, description);
       // Send a POST request to the API
       await httpRequest(HTTP_METHODS.PUT, updatedCustomer.toJSON(), `${API_BASE_URL}/${id}`);
-      loadCustomers();
+      editCurrentCustomerRow(updatedCustomer);
     }
-    searchCustomers(); // Update the search results
     closeModal(customerModal);
   }
   confirmButton.addEventListener('click', handleAddOrEditCustomer);

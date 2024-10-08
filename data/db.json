@@ -2,21 +2,21 @@
   "customers": [
     {
       "id": "bc6ef3fc-d0e0-4650-ae02-7b5dfb1da940",
-      "name": "John Foe",
-      "status": "Paid",
-      "rate": "50.25",
-      "balance": "230.00",
-      "deposit": "54.00",
-      "description": "This is new customer"
+      "name": "John Foeeeee",
+      "status": "Due",
+      "rate": "50.29",
+      "balance": "231.14",
+      "deposit": "54.05",
+      "description": "This is new customer, Editedx7"
     },
     {
       "id": "2ba9a319-02f9-47c4-a889-d4581c287c7c",
-      "name": "Alpha",
-      "status": "Open",
-      "rate": "350.00",
-      "balance": "-1000.00",
-      "deposit": "0.00",
-      "description": "Edited from Anaa"
+      "name": "Alphaa",
+      "status": "Paid",
+      "rate": "351.00",
+      "balance": "-1010.00",
+      "deposit": "0.01",
+      "description": "Edited x2"
     },
     {
       "id": "27877cce-008e-41f0-8e84-de57333c6ea2",
@@ -59,7 +59,7 @@
       "name": "Foxtrot",
       "status": "Due",
       "rate": "50.00",
-      "balance": "60.00",
+      "balance": "-60.01",
       "deposit": "30.00",
       "description": "F"
     },
@@ -104,16 +104,16 @@
       "name": "Juliet",
       "status": "Due",
       "rate": "500.00",
-      "balance": "768.00",
+      "balance": "-768.00",
       "deposit": "555.00",
       "description": "J"
     },
     {
       "id": "d46c5b41-6e0b-4a12-861d-18a407a96c16",
       "name": "Kilo",
-      "status": "Inactive",
+      "status": "Paid",
       "rate": "1000.00",
-      "balance": "-78.00",
+      "balance": "-78.01",
       "deposit": "900.00",
       "description": "K"
     },
@@ -138,11 +138,20 @@
     {
       "id": "77f1ac69-2ac7-4727-bed6-7293dacc2e2f",
       "name": "Mike",
-      "status": "Open",
+      "status": "Paid",
       "rate": "333.00",
       "balance": "333.00",
       "deposit": "333.00",
       "description": "M"
+    },
+    {
+      "id": "9460da61-9a5a-4cec-8ebd-2c05c0e3106b",
+      "name": "November",
+      "status": "Due",
+      "rate": "22.00",
+      "balance": "11.00",
+      "deposit": "33.00",
+      "description": "N"
     }
   ]
 }
