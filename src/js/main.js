@@ -8,9 +8,9 @@ import sortIconAsc from '../assets/icons/sort-asc-icon.svg';
 import sortIconDesc from '../assets/icons/sort-desc-icon.svg';
 import { generateTableRows, removeAllTableRows, setRowsColor } from './templates/dashboard';
 import { createCustomerModal, addEventListenersForModalButtons } from './templates/customer-modal';
-import state from './utils/state';
-import { openModal, combineAndRemoveDuplicates, sortCustomersByName } from './utils/helpers';
-
+import state from './constants/state';
+import { combineAndRemoveDuplicates, sortCustomersByName } from './utils/helpers';
+import { openModal } from './utils/modal';
 //* Loader functionality
 const loader = document.querySelector('.loader-container');
 

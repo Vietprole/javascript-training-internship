@@ -1,5 +1,5 @@
 import menuIcon from '../../assets/icons/menu-icon.svg';
-import state from '../utils/state';
+import state from '../constants/state';
 import { getActionMenuPosition } from '../utils/helpers';
 import createActionMenu from './action-menu';
 

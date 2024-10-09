@@ -1,5 +1,5 @@
-import state from '../utils/state';
-import { closeModal, openModal } from '../utils/helpers';
+import state from '../constants/state';
+import { closeModal, openModal } from '../utils/modal';
 
 function createViewCustomerModal(customer) {
   const viewCustomerModal = document.querySelector('.view-customer-modal');

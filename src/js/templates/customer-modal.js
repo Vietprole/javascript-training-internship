@@ -10,11 +10,11 @@ import {
   showErrorIfEmpty,
   sanitizeInput,
   checkFormValidity,
-  openModal,
-  closeModal,
 } from '../utils/helpers';
 
-import state from '../utils/state';
+import { openModal, closeModal } from '../utils/modal';
+
+import state from '../constants/state';
 
 const Status = {
   OPEN: 'Open',

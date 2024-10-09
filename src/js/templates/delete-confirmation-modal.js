@@ -1,7 +1,7 @@
 import { API_BASE_URL } from '../constants/api';
 import { Delete } from '../utils/http-request';
-import state from '../utils/state';
-import { openModal, closeModal } from '../utils/helpers';
+import state from '../constants/state';
+import { openModal, closeModal } from '../utils/modal';
 import { removeTableRow } from './dashboard';
 
 function createDeleteConfirmationModal() {
