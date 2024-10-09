@@ -15,9 +15,13 @@ function enforceMaxLength(event) {
 }
 
 // Function to check if the rate, balance, deposit is valid
-function isValid(input) {
-  // Positive, max 7 digits, max 2 decimal places, allow trailing decimal point
-  return /^\d{1,7}(\.\d{0,2})?$/.test(input);
+function isValid(input, allowNegative = false) {
+  if (!allowNegative) {
+    // Positive, max 7 digits, max 2 decimal places, allow trailing decimal point
+    return /^\d{1,7}(\.\d{0,2})?$/.test(input);
+  }
+  // Allow negative
+  return /^(-\d{0,7}(\.\d{0,2})?|\d{1,7}(\.\d{0,2})?)$/.test(input);
 }
 
 function sanitizeInput(value) {

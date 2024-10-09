@@ -64,7 +64,7 @@ function addEventListenersForModalButtons() {
   }
 
   function validateAndRevertInput(event) {
-    const { target } = event.target;
+    const target = event.target;
     switch (target) {
       case nameInput:
         if (target.value && hasNumbers(target.value)) {
@@ -78,8 +78,8 @@ function addEventListenersForModalButtons() {
         break;
       case balanceInput: {
         // Allow negative numbers
-        const regex = /^(-\d{0,7}(\.\d{0,2})?|\d{1,7}(\.\d{0,2})?)$/;
-        if (target.value && !regex.test(target.value)) {
+        const allowNegative = true;
+        if (target.value && !isValid(target.value, allowNegative)) {
           target.value = previousBalanceValue;
         }
         break;
