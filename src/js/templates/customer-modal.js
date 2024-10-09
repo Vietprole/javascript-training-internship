@@ -44,6 +44,7 @@ function addEventListenersForModalButtons() {
   let previousBalanceValue = '';
   let previousDepositValue = '';
 
+  // Save the previous value of the input field so we can revert if the new value is invalid
   function setPreviousValue(event) {
     switch (event.target) {
       case nameInput:
@@ -63,6 +64,7 @@ function addEventListenersForModalButtons() {
     }
   }
 
+  // Validate the input and revert to the previous value if the new value is invalid
   function validateAndRevertInput(event) {
     const target = event.target;
     switch (target) {
@@ -114,6 +116,7 @@ function addEventListenersForModalButtons() {
   depositInput.addEventListener('keydown', setPreviousValue);
   depositInput.addEventListener('input', validateAndRevertInput);
 
+  // Handle the customer modal form submission
   async function handleAddOrEditCustomer(event) {
     const { target } = event;
     target.disabled = true;
@@ -146,7 +149,6 @@ function addEventListenersForModalButtons() {
     closeModal(customerModal);
   }
   confirmButton.addEventListener('click', handleAddOrEditCustomer);
-  checkFormValidity();
 }
 
 function createCustomerModal(isAddMode) {
@@ -300,6 +302,7 @@ async function fillEditModal() {
   depositInput.value = customer.deposit;
   descriptionInput.value = customer.description;
 
+  // Check the form validity when the modal is opened
   checkFormValidity();
   openModal(customerModal);
 }

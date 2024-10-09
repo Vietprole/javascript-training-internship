@@ -24,15 +24,18 @@ function isValid(input, allowNegative = false) {
   return /^(-\d{0,7}(\.\d{0,2})?|\d{1,7}(\.\d{0,2})?)$/.test(input);
 }
 
+// Adjust input to the correct format
 function sanitizeInput(value) {
   let temp = value.endsWith('.') ? `${value}00` : value;
   // If the value ends with a single decimal digit, add '0'
   temp = /^-?\d+\.\d$/.test(temp) ? `${temp}0` : temp;
   // If the value not contains "." and end with a digit, add '.00'
   temp = /^-?\d+$/.test(temp) ? `${temp}.00` : temp;
+  // If the value ends with a single "-", adjust it to '0.00'
   return temp.endsWith('-') ? '0.00' : temp;
 }
 
+// Show error message if the required field is empty
 function showErrorIfEmpty(event) {
   const input = event.target;
   const inputWrapper = input.closest('.input-wrapper');

@@ -1,4 +1,4 @@
-//* Open and close modal functions
+// Open and close modal functions
 function openModal(modal) {
   const modalElement = modal;
   const modalOverlay = document.querySelector('.modal-overlay');

@@ -11,7 +11,7 @@ import { createCustomerModal, addEventListenersForModalButtons } from './templat
 import state from './constants/state';
 import { combineAndRemoveDuplicates, sortCustomersByName } from './utils/helpers';
 import { openModal } from './utils/modal';
-//* Loader functionality
+// Loader functionality
 const loader = document.querySelector('.loader-container');
 
 function showLoader() {
@@ -40,7 +40,7 @@ loadCustomers();
 
 let currentSortingState = sortingStates.DEFAULT;
 
-//* Search functionality
+// Search functionality
 const searchInput = document.querySelector('.search-input');
 
 async function searchCustomers() {
@@ -69,7 +69,7 @@ async function searchCustomers() {
 // Attach the debounce function to the search input
 searchInput.addEventListener('input', debounce(searchCustomers, searchInterval));
 
-//* Add button functionality
+// Add button functionality
 const addButton = document.querySelector('.add-button');
 
 // Customer add modal open and close
@@ -83,7 +83,7 @@ function handleOpenAddModal() {
 
 addButton.addEventListener('click', handleOpenAddModal);
 
-//* Sort functionality
+// Sort functionality
 const sortButton = document.querySelector('.sort-button');
 const sortButtonIcon = document.querySelector('.sort-button img');
 

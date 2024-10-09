@@ -5,7 +5,8 @@ import createActionMenu from './action-menu';
 
 let currentCustomer = {};
 
-//* Action menu functionality
+// Click outside of the action menu to close it
+// This won't work if you click on another menu button
 function closeActionMenuWhenClickedOutside(event) {
   const actionMenuButtons = document.querySelectorAll('.menu-button');
   const actionMenu = document.querySelector('.action-menu');
@@ -19,6 +20,7 @@ function closeActionMenuWhenClickedOutside(event) {
   }
 }
 
+// Add data and event listeners to menu buttons
 function loadMenuButton(customer, button) {
   const menuButton = button;
   menuButton.dataset.customerId = customer.id;
@@ -29,6 +31,8 @@ function loadMenuButton(customer, button) {
   menuButton.dataset.customerDeposit = customer.deposit;
   menuButton.dataset.customerDescription = customer.description;
   menuButton.addEventListener('click', () => {
+    // If there is already an action menu, delete it
+    // This is to account for when user click on another menu button
     if (document.querySelector('.action-menu')) {
       const actionMenu = document.querySelector('.action-menu');
       while (actionMenu.firstChild) {
@@ -48,8 +52,8 @@ function loadMenuButton(customer, button) {
 function loadActionMenu(customers) {
   const actionMenuButtons = document.querySelectorAll('.menu-button');
   actionMenuButtons.forEach((button, index) => {
-    // Store customer information in data-* attributes
     const customer = customers[index];
+    // Store customer information in data-* attributes
     loadMenuButton(customer, button);
   });
 
@@ -198,7 +202,7 @@ function createTableRow(customer) {
   return newRow;
 }
 
-//* Get customers to view on Dashboard
+// Get customers to view on Dashboard
 function generateTableRows(customers) {
   customers.forEach((customer) => {
     const newRow = createTableRow(customer);
@@ -209,6 +213,7 @@ function generateTableRows(customers) {
   loadActionMenu(customers);
 }
 
+// Add a new table row when create new customer
 function addNewTableRow(customer) {
   const newRow = createTableRow(customer);
   const tableBody = document.querySelector('.table-body');
@@ -218,6 +223,7 @@ function addNewTableRow(customer) {
   setRowsColor();
 }
 
+// Edit the current customer row when edit customer
 function editCurrentCustomerRow(updatedCustomer) {
   const menuButton = document.querySelector(`div[data-customer-id="${updatedCustomer.id}"]`);
   let sibling = menuButton.previousElementSibling;
