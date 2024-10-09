@@ -2,12 +2,12 @@
   "customers": [
     {
       "id": "bc6ef3fc-d0e0-4650-ae02-7b5dfb1da940",
-      "name": "John Foeeeee",
-      "status": "Paid",
-      "rate": "50.29",
-      "balance": "231.14",
-      "deposit": "54.05",
-      "description": "This is new customer, Editedx7"
+      "name": "John Foe",
+      "status": "Due",
+      "rate": "50.21",
+      "balance": "231.17",
+      "deposit": "54.01",
+      "description": "This is new customer, Editedx11"
     },
     {
       "id": "2ba9a319-02f9-47c4-a889-d4581c287c7c",
@@ -78,7 +78,7 @@
       "status": "Paid",
       "rate": "80.00",
       "balance": "70.00",
-      "deposit": "90.00",
+      "deposit": "90.01",
       "description": "h"
     },
     {
@@ -93,10 +93,10 @@
     {
       "id": "fa50175a-727c-413f-9bee-652b5d94a84f",
       "name": "Loong",
-      "status": "Open",
-      "rate": "500.00",
-      "balance": "700.00",
-      "deposit": "600.00",
+      "status": "Paid",
+      "rate": "501.00",
+      "balance": "701.00",
+      "deposit": "601.00",
       "description": "A really really long text that overflow two line on the description row. This is to test out if the ellipsis is there in the 2nd row."
     },
     {

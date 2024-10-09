@@ -1,5 +1,7 @@
 import menuIcon from '../../assets/icons/menu-icon.svg';
+import state from '../utils/state';
 import { getActionMenuPosition } from '../utils/helpers';
+import createActionMenu from './action-menu';
 
 let currentCustomer = {};
 
@@ -10,12 +12,14 @@ function closeActionMenuWhenClickedOutside(event) {
   // Close the action menu if the user clicks outside of it
   // Check if action menu's buttons is not the target to prevent closing the menu when clicking on them
   if (!Array.from(actionMenuButtons).some((button) => button.contains(event.target))) {
+    while (actionMenu.firstChild) {
+      actionMenu.removeChild(actionMenu.firstChild);
+    }
     actionMenu.classList.remove('open');
   }
 }
 
 function loadMenuButton(customer, button) {
-  const actionMenu = document.querySelector('.action-menu');
   const menuButton = button;
   menuButton.dataset.customerId = customer.id;
   menuButton.dataset.customerName = customer.name;
@@ -25,7 +29,15 @@ function loadMenuButton(customer, button) {
   menuButton.dataset.customerDeposit = customer.deposit;
   menuButton.dataset.customerDescription = customer.description;
   menuButton.addEventListener('click', () => {
-    currentCustomer = customer;
+    if (document.querySelector('.action-menu')) {
+      const actionMenu = document.querySelector('.action-menu');
+      while (actionMenu.firstChild) {
+        actionMenu.removeChild(actionMenu.firstChild);
+      }
+    }
+    createActionMenu();
+    const actionMenu = document.querySelector('.action-menu');
+    state.currentCustomer = customer;
     const { top, left } = getActionMenuPosition(button);
     actionMenu.style.top = top;
     actionMenu.style.left = left;
@@ -206,11 +218,64 @@ function addNewTableRow(customer) {
   setRowsColor();
 }
 
+function editCurrentCustomerRow(updatedCustomer) {
+  const menuButton = document.querySelector(`div[data-customer-id="${updatedCustomer.id}"]`);
+  let sibling = menuButton.previousElementSibling;
+  while (sibling) {
+    switch (sibling.classList[0]) {
+      case 'name-cell':
+        const nameCell = sibling;
+        const nameField = nameCell.querySelector('.name');
+        nameField.textContent = updatedCustomer.name;
+        const idField = nameCell.querySelector('.id');
+        idField.textContent = updatedCustomer.id;
+        sibling = null;
+        break;
+      case 'description-cell':
+        sibling.textContent = updatedCustomer.description;
+        sibling = sibling.previousElementSibling;
+        break;
+      case 'status-cell':
+        sibling.textContent = updatedCustomer.status;
+        // Add class based on status
+        sibling.classList.remove(`status-${state.currentCustomer.status.toLowerCase()}`);
+        sibling.classList.add(`status-${updatedCustomer.status.toLowerCase()}`);
+        sibling = sibling.previousElementSibling;
+        break;
+      case 'rate-cell':
+        sibling.querySelector('.amount').querySelectorAll('span')[1].textContent = updatedCustomer.rate;
+        sibling = sibling.previousElementSibling;
+        break;
+      case 'balance-cell':
+        const balanceDollarSign = sibling.querySelector('.amount').querySelectorAll('span')[0];
+        const balance = sibling.querySelector('.amount').querySelectorAll('span')[1];
+        const balanceAmount = sibling.querySelector('.amount');
+        balance.textContent = updatedCustomer.balance;
+        if (updatedCustomer.balance < 0) {
+          balanceDollarSign.textContent = '-$';
+          balance.textContent = Math.abs(updatedCustomer.balance);
+          balanceAmount.classList.remove('positive');
+          balanceAmount.classList.add('negative');
+        }
+        sibling = sibling.previousElementSibling;
+        break;
+      case 'deposit-cell':
+        sibling.querySelector('.amount').querySelectorAll('span')[1].textContent = updatedCustomer.deposit;
+        sibling = sibling.previousElementSibling;
+        break;
+      default:
+        sibling = null;
+        break;
+    }
+  }
+}
+
 export {
   generateTableRows,
   removeAllTableRows,
   removeTableRow,
   addNewTableRow,
+  editCurrentCustomerRow,
   setRowsColor,
   currentCustomer,
 };

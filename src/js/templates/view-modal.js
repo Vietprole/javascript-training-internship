@@ -1,3 +1,6 @@
+import state from '../utils/state';
+import { closeModal, openModal } from '../utils/helpers';
+
 function createViewCustomerModal(customer) {
   const viewCustomerModal = document.querySelector('.view-customer-modal');
 
@@ -110,4 +113,15 @@ function createViewCustomerModal(customer) {
   viewCustomerModal.append(heading, horizontalRule, viewCustomerWrapper, buttonGroup);
 }
 
-export default createViewCustomerModal;
+// View customer when click on the view button
+function viewCustomer() {
+  createViewCustomerModal(state.currentCustomer);
+  const viewCustomerModal = document.querySelector('.view-customer-modal');
+  const closeViewModalButton = document.querySelector('.view-customer-modal .close-button');
+  closeViewModalButton.addEventListener('click', () => {
+    closeModal(viewCustomerModal);
+  });
+  openModal(viewCustomerModal);
+}
+
+export { createViewCustomerModal, viewCustomer };

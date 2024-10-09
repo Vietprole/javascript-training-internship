@@ -1,3 +1,9 @@
+import { API_BASE_URL } from '../constants/api';
+import { Delete } from '../utils/http-request';
+import state from '../utils/state';
+import { openModal, closeModal } from '../utils/helpers';
+import { removeTableRow } from './dashboard';
+
 function createDeleteConfirmationModal() {
   const deleteConfirmationModal = document.querySelector('.delete-confirmation-modal');
   const warningMessage = document.createElement('p');
@@ -14,4 +20,27 @@ function createDeleteConfirmationModal() {
   deleteConfirmationModal.append(warningMessage, buttonGroup);
 }
 
-export default createDeleteConfirmationModal;
+function closeDeleteConfirmationModal() {
+  const deleteConfirmationModal = document.querySelector('.delete-confirmation-modal');
+  closeModal(deleteConfirmationModal);
+}
+
+async function removeCustomer(event) {
+  const { target } = event;
+  target.disabled = true;
+  await Delete(`${API_BASE_URL}/${state.currentCustomer.id}`);
+  removeTableRow(state.currentCustomer.id);
+  closeDeleteConfirmationModal();
+}
+
+function createAndOpenDeleteConfirmationModal() {
+  createDeleteConfirmationModal();
+  const deleteConfirmationModal = document.querySelector('.delete-confirmation-modal');
+  const deleteConfirmButton = document.querySelector('.delete-confirmation-modal .confirm-button');
+  const deleteCloseButton = document.querySelector('.delete-confirmation-modal .close-button');
+  deleteCloseButton.addEventListener('click', closeDeleteConfirmationModal);
+  deleteConfirmButton.addEventListener('click', removeCustomer);
+  openModal(deleteConfirmationModal);
+}
+
+export { createDeleteConfirmationModal, createAndOpenDeleteConfirmationModal };
