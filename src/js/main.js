@@ -77,7 +77,6 @@ function handleOpenAddModal() {
   state.isAddMode = true;
   createCustomerModal(state.isAddMode);
   const customerModal = document.querySelector('.customer-modal');
-  addEventListenersForModalButtons();
   openModal(customerModal);
 }
 

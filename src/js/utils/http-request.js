@@ -20,19 +20,23 @@ async function httpRequest(method, body, url) {
 }
 
 async function Get(url = API_BASE_URL) {
-  return httpRequest(HTTP_METHODS.GET, null, url);
+  const data = await httpRequest(HTTP_METHODS.GET, null, url);
+  return data;
 }
 
 async function Post(body, url = API_BASE_URL) {
-  return httpRequest(HTTP_METHODS.POST, body, url);
+  const data = await httpRequest(HTTP_METHODS.POST, body, url);
+  return data;
 }
 
 async function Put(body, url) {
-  return httpRequest(HTTP_METHODS.PUT, body, url);
+  const data = await httpRequest(HTTP_METHODS.PUT, body, url);
+  return data;
 }
 
 async function Delete(url) {
-  return httpRequest(HTTP_METHODS.DELETE, null, url);
+  const data = await httpRequest(HTTP_METHODS.DELETE, null, url);
+  return data;
 }
 
 export { Get, Post, Put, Delete };

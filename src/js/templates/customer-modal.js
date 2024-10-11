@@ -96,25 +96,25 @@ function addEventListenersForModalButtons() {
     }
   }
   nameInput.addEventListener('input', enforceMaxLength);
-  nameInput.addEventListener('input', checkFormValidity);
   nameInput.addEventListener('blur', showErrorIfEmpty);
   nameInput.addEventListener('keydown', setPreviousValue);
   nameInput.addEventListener('input', validateAndRevertInput);
+  nameInput.addEventListener('input', checkFormValidity);
 
-  rateInput.addEventListener('input', checkFormValidity);
   rateInput.addEventListener('blur', showErrorIfEmpty);
   rateInput.addEventListener('keydown', setPreviousValue);
   rateInput.addEventListener('input', validateAndRevertInput);
+  rateInput.addEventListener('input', checkFormValidity);
 
-  balanceInput.addEventListener('input', checkFormValidity);
   balanceInput.addEventListener('blur', showErrorIfEmpty);
   balanceInput.addEventListener('keydown', setPreviousValue);
   balanceInput.addEventListener('input', validateAndRevertInput);
+  balanceInput.addEventListener('input', checkFormValidity);
 
-  depositInput.addEventListener('input', checkFormValidity);
   depositInput.addEventListener('blur', showErrorIfEmpty);
   depositInput.addEventListener('keydown', setPreviousValue);
   depositInput.addEventListener('input', validateAndRevertInput);
+  depositInput.addEventListener('input', checkFormValidity);
 
   // Handle the customer modal form submission
   async function handleAddOrEditCustomer(event) {
@@ -285,7 +285,6 @@ async function fillEditModal() {
   state.isAddMode = false;
   createCustomerModal(state.isAddMode);
   const customerModal = document.querySelector('.customer-modal');
-  addEventListenersForModalButtons();
 
   const nameInput = document.getElementById('name-input');
   const statusInput = document.getElementById('status-input');

@@ -218,7 +218,7 @@ function addNewTableRow(customer) {
   const newRow = createTableRow(customer);
   const tableBody = document.querySelector('.table-body');
   tableBody.appendChild(newRow);
-  window.removeEventListener('click', closeActionMenuWhenClickedOutside);
+  // window.removeEventListener('click', closeActionMenuWhenClickedOutside);
   loadMenuButton(customer, newRow.querySelector('.menu-button'));
   setRowsColor();
 }
@@ -274,6 +274,7 @@ function editCurrentCustomerRow(updatedCustomer) {
         break;
     }
   }
+  loadMenuButton(updatedCustomer, menuButton);
 }
 
 export {

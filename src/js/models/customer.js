@@ -1,5 +1,15 @@
 class Customer {
-  constructor(id, name, status, rate, balance, deposit, description) {
+  constructor(
+    id,
+    name,
+    status,
+    rate,
+    balance,
+    deposit,
+    description,
+    currency = 'CAD',
+    symbol = '$'
+  ) {
     this.id = id;
     this.name = name;
     this.status = status;
@@ -7,6 +17,8 @@ class Customer {
     this.balance = balance;
     this.deposit = deposit;
     this.description = description;
+    this.currency = currency;
+    this.symbol = symbol;
   }
 
   toJSON() {
@@ -18,6 +30,8 @@ class Customer {
       balance: this.balance,
       deposit: this.deposit,
       description: this.description,
+      currency: this.currency,
+      symbol: this.symbol,
     });
   }
 }
