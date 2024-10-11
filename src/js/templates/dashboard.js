@@ -118,14 +118,14 @@ function createTableRow(customer) {
   statusCell.classList.add(`status-${status.toLowerCase()}`);
   statusCell.textContent = status;
 
-  // Create a reusable dollar sign element
-  const dollarSign = document.createElement('span');
-  dollarSign.textContent = '$';
+  // Create a reusable symbol element
+  const symbol = document.createElement('span');
+  symbol.textContent = customer.symbol;
 
   // Create a reusable currency element
   const currency = document.createElement('div');
   currency.classList.add('currency');
-  currency.textContent = 'CAD';
+  currency.textContent = customer.currency;
 
   // Create a rate cell
   const rateCell = document.createElement('div');
@@ -133,10 +133,10 @@ function createTableRow(customer) {
   // Create a rate amount div
   const rateAmount = document.createElement('div');
   rateAmount.classList.add('amount');
-  const rateDollarSign = dollarSign.cloneNode(true); // Clone the dollar sign element
+  const rateSymbol = symbol.cloneNode(true); // Clone the symbol element
   const rate = document.createElement('span');
   rate.textContent = customer.rate;
-  rateAmount.appendChild(rateDollarSign);
+  rateAmount.appendChild(rateSymbol);
   rateAmount.appendChild(rate);
   // Create a rate currency div
   const rateCurrency = currency.cloneNode(true); // Clone the currency element
@@ -150,16 +150,16 @@ function createTableRow(customer) {
   const balanceAmount = document.createElement('div');
   balanceAmount.classList.add('amount');
   balanceAmount.classList.add('positive');
-  const balanceDollarSign = dollarSign.cloneNode(true); // Clone the dollar sign element
+  const balanceSymbol = symbol.cloneNode(true); // Clone the symbol element
   const balance = document.createElement('span');
   balance.textContent = customer.balance;
   if (customer.balance < 0) {
-    balanceDollarSign.textContent = '-$';
+    balanceSymbol.textContent = `-${customer.symbol}`;
     balance.textContent = Math.abs(customer.balance);
     balanceAmount.classList.remove('positive');
     balanceAmount.classList.add('negative');
   }
-  balanceAmount.appendChild(balanceDollarSign);
+  balanceAmount.appendChild(balanceSymbol);
   balanceAmount.appendChild(balance);
   // Create a balance currency div
   const balanceCurrency = currency.cloneNode(true); // Clone the currency element
@@ -172,10 +172,10 @@ function createTableRow(customer) {
   // Create a deposit amount div
   const depositAmount = document.createElement('div');
   depositAmount.classList.add('amount');
-  const depositDollarSign = dollarSign.cloneNode(true); // Clone the dollar sign element
+  const depositSymbol = symbol.cloneNode(true); // Clone the symbol element
   const deposit = document.createElement('span');
   deposit.textContent = customer.deposit;
-  depositAmount.appendChild(depositDollarSign);
+  depositAmount.appendChild(depositSymbol);
   depositAmount.appendChild(deposit);
   // Create a deposit currency div
   const depositCurrency = currency.cloneNode(true); // Clone the currency element
@@ -202,8 +202,19 @@ function createTableRow(customer) {
   return newRow;
 }
 
+function showNoCustomersFound() {
+  const tableBody = document.querySelector('.table-body');
+  const noCustomersFound = document.createElement('div');
+  noCustomersFound.classList.add('no-customers-found');
+  noCustomersFound.textContent = 'No customers found.';
+  tableBody.appendChild(noCustomersFound);
+}
+
 // Get customers to view on Dashboard
 function generateTableRows(customers) {
+  if (customers.length === 0) {
+    showNoCustomersFound();
+  }
   customers.forEach((customer) => {
     const newRow = createTableRow(customer);
     const tableBody = document.querySelector('.table-body');
@@ -227,52 +238,56 @@ function addNewTableRow(customer) {
 function editCurrentCustomerRow(updatedCustomer) {
   const menuButton = document.querySelector(`div[data-customer-id="${updatedCustomer.id}"]`);
   let sibling = menuButton.previousElementSibling;
+  const classes = {
+    'name-cell': () => {
+      const nameCell = sibling;
+      const nameField = nameCell.querySelector('.name');
+      nameField.textContent = updatedCustomer.name;
+      const idField = nameCell.querySelector('.id');
+      idField.textContent = updatedCustomer.id;
+      sibling = null;
+    },
+    'description-cell': () => {
+      sibling.textContent = updatedCustomer.description;
+      sibling = sibling.previousElementSibling;
+    },
+    'status-cell': () => {
+      sibling.textContent = updatedCustomer.status;
+      // Add class based on status
+      sibling.classList.remove(`status-${state.currentCustomer.status.toLowerCase()}`);
+      sibling.classList.add(`status-${updatedCustomer.status.toLowerCase()}`);
+      sibling = sibling.previousElementSibling;
+    },
+    'rate-cell': () => {
+      sibling.querySelector('.amount').querySelectorAll('span')[1].textContent =
+        updatedCustomer.rate;
+      sibling = sibling.previousElementSibling;
+    },
+    'balance-cell': () => {
+      const balanceSymbol = sibling.querySelector('.amount').querySelectorAll('span')[0];
+      const balance = sibling.querySelector('.amount').querySelectorAll('span')[1];
+      const balanceAmount = sibling.querySelector('.amount');
+      balance.textContent = updatedCustomer.balance;
+      if (updatedCustomer.balance < 0) {
+        balanceSymbol.textContent = `-${updatedCustomer.symbol}`;
+        balance.textContent = Math.abs(updatedCustomer.balance);
+        balanceAmount.classList.remove('positive');
+        balanceAmount.classList.add('negative');
+      }
+      sibling = sibling.previousElementSibling;
+    },
+    'deposit-cell': () => {
+      sibling.querySelector('.amount').querySelectorAll('span')[1].textContent =
+        updatedCustomer.deposit;
+      sibling = sibling.previousElementSibling;
+    },
+    default: () => {
+      sibling = null;
+    },
+  };
   while (sibling) {
-    switch (sibling.classList[0]) {
-      case 'name-cell':
-        const nameCell = sibling;
-        const nameField = nameCell.querySelector('.name');
-        nameField.textContent = updatedCustomer.name;
-        const idField = nameCell.querySelector('.id');
-        idField.textContent = updatedCustomer.id;
-        sibling = null;
-        break;
-      case 'description-cell':
-        sibling.textContent = updatedCustomer.description;
-        sibling = sibling.previousElementSibling;
-        break;
-      case 'status-cell':
-        sibling.textContent = updatedCustomer.status;
-        // Add class based on status
-        sibling.classList.remove(`status-${state.currentCustomer.status.toLowerCase()}`);
-        sibling.classList.add(`status-${updatedCustomer.status.toLowerCase()}`);
-        sibling = sibling.previousElementSibling;
-        break;
-      case 'rate-cell':
-        sibling.querySelector('.amount').querySelectorAll('span')[1].textContent = updatedCustomer.rate;
-        sibling = sibling.previousElementSibling;
-        break;
-      case 'balance-cell':
-        const balanceDollarSign = sibling.querySelector('.amount').querySelectorAll('span')[0];
-        const balance = sibling.querySelector('.amount').querySelectorAll('span')[1];
-        const balanceAmount = sibling.querySelector('.amount');
-        balance.textContent = updatedCustomer.balance;
-        if (updatedCustomer.balance < 0) {
-          balanceDollarSign.textContent = '-$';
-          balance.textContent = Math.abs(updatedCustomer.balance);
-          balanceAmount.classList.remove('positive');
-          balanceAmount.classList.add('negative');
-        }
-        sibling = sibling.previousElementSibling;
-        break;
-      case 'deposit-cell':
-        sibling.querySelector('.amount').querySelectorAll('span')[1].textContent = updatedCustomer.deposit;
-        sibling = sibling.previousElementSibling;
-        break;
-      default:
-        sibling = null;
-        break;
-    }
+    const handler = classes[sibling.classList[0]] || classes.default;
+    handler();
   }
   loadMenuButton(updatedCustomer, menuButton);
 }

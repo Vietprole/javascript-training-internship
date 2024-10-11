@@ -15,6 +15,7 @@ import {
 import { openModal, closeModal } from '../utils/modal';
 
 import state from '../constants/state';
+import { DEFAULT_SYMBOL } from '../constants/currency';
 
 const Status = {
   OPEN: 'Open',
@@ -39,82 +40,55 @@ function addEventListenersForModalButtons() {
     closeModal(customerModal);
   });
 
-  let previousNameValue = '';
-  let previousRateValue = '';
-  let previousBalanceValue = '';
-  let previousDepositValue = '';
+  // Store previous values for inputs in an object instead of separated variables
+  const previousValues = {
+    name: '',
+    rate: '',
+    balance: '',
+    deposit: '',
+  };
 
-  // Save the previous value of the input field so we can revert if the new value is invalid
-  function setPreviousValue(event) {
-    switch (event.target) {
-      case nameInput:
-        previousNameValue = event.target.value;
-        break;
-      case rateInput:
-        previousRateValue = event.target.value;
-        break;
-      case balanceInput:
-        previousBalanceValue = event.target.value;
-        break;
-      case depositInput:
-        previousDepositValue = event.target.value;
-        break;
-      default:
-        break;
-    }
+  const inputMap = {
+    'name-input': 'name',
+    'rate-input': 'rate',
+    'balance-input': 'balance',
+    'deposit-input': 'deposit',
+  };
+
+  function setPreviousValue() {
+    const key = inputMap[this.id];
+    if (key) previousValues[key] = this.value;
   }
+
+  const validators = {
+    name: (value) => !hasNumbers(value),
+    rate: (value) => isValid(value),
+    balance: (value) => isValid(value, true), // allow negative numbers
+    deposit: (value) => isValid(value),
+  };
 
   // Validate the input and revert to the previous value if the new value is invalid
-  function validateAndRevertInput(event) {
-    const target = event.target;
-    switch (target) {
-      case nameInput:
-        if (target.value && hasNumbers(target.value)) {
-          target.value = previousNameValue;
-        }
-        break;
-      case rateInput:
-        if (target.value && !isValid(target.value)) {
-          target.value = previousRateValue;
-        }
-        break;
-      case balanceInput: {
-        // Allow negative numbers
-        const allowNegative = true;
-        if (target.value && !isValid(target.value, allowNegative)) {
-          target.value = previousBalanceValue;
-        }
-        break;
-      }
-      case depositInput:
-        if (target.value && !isValid(target.value)) {
-          target.value = previousDepositValue;
-        }
-        break;
-      default:
-        break;
+  function validateAndRevertInput() {
+    const key = inputMap[this.id];
+    if (this.value && !validators[key](this.value)) {
+      this.value = previousValues[key];
     }
   }
-  nameInput.addEventListener('input', enforceMaxLength);
-  nameInput.addEventListener('blur', showErrorIfEmpty);
-  nameInput.addEventListener('keydown', setPreviousValue);
-  nameInput.addEventListener('input', validateAndRevertInput);
-  nameInput.addEventListener('input', checkFormValidity);
 
-  rateInput.addEventListener('blur', showErrorIfEmpty);
-  rateInput.addEventListener('keydown', setPreviousValue);
-  rateInput.addEventListener('input', validateAndRevertInput);
-  rateInput.addEventListener('input', checkFormValidity);
+  // maxLength : boolean
+  function setupInputListeners(inputElement, maxLength) {
+    if (maxLength) inputElement.addEventListener('input', enforceMaxLength);
+    inputElement.addEventListener('blur', showErrorIfEmpty);
+    inputElement.addEventListener('keydown', setPreviousValue);
+    inputElement.addEventListener('input', validateAndRevertInput);
+    inputElement.addEventListener('input', checkFormValidity);
+  }
 
-  balanceInput.addEventListener('blur', showErrorIfEmpty);
-  balanceInput.addEventListener('keydown', setPreviousValue);
-  balanceInput.addEventListener('input', validateAndRevertInput);
-  balanceInput.addEventListener('input', checkFormValidity);
-
-  depositInput.addEventListener('blur', showErrorIfEmpty);
-  depositInput.addEventListener('keydown', setPreviousValue);
-  depositInput.addEventListener('input', validateAndRevertInput);
-  depositInput.addEventListener('input', checkFormValidity);
+  // Setup listeners for each input field
+  setupInputListeners(nameInput, true);
+  setupInputListeners(rateInput);
+  setupInputListeners(balanceInput);
+  setupInputListeners(depositInput);
 
   // Handle the customer modal form submission
   async function handleAddOrEditCustomer(event) {
@@ -140,8 +114,20 @@ function addEventListenersForModalButtons() {
       addNewTableRow(newCustomer);
     } else {
       const { id } = state.currentCustomer;
+      const { currency } = state.currentCustomer;
+      const { symbol } = state.currentCustomer;
       // Create an updated Customer instance
-      const updatedCustomer = new Customer(id, name, status, rate, balance, deposit, description);
+      const updatedCustomer = new Customer(
+        id,
+        name,
+        status,
+        rate,
+        balance,
+        deposit,
+        description,
+        currency,
+        symbol
+      );
       // Send a PUT request to the API
       await Put(updatedCustomer.toJSON(), `${API_BASE_URL}/${id}`);
       editCurrentCustomerRow(updatedCustomer);
@@ -201,9 +187,10 @@ function createCustomerModal(isAddMode) {
   statusInput.append(openOption, paidOption, inactiveOption, dueOption);
   statusField.append(statusLabel, statusInput);
 
-  // Reusable dollar sign
-  const dollarSign = document.createElement('span');
-  dollarSign.textContent = '$';
+  // Reusable symbol
+  const symbol = document.createElement('span');
+  symbol.classList.add('symbol');
+  symbol.textContent = DEFAULT_SYMBOL;
 
   const rateField = document.createElement('div');
   rateField.classList.add('rate-field');
@@ -212,12 +199,12 @@ function createCustomerModal(isAddMode) {
   rateLabel.classList.add('label');
   rateLabel.textContent = 'Rate';
   const rateInputWrapper = inputWrapper.cloneNode(false);
-  const rateDollarSign = dollarSign.cloneNode(true);
+  const rateSymbol = symbol.cloneNode(true);
   const rateInput = document.createElement('input');
   rateInput.setAttribute('type', 'text');
   rateInput.setAttribute('id', 'rate-input');
   rateInput.setAttribute('required', 'true');
-  rateInputWrapper.append(rateDollarSign, rateInput);
+  rateInputWrapper.append(rateSymbol, rateInput);
   const rateErrorMessage = errorMessage.cloneNode(false);
   rateField.append(rateLabel, rateInputWrapper, rateErrorMessage);
 
@@ -228,12 +215,12 @@ function createCustomerModal(isAddMode) {
   balanceLabel.classList.add('label');
   balanceLabel.textContent = 'Balance';
   const balanceInputWrapper = inputWrapper.cloneNode(false);
-  const balanceDollarSign = dollarSign.cloneNode(true);
+  const balanceSymbol = symbol.cloneNode(true);
   const balanceInput = document.createElement('input');
   balanceInput.setAttribute('type', 'text');
   balanceInput.setAttribute('id', 'balance-input');
   balanceInput.setAttribute('required', 'true');
-  balanceInputWrapper.append(balanceDollarSign, balanceInput);
+  balanceInputWrapper.append(balanceSymbol, balanceInput);
   const balanceErrorMessage = errorMessage.cloneNode(false);
   balanceField.append(balanceLabel, balanceInputWrapper, balanceErrorMessage);
 
@@ -244,12 +231,12 @@ function createCustomerModal(isAddMode) {
   depositLabel.classList.add('label');
   depositLabel.textContent = 'Deposit';
   const depositInputWrapper = inputWrapper.cloneNode(false);
-  const depositDollarSign = dollarSign.cloneNode(true);
+  const depositSymbol = symbol.cloneNode(true);
   const depositInput = document.createElement('input');
   depositInput.setAttribute('type', 'text');
   depositInput.setAttribute('id', 'deposit-input');
   depositInput.setAttribute('required', 'true');
-  depositInputWrapper.append(depositDollarSign, depositInput);
+  depositInputWrapper.append(depositSymbol, depositInput);
   const depositErrorMessage = errorMessage.cloneNode(false);
   depositField.append(depositLabel, depositInputWrapper, depositErrorMessage);
 
@@ -292,6 +279,7 @@ async function fillEditModal() {
   const balanceInput = document.getElementById('balance-input');
   const depositInput = document.getElementById('deposit-input');
   const descriptionInput = document.getElementById('description-input');
+  const symbols = document.querySelectorAll('.symbol');
 
   const customer = state.currentCustomer;
   nameInput.value = customer.name;
@@ -300,6 +288,9 @@ async function fillEditModal() {
   balanceInput.value = customer.balance;
   depositInput.value = customer.deposit;
   descriptionInput.value = customer.description;
+  symbols.forEach((symbol) => {
+    symbol.textContent = customer.symbol;
+  });
 
   // Check the form validity when the modal is opened
   checkFormValidity();

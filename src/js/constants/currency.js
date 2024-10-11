@@ -1,0 +1,4 @@
+const DEFAULT_CURRENCY = 'CAD';
+const DEFAULT_SYMBOL = '$';
+
+export { DEFAULT_CURRENCY, DEFAULT_SYMBOL };

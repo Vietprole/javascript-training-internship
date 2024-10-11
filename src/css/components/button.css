@@ -7,6 +7,7 @@
   font-size: var(--body-size-md);
   line-height: 17px;
   border-radius: var(--border-radius-xs);
+  cursor: pointer;
 }
 
 .button-primary {

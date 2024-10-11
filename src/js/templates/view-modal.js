@@ -32,9 +32,9 @@ function createViewCustomerModal(customer) {
   statusContent.textContent = customer.status;
   statusField.append(statusLabel, statusContent);
 
-  // Create a reusable dollar sign element
-  const dollarSign = document.createElement('span');
-  dollarSign.textContent = '$';
+  // Create a reusable symbol element
+  const symbol = document.createElement('span');
+  symbol.textContent = customer.symbol;
 
   const rateField = document.createElement('div');
   rateField.classList.add('rate-field');
@@ -44,10 +44,10 @@ function createViewCustomerModal(customer) {
   const rateContent = document.createElement('div');
   rateContent.classList.add('rate-content');
   rateContent.setAttribute('id', 'rate-content');
-  const rateDollarSign = dollarSign.cloneNode(true); // Clone the dollar sign element
+  const rateSymbol = symbol.cloneNode(true); // Clone the symbol element
   const rate = document.createElement('span');
   rate.textContent = customer.rate;
-  rateContent.append(rateDollarSign, rate);
+  rateContent.append(rateSymbol, rate);
   rateField.append(rateLabel, rateContent);
 
   const balanceField = document.createElement('div');
@@ -58,16 +58,16 @@ function createViewCustomerModal(customer) {
   const balanceContent = document.createElement('div');
   balanceContent.classList.add('balance-content');
   balanceContent.setAttribute('id', 'balance-content');
-  const balanceDollarSign = dollarSign.cloneNode(true); // Clone the dollar sign element
+  const balanceSymbol = symbol.cloneNode(true); // Clone the symbol element
   const balance = document.createElement('span');
   balance.textContent = customer.balance;
   if (customer.balance < 0) {
-    balanceDollarSign.textContent = '-$';
+    balanceSymbol.textContent = `-${customer.symbol}`;
     balance.textContent = Math.abs(customer.balance);
     balanceContent.classList.remove('positive');
     balanceContent.classList.add('negative');
   }
-  balanceContent.append(balanceDollarSign, balance);
+  balanceContent.append(balanceSymbol, balance);
   balanceField.append(balanceLabel, balanceContent);
 
   const depositField = document.createElement('div');
@@ -78,10 +78,10 @@ function createViewCustomerModal(customer) {
   const depositContent = document.createElement('div');
   depositContent.classList.add('deposit-content');
   depositContent.setAttribute('id', 'deposit-content');
-  const depositDollarSign = dollarSign.cloneNode(true); // Clone the dollar sign element
+  const depositSymbol = symbol.cloneNode(true); // Clone the symbol element
   const deposit = document.createElement('span');
   deposit.textContent = customer.deposit;
-  depositContent.append(depositDollarSign, deposit);
+  depositContent.append(depositSymbol, deposit);
   depositField.append(depositLabel, depositContent);
 
   const descriptionField = document.createElement('div');
