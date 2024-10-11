@@ -46,21 +46,28 @@ function addEventListenersForModalButtons() {
 
   // Save the previous value of the input field so we can revert if the new value is invalid
   function setPreviousValue(event) {
-    switch (event.target) {
-      case nameInput:
+    console.log(event.target);
+    const inputHandlers = {
+      [nameInput]: () => {
         previousNameValue = event.target.value;
-        break;
-      case rateInput:
+      },
+      [rateInput]: () => {
         previousRateValue = event.target.value;
-        break;
-      case balanceInput:
+      },
+      [balanceInput]: () => {
         previousBalanceValue = event.target.value;
-        break;
-      case depositInput:
+      },
+      [depositInput]: () => {
         previousDepositValue = event.target.value;
-        break;
-      default:
-        break;
+      },
+    };
+
+    // Map the input element to its corresponding handler
+    const handler = inputHandlers[event.target];
+    console.log(handler);
+    // Safety check for event.target not matching any input element
+    if (handler) {
+      handler();
     }
   }
 
