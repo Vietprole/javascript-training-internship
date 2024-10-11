@@ -202,8 +202,19 @@ function createTableRow(customer) {
   return newRow;
 }
 
+function showNoCustomersFound() {
+  const tableBody = document.querySelector('.table-body');
+  const noCustomersFound = document.createElement('div');
+  noCustomersFound.classList.add('no-customers-found');
+  noCustomersFound.textContent = 'No customers found.';
+  tableBody.appendChild(noCustomersFound);
+}
+
 // Get customers to view on Dashboard
 function generateTableRows(customers) {
+  if (customers.length === 0) {
+    showNoCustomersFound();
+  }
   customers.forEach((customer) => {
     const newRow = createTableRow(customer);
     const tableBody = document.querySelector('.table-body');

@@ -179,3 +179,10 @@
   cursor: pointer;
 }
 
+.no-customers-found {
+  text-align: center;
+  font-weight: var(--font-weight-regular);
+  font-size: var(--body-size-md);
+  line-height: 20px;
+  color: var(--text-default-color);
+}
