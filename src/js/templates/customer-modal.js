@@ -15,6 +15,7 @@ import {
 import { openModal, closeModal } from '../utils/modal';
 
 import state from '../constants/state';
+import { DEFAULT_SYMBOL } from '../constants/currency';
 
 const Status = {
   OPEN: 'Open',
@@ -189,7 +190,7 @@ function createCustomerModal(isAddMode) {
   // Reusable symbol
   const symbol = document.createElement('span');
   symbol.classList.add('symbol');
-  symbol.textContent = '$';
+  symbol.textContent = DEFAULT_SYMBOL;
 
   const rateField = document.createElement('div');
   rateField.classList.add('rate-field');
