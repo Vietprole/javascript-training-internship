@@ -15,20 +15,27 @@ function enforceMaxLength(event) {
 }
 
 // Function to check if the rate, balance, deposit is valid
-function isValid(input) {
-  // Positive, max 7 digits, max 2 decimal places, allow trailing decimal point
-  return /^\d{1,7}(\.\d{0,2})?$/.test(input);
+function isValid(input, allowNegative = false) {
+  if (!allowNegative) {
+    // Positive, max 7 digits, max 2 decimal places, allow trailing decimal point
+    return /^\d{1,7}(\.\d{0,2})?$/.test(input);
+  }
+  // Allow negative
+  return /^(-\d{0,7}(\.\d{0,2})?|\d{1,7}(\.\d{0,2})?)$/.test(input);
 }
 
+// Adjust input to the correct format
 function sanitizeInput(value) {
   let temp = value.endsWith('.') ? `${value}00` : value;
   // If the value ends with a single decimal digit, add '0'
   temp = /^-?\d+\.\d$/.test(temp) ? `${temp}0` : temp;
   // If the value not contains "." and end with a digit, add '.00'
   temp = /^-?\d+$/.test(temp) ? `${temp}.00` : temp;
+  // If the value ends with a single "-", adjust it to '0.00'
   return temp.endsWith('-') ? '0.00' : temp;
 }
 
+// Show error message if the required field is empty
 function showErrorIfEmpty(event) {
   const input = event.target;
   const inputWrapper = input.closest('.input-wrapper');
@@ -77,6 +84,18 @@ function sortCustomersByName(customers, currentSortingState) {
   }
 }
 
+// Add/Edit form validation
+function checkFormValidity() {
+  const confirmButton = document.querySelector('.confirm-button');
+  const nameInput = document.getElementById('name-input');
+  const rateInput = document.getElementById('rate-input');
+  const balanceInput = document.getElementById('balance-input');
+  const depositInput = document.getElementById('deposit-input');
+  const isFormValid =
+    nameInput.value && rateInput.value && balanceInput.value && depositInput.value;
+  confirmButton.disabled = !isFormValid;
+}
+
 export {
   hasNumbers,
   enforceMaxLength,
@@ -86,4 +105,5 @@ export {
   combineAndRemoveDuplicates,
   getActionMenuPosition,
   sortCustomersByName,
+  checkFormValidity,
 };

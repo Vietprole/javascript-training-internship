@@ -1,21 +1,27 @@
 import menuIcon from '../../assets/icons/menu-icon.svg';
+import state from '../constants/state';
 import { getActionMenuPosition } from '../utils/helpers';
+import createActionMenu from './action-menu';
 
 let currentCustomer = {};
 
-//* Action menu functionality
+// Click outside of the action menu to close it
+// This won't work if you click on another menu button
 function closeActionMenuWhenClickedOutside(event) {
   const actionMenuButtons = document.querySelectorAll('.menu-button');
   const actionMenu = document.querySelector('.action-menu');
   // Close the action menu if the user clicks outside of it
   // Check if action menu's buttons is not the target to prevent closing the menu when clicking on them
   if (!Array.from(actionMenuButtons).some((button) => button.contains(event.target))) {
+    while (actionMenu.firstChild) {
+      actionMenu.removeChild(actionMenu.firstChild);
+    }
     actionMenu.classList.remove('open');
   }
 }
 
+// Add data and event listeners to menu buttons
 function loadMenuButton(customer, button) {
-  const actionMenu = document.querySelector('.action-menu');
   const menuButton = button;
   menuButton.dataset.customerId = customer.id;
   menuButton.dataset.customerName = customer.name;
@@ -25,7 +31,17 @@ function loadMenuButton(customer, button) {
   menuButton.dataset.customerDeposit = customer.deposit;
   menuButton.dataset.customerDescription = customer.description;
   menuButton.addEventListener('click', () => {
-    currentCustomer = customer;
+    // If there is already an action menu, delete it
+    // This is to account for when user click on another menu button
+    if (document.querySelector('.action-menu')) {
+      const actionMenu = document.querySelector('.action-menu');
+      while (actionMenu.firstChild) {
+        actionMenu.removeChild(actionMenu.firstChild);
+      }
+    }
+    createActionMenu();
+    const actionMenu = document.querySelector('.action-menu');
+    state.currentCustomer = customer;
     const { top, left } = getActionMenuPosition(button);
     actionMenu.style.top = top;
     actionMenu.style.left = left;
@@ -36,8 +52,8 @@ function loadMenuButton(customer, button) {
 function loadActionMenu(customers) {
   const actionMenuButtons = document.querySelectorAll('.menu-button');
   actionMenuButtons.forEach((button, index) => {
-    // Store customer information in data-* attributes
     const customer = customers[index];
+    // Store customer information in data-* attributes
     loadMenuButton(customer, button);
   });
 
@@ -186,7 +202,7 @@ function createTableRow(customer) {
   return newRow;
 }
 
-//* Get customers to view on Dashboard
+// Get customers to view on Dashboard
 function generateTableRows(customers) {
   customers.forEach((customer) => {
     const newRow = createTableRow(customer);
@@ -197,13 +213,68 @@ function generateTableRows(customers) {
   loadActionMenu(customers);
 }
 
+// Add a new table row when create new customer
 function addNewTableRow(customer) {
   const newRow = createTableRow(customer);
   const tableBody = document.querySelector('.table-body');
   tableBody.appendChild(newRow);
-  window.removeEventListener('click', closeActionMenuWhenClickedOutside);
+  // window.removeEventListener('click', closeActionMenuWhenClickedOutside);
   loadMenuButton(customer, newRow.querySelector('.menu-button'));
   setRowsColor();
+}
+
+// Edit the current customer row when edit customer
+function editCurrentCustomerRow(updatedCustomer) {
+  const menuButton = document.querySelector(`div[data-customer-id="${updatedCustomer.id}"]`);
+  let sibling = menuButton.previousElementSibling;
+  while (sibling) {
+    switch (sibling.classList[0]) {
+      case 'name-cell':
+        const nameCell = sibling;
+        const nameField = nameCell.querySelector('.name');
+        nameField.textContent = updatedCustomer.name;
+        const idField = nameCell.querySelector('.id');
+        idField.textContent = updatedCustomer.id;
+        sibling = null;
+        break;
+      case 'description-cell':
+        sibling.textContent = updatedCustomer.description;
+        sibling = sibling.previousElementSibling;
+        break;
+      case 'status-cell':
+        sibling.textContent = updatedCustomer.status;
+        // Add class based on status
+        sibling.classList.remove(`status-${state.currentCustomer.status.toLowerCase()}`);
+        sibling.classList.add(`status-${updatedCustomer.status.toLowerCase()}`);
+        sibling = sibling.previousElementSibling;
+        break;
+      case 'rate-cell':
+        sibling.querySelector('.amount').querySelectorAll('span')[1].textContent = updatedCustomer.rate;
+        sibling = sibling.previousElementSibling;
+        break;
+      case 'balance-cell':
+        const balanceDollarSign = sibling.querySelector('.amount').querySelectorAll('span')[0];
+        const balance = sibling.querySelector('.amount').querySelectorAll('span')[1];
+        const balanceAmount = sibling.querySelector('.amount');
+        balance.textContent = updatedCustomer.balance;
+        if (updatedCustomer.balance < 0) {
+          balanceDollarSign.textContent = '-$';
+          balance.textContent = Math.abs(updatedCustomer.balance);
+          balanceAmount.classList.remove('positive');
+          balanceAmount.classList.add('negative');
+        }
+        sibling = sibling.previousElementSibling;
+        break;
+      case 'deposit-cell':
+        sibling.querySelector('.amount').querySelectorAll('span')[1].textContent = updatedCustomer.deposit;
+        sibling = sibling.previousElementSibling;
+        break;
+      default:
+        sibling = null;
+        break;
+    }
+  }
+  loadMenuButton(updatedCustomer, menuButton);
 }
 
 export {
@@ -211,6 +282,7 @@ export {
   removeAllTableRows,
   removeTableRow,
   addNewTableRow,
+  editCurrentCustomerRow,
   setRowsColor,
   currentCustomer,
 };
