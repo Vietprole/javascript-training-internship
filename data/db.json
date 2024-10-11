@@ -3,11 +3,13 @@
     {
       "id": "5753f144-1dde-42e7-8a64-cb0d8d710c5d",
       "name": "Alpha",
-      "status": "Open",
-      "rate": "1234567.12",
-      "balance": "-400.00",
-      "deposit": "300.00",
-      "description": "A"
+      "status": "Paid",
+      "rate": "123467.12",
+      "balance": "-401.00",
+      "deposit": "30.00",
+      "description": "A",
+      "currency": "CAD",
+      "symbol": "$"
     },
     {
       "id": "aa2e751e-38a3-40ce-88d3-e3298fc530c4",
@@ -23,11 +25,13 @@
     {
       "id": "0d66ec19-4c28-41f1-a9c5-ceaa0811ae63",
       "name": "Charlie",
-      "status": "Open",
-      "rate": "300.56",
-      "balance": "450.00",
-      "deposit": "456.78",
-      "description": "C"
+      "status": "Due",
+      "rate": "300.57",
+      "balance": "450.11",
+      "deposit": "456.76",
+      "description": "C",
+      "currency": "CAD",
+      "symbol": "$"
     },
     {
       "id": "f94e7da2-959d-4ac5-983f-d1a134c0b022",
@@ -74,9 +78,9 @@
     {
       "id": "c265b992-88a4-48c1-926f-009c9752df37",
       "name": "India",
-      "status": "Open",
+      "status": "Inactive",
       "rate": "222.00",
-      "balance": "1111.00",
+      "balance": "1112.00",
       "deposit": "222.00",
       "description": "I",
       "currency": "CAD",
@@ -123,6 +127,17 @@
       "balance": "-222.00",
       "deposit": "222.00",
       "description": "M",
+      "currency": "CAD",
+      "symbol": "$"
+    },
+    {
+      "id": "d2f6443d-935b-4e7c-9c40-c8f0a13103b8",
+      "name": "Apple",
+      "status": "Open",
+      "rate": "1699.00",
+      "balance": "899.00",
+      "deposit": "799.00",
+      "description": "A1",
       "currency": "CAD",
       "symbol": "$"
     }

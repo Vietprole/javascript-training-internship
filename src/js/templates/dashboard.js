@@ -227,52 +227,54 @@ function addNewTableRow(customer) {
 function editCurrentCustomerRow(updatedCustomer) {
   const menuButton = document.querySelector(`div[data-customer-id="${updatedCustomer.id}"]`);
   let sibling = menuButton.previousElementSibling;
+  const classes = {
+    'name-cell': () => {
+      const nameCell = sibling;
+      const nameField = nameCell.querySelector('.name');
+      nameField.textContent = updatedCustomer.name;
+      const idField = nameCell.querySelector('.id');
+      idField.textContent = updatedCustomer.id;
+      sibling = null;
+    },
+    'description-cell': () => {
+      sibling.textContent = updatedCustomer.description;
+      sibling = sibling.previousElementSibling;
+    },
+    'status-cell': () => {
+      sibling.textContent = updatedCustomer.status;
+      // Add class based on status
+      sibling.classList.remove(`status-${state.currentCustomer.status.toLowerCase()}`);
+      sibling.classList.add(`status-${updatedCustomer.status.toLowerCase()}`);
+      sibling = sibling.previousElementSibling;
+    },
+    'rate-cell': () => {
+      sibling.querySelector('.amount').querySelectorAll('span')[1].textContent = updatedCustomer.rate;
+      sibling = sibling.previousElementSibling;
+    },
+    'balance-cell': () => {
+      const balanceDollarSign = sibling.querySelector('.amount').querySelectorAll('span')[0];
+      const balance = sibling.querySelector('.amount').querySelectorAll('span')[1];
+      const balanceAmount = sibling.querySelector('.amount');
+      balance.textContent = updatedCustomer.balance;
+      if (updatedCustomer.balance < 0) {
+        balanceDollarSign.textContent = '-$';
+        balance.textContent = Math.abs(updatedCustomer.balance);
+        balanceAmount.classList.remove('positive');
+        balanceAmount.classList.add('negative');
+      }
+      sibling = sibling.previousElementSibling;
+    },
+    'deposit-cell': () => {
+      sibling.querySelector('.amount').querySelectorAll('span')[1].textContent = updatedCustomer.deposit;
+      sibling = sibling.previousElementSibling;
+    },
+    default: () => {
+      sibling = null;
+    },
+  };
   while (sibling) {
-    switch (sibling.classList[0]) {
-      case 'name-cell':
-        const nameCell = sibling;
-        const nameField = nameCell.querySelector('.name');
-        nameField.textContent = updatedCustomer.name;
-        const idField = nameCell.querySelector('.id');
-        idField.textContent = updatedCustomer.id;
-        sibling = null;
-        break;
-      case 'description-cell':
-        sibling.textContent = updatedCustomer.description;
-        sibling = sibling.previousElementSibling;
-        break;
-      case 'status-cell':
-        sibling.textContent = updatedCustomer.status;
-        // Add class based on status
-        sibling.classList.remove(`status-${state.currentCustomer.status.toLowerCase()}`);
-        sibling.classList.add(`status-${updatedCustomer.status.toLowerCase()}`);
-        sibling = sibling.previousElementSibling;
-        break;
-      case 'rate-cell':
-        sibling.querySelector('.amount').querySelectorAll('span')[1].textContent = updatedCustomer.rate;
-        sibling = sibling.previousElementSibling;
-        break;
-      case 'balance-cell':
-        const balanceDollarSign = sibling.querySelector('.amount').querySelectorAll('span')[0];
-        const balance = sibling.querySelector('.amount').querySelectorAll('span')[1];
-        const balanceAmount = sibling.querySelector('.amount');
-        balance.textContent = updatedCustomer.balance;
-        if (updatedCustomer.balance < 0) {
-          balanceDollarSign.textContent = '-$';
-          balance.textContent = Math.abs(updatedCustomer.balance);
-          balanceAmount.classList.remove('positive');
-          balanceAmount.classList.add('negative');
-        }
-        sibling = sibling.previousElementSibling;
-        break;
-      case 'deposit-cell':
-        sibling.querySelector('.amount').querySelectorAll('span')[1].textContent = updatedCustomer.deposit;
-        sibling = sibling.previousElementSibling;
-        break;
-      default:
-        sibling = null;
-        break;
-    }
+    const handler = classes[sibling.classList[0]] || classes.default;
+    handler();
   }
   loadMenuButton(updatedCustomer, menuButton);
 }

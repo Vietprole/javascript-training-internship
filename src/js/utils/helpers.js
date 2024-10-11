@@ -74,14 +74,12 @@ function getActionMenuPosition(button) {
 
 // Sort the customers by name
 function sortCustomersByName(customers, currentSortingState) {
-  switch (currentSortingState) {
-    case sortingStates.ASC:
-      return customers.sort((a, b) => a.name.localeCompare(b.name));
-    case sortingStates.DESC:
-      return customers.sort((a, b) => b.name.localeCompare(a.name));
-    default:
-      return customers;
-  }
+  const sortFunctions = {
+    [sortingStates.ASC]: () => customers.sort((a, b) => a.name.localeCompare(b.name)),
+    [sortingStates.DESC]: () => customers.sort((a, b) => b.name.localeCompare(a.name)),
+    [sortingStates.DEFAULT]: () => customers,
+  };
+  return sortFunctions[currentSortingState]();
 }
 
 // Add/Edit form validation

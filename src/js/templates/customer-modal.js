@@ -39,89 +39,55 @@ function addEventListenersForModalButtons() {
     closeModal(customerModal);
   });
 
-  let previousNameValue = '';
-  let previousRateValue = '';
-  let previousBalanceValue = '';
-  let previousDepositValue = '';
+  // Store previous values for inputs in an object instead of separated variables
+  const previousValues = {
+    name: '',
+    rate: '',
+    balance: '',
+    deposit: '',
+  };
 
-  // Save the previous value of the input field so we can revert if the new value is invalid
-  function setPreviousValue(event) {
-    console.log(event.target);
-    const inputHandlers = {
-      [nameInput]: () => {
-        previousNameValue = event.target.value;
-      },
-      [rateInput]: () => {
-        previousRateValue = event.target.value;
-      },
-      [balanceInput]: () => {
-        previousBalanceValue = event.target.value;
-      },
-      [depositInput]: () => {
-        previousDepositValue = event.target.value;
-      },
-    };
+  const inputMap = {
+    'name-input': 'name',
+    'rate-input': 'rate',
+    'balance-input': 'balance',
+    'deposit-input': 'deposit',
+  };
 
-    // Map the input element to its corresponding handler
-    const handler = inputHandlers[event.target];
-    console.log(handler);
-    // Safety check for event.target not matching any input element
-    if (handler) {
-      handler();
-    }
+  function setPreviousValue() {
+    const key = inputMap[this.id];
+    if (key) previousValues[key] = this.value;
   }
+
+  const validators = {
+    name: (value) => !hasNumbers(value),
+    rate: (value) => isValid(value),
+    balance: (value) => isValid(value, true), // allow negative numbers
+    deposit: (value) => isValid(value),
+  };
 
   // Validate the input and revert to the previous value if the new value is invalid
-  function validateAndRevertInput(event) {
-    const target = event.target;
-    switch (target) {
-      case nameInput:
-        if (target.value && hasNumbers(target.value)) {
-          target.value = previousNameValue;
-        }
-        break;
-      case rateInput:
-        if (target.value && !isValid(target.value)) {
-          target.value = previousRateValue;
-        }
-        break;
-      case balanceInput: {
-        // Allow negative numbers
-        const allowNegative = true;
-        if (target.value && !isValid(target.value, allowNegative)) {
-          target.value = previousBalanceValue;
-        }
-        break;
-      }
-      case depositInput:
-        if (target.value && !isValid(target.value)) {
-          target.value = previousDepositValue;
-        }
-        break;
-      default:
-        break;
+  function validateAndRevertInput() {
+    const key = inputMap[this.id];
+    if (this.value && !validators[key](this.value)) {
+      this.value = previousValues[key];
     }
   }
-  nameInput.addEventListener('input', enforceMaxLength);
-  nameInput.addEventListener('blur', showErrorIfEmpty);
-  nameInput.addEventListener('keydown', setPreviousValue);
-  nameInput.addEventListener('input', validateAndRevertInput);
-  nameInput.addEventListener('input', checkFormValidity);
 
-  rateInput.addEventListener('blur', showErrorIfEmpty);
-  rateInput.addEventListener('keydown', setPreviousValue);
-  rateInput.addEventListener('input', validateAndRevertInput);
-  rateInput.addEventListener('input', checkFormValidity);
+  // maxLength : boolean
+  function setupInputListeners(inputElement, maxLength) {
+    if (maxLength) inputElement.addEventListener('input', enforceMaxLength);
+    inputElement.addEventListener('blur', showErrorIfEmpty);
+    inputElement.addEventListener('keydown', setPreviousValue);
+    inputElement.addEventListener('input', validateAndRevertInput);
+    inputElement.addEventListener('input', checkFormValidity);
+  }
 
-  balanceInput.addEventListener('blur', showErrorIfEmpty);
-  balanceInput.addEventListener('keydown', setPreviousValue);
-  balanceInput.addEventListener('input', validateAndRevertInput);
-  balanceInput.addEventListener('input', checkFormValidity);
-
-  depositInput.addEventListener('blur', showErrorIfEmpty);
-  depositInput.addEventListener('keydown', setPreviousValue);
-  depositInput.addEventListener('input', validateAndRevertInput);
-  depositInput.addEventListener('input', checkFormValidity);
+  // Setup listeners for each input field
+  setupInputListeners(nameInput, true);
+  setupInputListeners(rateInput);
+  setupInputListeners(balanceInput);
+  setupInputListeners(depositInput);
 
   // Handle the customer modal form submission
   async function handleAddOrEditCustomer(event) {
