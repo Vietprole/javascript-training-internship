@@ -137,7 +137,7 @@
       "rate": "1699.00",
       "balance": "899.00",
       "deposit": "799.00",
-      "description": "A1",
+      "description": "This test description uses super-duper long paragraph of example text that is enough to make the scrollbar from the view-modal appear.\nThis test description uses super-duper long paragraph of example text that is enough to make the scrollbar from the view-modal appear.\nLoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooog",
       "currency": "CAD",
       "symbol": "$"
     }

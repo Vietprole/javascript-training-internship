@@ -82,7 +82,8 @@
 .description-content {
   width: 312px;
   height: 60px;
-  overflow: auto;
+  overflow: hidden auto;
+  word-break: break-word;
 }
 
 .input-wrapper,
