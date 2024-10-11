@@ -113,8 +113,20 @@ function addEventListenersForModalButtons() {
       addNewTableRow(newCustomer);
     } else {
       const { id } = state.currentCustomer;
+      const { currency } = state.currentCustomer;
+      const { symbol } = state.currentCustomer;
       // Create an updated Customer instance
-      const updatedCustomer = new Customer(id, name, status, rate, balance, deposit, description);
+      const updatedCustomer = new Customer(
+        id,
+        name,
+        status,
+        rate,
+        balance,
+        deposit,
+        description,
+        currency,
+        symbol
+      );
       // Send a PUT request to the API
       await Put(updatedCustomer.toJSON(), `${API_BASE_URL}/${id}`);
       editCurrentCustomerRow(updatedCustomer);
@@ -174,9 +186,10 @@ function createCustomerModal(isAddMode) {
   statusInput.append(openOption, paidOption, inactiveOption, dueOption);
   statusField.append(statusLabel, statusInput);
 
-  // Reusable dollar sign
-  const dollarSign = document.createElement('span');
-  dollarSign.textContent = '$';
+  // Reusable symbol
+  const symbol = document.createElement('span');
+  symbol.classList.add('symbol');
+  symbol.textContent = '$';
 
   const rateField = document.createElement('div');
   rateField.classList.add('rate-field');
@@ -185,12 +198,12 @@ function createCustomerModal(isAddMode) {
   rateLabel.classList.add('label');
   rateLabel.textContent = 'Rate';
   const rateInputWrapper = inputWrapper.cloneNode(false);
-  const rateDollarSign = dollarSign.cloneNode(true);
+  const rateSymbol = symbol.cloneNode(true);
   const rateInput = document.createElement('input');
   rateInput.setAttribute('type', 'text');
   rateInput.setAttribute('id', 'rate-input');
   rateInput.setAttribute('required', 'true');
-  rateInputWrapper.append(rateDollarSign, rateInput);
+  rateInputWrapper.append(rateSymbol, rateInput);
   const rateErrorMessage = errorMessage.cloneNode(false);
   rateField.append(rateLabel, rateInputWrapper, rateErrorMessage);
 
@@ -201,12 +214,12 @@ function createCustomerModal(isAddMode) {
   balanceLabel.classList.add('label');
   balanceLabel.textContent = 'Balance';
   const balanceInputWrapper = inputWrapper.cloneNode(false);
-  const balanceDollarSign = dollarSign.cloneNode(true);
+  const balanceSymbol = symbol.cloneNode(true);
   const balanceInput = document.createElement('input');
   balanceInput.setAttribute('type', 'text');
   balanceInput.setAttribute('id', 'balance-input');
   balanceInput.setAttribute('required', 'true');
-  balanceInputWrapper.append(balanceDollarSign, balanceInput);
+  balanceInputWrapper.append(balanceSymbol, balanceInput);
   const balanceErrorMessage = errorMessage.cloneNode(false);
   balanceField.append(balanceLabel, balanceInputWrapper, balanceErrorMessage);
 
@@ -217,12 +230,12 @@ function createCustomerModal(isAddMode) {
   depositLabel.classList.add('label');
   depositLabel.textContent = 'Deposit';
   const depositInputWrapper = inputWrapper.cloneNode(false);
-  const depositDollarSign = dollarSign.cloneNode(true);
+  const depositSymbol = symbol.cloneNode(true);
   const depositInput = document.createElement('input');
   depositInput.setAttribute('type', 'text');
   depositInput.setAttribute('id', 'deposit-input');
   depositInput.setAttribute('required', 'true');
-  depositInputWrapper.append(depositDollarSign, depositInput);
+  depositInputWrapper.append(depositSymbol, depositInput);
   const depositErrorMessage = errorMessage.cloneNode(false);
   depositField.append(depositLabel, depositInputWrapper, depositErrorMessage);
 
@@ -265,6 +278,7 @@ async function fillEditModal() {
   const balanceInput = document.getElementById('balance-input');
   const depositInput = document.getElementById('deposit-input');
   const descriptionInput = document.getElementById('description-input');
+  const symbols = document.querySelectorAll('.symbol');
 
   const customer = state.currentCustomer;
   nameInput.value = customer.name;
@@ -273,6 +287,9 @@ async function fillEditModal() {
   balanceInput.value = customer.balance;
   depositInput.value = customer.deposit;
   descriptionInput.value = customer.description;
+  symbols.forEach((symbol) => {
+    symbol.textContent = customer.symbol;
+  });
 
   // Check the form validity when the modal is opened
   checkFormValidity();

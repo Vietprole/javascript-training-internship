@@ -118,14 +118,14 @@ function createTableRow(customer) {
   statusCell.classList.add(`status-${status.toLowerCase()}`);
   statusCell.textContent = status;
 
-  // Create a reusable dollar sign element
-  const dollarSign = document.createElement('span');
-  dollarSign.textContent = '$';
+  // Create a reusable symbol element
+  const symbol = document.createElement('span');
+  symbol.textContent = customer.symbol;
 
   // Create a reusable currency element
   const currency = document.createElement('div');
   currency.classList.add('currency');
-  currency.textContent = 'CAD';
+  currency.textContent = customer.currency;
 
   // Create a rate cell
   const rateCell = document.createElement('div');
@@ -133,10 +133,10 @@ function createTableRow(customer) {
   // Create a rate amount div
   const rateAmount = document.createElement('div');
   rateAmount.classList.add('amount');
-  const rateDollarSign = dollarSign.cloneNode(true); // Clone the dollar sign element
+  const rateSymbol = symbol.cloneNode(true); // Clone the symbol element
   const rate = document.createElement('span');
   rate.textContent = customer.rate;
-  rateAmount.appendChild(rateDollarSign);
+  rateAmount.appendChild(rateSymbol);
   rateAmount.appendChild(rate);
   // Create a rate currency div
   const rateCurrency = currency.cloneNode(true); // Clone the currency element
@@ -150,16 +150,16 @@ function createTableRow(customer) {
   const balanceAmount = document.createElement('div');
   balanceAmount.classList.add('amount');
   balanceAmount.classList.add('positive');
-  const balanceDollarSign = dollarSign.cloneNode(true); // Clone the dollar sign element
+  const balanceSymbol = symbol.cloneNode(true); // Clone the symbol element
   const balance = document.createElement('span');
   balance.textContent = customer.balance;
   if (customer.balance < 0) {
-    balanceDollarSign.textContent = '-$';
+    balanceSymbol.textContent = `-${customer.symbol}`;
     balance.textContent = Math.abs(customer.balance);
     balanceAmount.classList.remove('positive');
     balanceAmount.classList.add('negative');
   }
-  balanceAmount.appendChild(balanceDollarSign);
+  balanceAmount.appendChild(balanceSymbol);
   balanceAmount.appendChild(balance);
   // Create a balance currency div
   const balanceCurrency = currency.cloneNode(true); // Clone the currency element
@@ -172,10 +172,10 @@ function createTableRow(customer) {
   // Create a deposit amount div
   const depositAmount = document.createElement('div');
   depositAmount.classList.add('amount');
-  const depositDollarSign = dollarSign.cloneNode(true); // Clone the dollar sign element
+  const depositSymbol = symbol.cloneNode(true); // Clone the symbol element
   const deposit = document.createElement('span');
   deposit.textContent = customer.deposit;
-  depositAmount.appendChild(depositDollarSign);
+  depositAmount.appendChild(depositSymbol);
   depositAmount.appendChild(deposit);
   // Create a deposit currency div
   const depositCurrency = currency.cloneNode(true); // Clone the currency element
@@ -248,16 +248,17 @@ function editCurrentCustomerRow(updatedCustomer) {
       sibling = sibling.previousElementSibling;
     },
     'rate-cell': () => {
-      sibling.querySelector('.amount').querySelectorAll('span')[1].textContent = updatedCustomer.rate;
+      sibling.querySelector('.amount').querySelectorAll('span')[1].textContent =
+        updatedCustomer.rate;
       sibling = sibling.previousElementSibling;
     },
     'balance-cell': () => {
-      const balanceDollarSign = sibling.querySelector('.amount').querySelectorAll('span')[0];
+      const balanceSymbol = sibling.querySelector('.amount').querySelectorAll('span')[0];
       const balance = sibling.querySelector('.amount').querySelectorAll('span')[1];
       const balanceAmount = sibling.querySelector('.amount');
       balance.textContent = updatedCustomer.balance;
       if (updatedCustomer.balance < 0) {
-        balanceDollarSign.textContent = '-$';
+        balanceSymbol.textContent = `-${updatedCustomer.symbol}`;
         balance.textContent = Math.abs(updatedCustomer.balance);
         balanceAmount.classList.remove('positive');
         balanceAmount.classList.add('negative');
@@ -265,7 +266,8 @@ function editCurrentCustomerRow(updatedCustomer) {
       sibling = sibling.previousElementSibling;
     },
     'deposit-cell': () => {
-      sibling.querySelector('.amount').querySelectorAll('span')[1].textContent = updatedCustomer.deposit;
+      sibling.querySelector('.amount').querySelectorAll('span')[1].textContent =
+        updatedCustomer.deposit;
       sibling = sibling.previousElementSibling;
     },
     default: () => {
