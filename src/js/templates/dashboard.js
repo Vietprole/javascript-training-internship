@@ -210,10 +210,19 @@ function showNoCustomersFound() {
   tableBody.appendChild(noCustomersFound);
 }
 
+function deleteNoCustomersFound() {
+  const noCustomersFound = document.querySelector('.no-customers-found');
+  if (noCustomersFound) {
+    noCustomersFound.remove();
+  }
+}
+
 // Get customers to view on Dashboard
 function generateTableRows(customers) {
   if (customers.length === 0) {
     showNoCustomersFound();
+  } else {
+    deleteNoCustomersFound();
   }
   customers.forEach((customer) => {
     const newRow = createTableRow(customer);
