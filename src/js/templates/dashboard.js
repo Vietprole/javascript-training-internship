@@ -224,11 +224,15 @@ function generateTableRows(customers) {
   loadActionMenu(customers);
 }
 
-// Add a new table row when create new customer
+// Add a new table row and append it to the top when create new customer
 function addNewTableRow(customer) {
   const newRow = createTableRow(customer);
   const tableBody = document.querySelector('.table-body');
-  tableBody.appendChild(newRow);
+  if (tableBody.firstChild) {
+    tableBody.insertBefore(newRow, tableBody.firstChild);
+  } else {
+    tableBody.appendChild(newRow);
+  }
   // window.removeEventListener('click', closeActionMenuWhenClickedOutside);
   loadMenuButton(customer, newRow.querySelector('.menu-button'));
   setRowsColor();

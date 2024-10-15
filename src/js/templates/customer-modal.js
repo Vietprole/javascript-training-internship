@@ -111,6 +111,7 @@ function addEventListenersForModalButtons() {
       const newCustomer = new Customer(id, name, status, rate, balance, deposit, description);
       // Send a POST request to the API
       await Post(newCustomer.toJSON());
+      // Add new customer row to top of the table
       addNewTableRow(newCustomer);
     } else {
       const { id } = state.currentCustomer;
