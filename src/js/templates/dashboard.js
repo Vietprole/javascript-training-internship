@@ -210,7 +210,7 @@ function showNoCustomersFound() {
   tableBody.appendChild(noCustomersFound);
 }
 
-function deleteNoCustomersFound() {
+function removeNoCustomersFound() {
   const noCustomersFound = document.querySelector('.no-customers-found');
   if (noCustomersFound) {
     noCustomersFound.remove();
@@ -222,7 +222,7 @@ function generateTableRows(customers) {
   if (customers.length === 0) {
     showNoCustomersFound();
   } else {
-    deleteNoCustomersFound();
+    removeNoCustomersFound();
   }
   customers.forEach((customer) => {
     const newRow = createTableRow(customer);

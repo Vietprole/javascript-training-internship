@@ -11,6 +11,7 @@
   background-color: var(--white);
 }
 
+/* When screen height is smaller than the modal's height */
 @media (max-height: 608px) {
   .modal {
     position: absolute;
@@ -19,6 +20,7 @@
   }
 }
 
+/* When screen width is smaller than the modal's width */
 @media (max-width: 794px) {
   .modal {
     position: absolute;
@@ -27,6 +29,7 @@
   }
 }
 
+/* When screen width and height are smaller than the modal's width and height */
 @media (max-width: 794px) and (max-height: 608px) {
   .modal {
     position: absolute;
