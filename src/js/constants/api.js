@@ -1,5 +1,5 @@
 // API Endpoints
-const API_BASE_URL = 'http://localhost:3000/customers';
+const API_BASE_URL = 'https://json-server-vercel-zeta-bice.vercel.app/customers';
 
 // Define HTTP method constants
 const HTTP_METHODS = {
