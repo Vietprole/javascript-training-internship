@@ -1,13 +1,13 @@
 import searchInterval from './constants/search';
 import sortingStates from './constants/sort';
 import { API_BASE_URL } from './constants/api';
-import { Get } from './utils/http-request';
+import { getData } from './utils/http-request';
 import debounce from './utils/debounce';
 import sortIconDefault from '../assets/icons/sort-default-icon.svg';
 import sortIconAsc from '../assets/icons/sort-asc-icon.svg';
 import sortIconDesc from '../assets/icons/sort-desc-icon.svg';
-import { generateTableRows, removeAllTableRows, setRowsColor } from './templates/dashboard';
-import { createCustomerModal, addEventListenersForModalButtons } from './templates/customer-modal';
+import { generateTableRows, removeAllTableRows } from './templates/dashboard';
+import { createCustomerModal } from './templates/customer-modal';
 import state from './constants/state';
 import { combineAndRemoveDuplicates, sortCustomersByName } from './utils/helpers';
 import { openModal } from './utils/modal';
@@ -15,20 +15,19 @@ import { openModal } from './utils/modal';
 const loader = document.querySelector('.loader-container');
 
 function showLoader() {
-  loader.style.display = 'flex';
+  loader.classList.add('flex');
 }
 
 function hideLoader() {
-  loader.style.display = 'none';
+  loader.classList.add('hidden');
 }
 
 async function loadCustomers() {
   showLoader();
   try {
-    const customers = await Get();
+    const customers = await getData();
     removeAllTableRows();
     generateTableRows(customers);
-    setRowsColor();
   } catch (error) {
     console.error('Failed to load customers:', error);
   } finally {
@@ -46,10 +45,10 @@ const searchInput = document.querySelector('.search-input');
 async function searchCustomers() {
   const searchValue = searchInput.value.toLowerCase();
   // Fetch customers by name
-  const nameCustomers = await Get(`${API_BASE_URL}?name_like=${searchValue}`);
+  const nameCustomers = await getData(`${API_BASE_URL}?name_like=${searchValue}`);
 
   // Fetch customers by status
-  const statusCustomers = await Get(`${API_BASE_URL}?status_like=${searchValue}`);
+  const statusCustomers = await getData(`${API_BASE_URL}?status_like=${searchValue}`);
 
   // Combine and remove duplicates
   const customers = combineAndRemoveDuplicates(nameCustomers, statusCustomers);
@@ -62,8 +61,6 @@ async function searchCustomers() {
 
   // Populate table with filtered customers
   generateTableRows(customers);
-
-  setRowsColor();
 }
 
 // Attach the debounce function to the search input

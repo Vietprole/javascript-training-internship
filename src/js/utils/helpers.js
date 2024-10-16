@@ -1,8 +1,9 @@
 import sortingStates from '../constants/sort';
+import REGEX from '../constants/regex';
 
 // Function to check for numbers
 function hasNumbers(value) {
-  return /\d/.test(value);
+  return REGEX.HAS_NUMBER.test(value);
 }
 
 // Function to enforce max length
@@ -18,19 +19,19 @@ function enforceMaxLength(event) {
 function isValid(input, allowNegative = false) {
   if (!allowNegative) {
     // Positive, max 7 digits, max 2 decimal places, allow trailing decimal point
-    return /^\d{1,7}(\.\d{0,2})?$/.test(input);
+    return REGEX.POSITIVE_VALID.test(input);
   }
   // Allow negative
-  return /^(-\d{0,7}(\.\d{0,2})?|\d{1,7}(\.\d{0,2})?)$/.test(input);
+  return REGEX.NEGATIVE_VALID.test(input);
 }
 
 // Adjust input to the correct format
 function sanitizeInput(value) {
   let temp = value.endsWith('.') ? `${value}00` : value;
   // If the value ends with a single decimal digit, add '0'
-  temp = /^-?\d+\.\d$/.test(temp) ? `${temp}0` : temp;
+  temp = REGEX.SINGLE_DECIMAL.test(temp) ? `${temp}0` : temp;
   // If the value not contains "." and end with a digit, add '.00'
-  temp = /^-?\d+$/.test(temp) ? `${temp}.00` : temp;
+  temp = REGEX.NO_DECIMAL.test(temp) ? `${temp}.00` : temp;
   // If the value ends with a single "-", adjust it to '0.00'
   return temp.endsWith('-') ? '0.00' : temp;
 }
@@ -90,7 +91,7 @@ function checkFormValidity() {
   const balanceInput = document.getElementById('balance-input');
   const depositInput = document.getElementById('deposit-input');
   const isFormValid =
-    nameInput.value && rateInput.value && balanceInput.value && depositInput.value;
+    nameInput.value.trim() && rateInput.value && balanceInput.value && depositInput.value;
   confirmButton.disabled = !isFormValid;
 }
 
