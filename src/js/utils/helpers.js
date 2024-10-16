@@ -90,7 +90,7 @@ function checkFormValidity() {
   const balanceInput = document.getElementById('balance-input');
   const depositInput = document.getElementById('deposit-input');
   const isFormValid =
-    nameInput.value && rateInput.value && balanceInput.value && depositInput.value;
+    nameInput.value.trim() && rateInput.value && balanceInput.value && depositInput.value;
   confirmButton.disabled = !isFormValid;
 }
 
