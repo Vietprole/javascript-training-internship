@@ -1,8 +1,14 @@
 import sortingStates from '../constants/sort';
+// Regular expression variables
+const numberRegex = /\d/; // Check for numbers
+const positiveValidRegex = /^\d{1,7}(\.\d{0,2})?$/; // Positive, max 7 digits, max 2 decimal places, allow trailing decimal point
+const negativeValidRegex = /^(-\d{0,7}(\.\d{0,2})?|\d{1,7}(\.\d{0,2})?)$/; // Allow negative
+const singleDecimalRegex = /^-?\d+\.\d$/; // Ends with a single decimal digit
+const noDecimalRegex = /^-?\d+$/; // Not contains "." and end with a digit
 
 // Function to check for numbers
 function hasNumbers(value) {
-  return /\d/.test(value);
+  return numberRegex.test(value);
 }
 
 // Function to enforce max length
@@ -18,19 +24,19 @@ function enforceMaxLength(event) {
 function isValid(input, allowNegative = false) {
   if (!allowNegative) {
     // Positive, max 7 digits, max 2 decimal places, allow trailing decimal point
-    return /^\d{1,7}(\.\d{0,2})?$/.test(input);
+    return positiveValidRegex.test(input);
   }
   // Allow negative
-  return /^(-\d{0,7}(\.\d{0,2})?|\d{1,7}(\.\d{0,2})?)$/.test(input);
+  return negativeValidRegex.test(input);
 }
 
 // Adjust input to the correct format
 function sanitizeInput(value) {
   let temp = value.endsWith('.') ? `${value}00` : value;
   // If the value ends with a single decimal digit, add '0'
-  temp = /^-?\d+\.\d$/.test(temp) ? `${temp}0` : temp;
+  temp = singleDecimalRegex.test(temp) ? `${temp}0` : temp;
   // If the value not contains "." and end with a digit, add '.00'
-  temp = /^-?\d+$/.test(temp) ? `${temp}.00` : temp;
+  temp = noDecimalRegex.test(temp) ? `${temp}.00` : temp;
   // If the value ends with a single "-", adjust it to '0.00'
   return temp.endsWith('-') ? '0.00' : temp;
 }
