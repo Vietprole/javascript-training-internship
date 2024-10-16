@@ -27,13 +27,10 @@ function isValid(input, allowNegative = false) {
 
 // Adjust input to the correct format
 function sanitizeInput(value) {
-  let temp = value.endsWith('.') ? `${value}00` : value;
-  // If the value ends with a single decimal digit, add '0'
-  temp = REGEX.SINGLE_DECIMAL.test(temp) ? `${temp}0` : temp;
-  // If the value not contains "." and end with a digit, add '.00'
-  temp = REGEX.NO_DECIMAL.test(temp) ? `${temp}.00` : temp;
-  // If the value ends with a single "-", adjust it to '0.00'
-  return temp.endsWith('-') ? '0.00' : temp;
+  if (value.endsWith('-')) {
+    return '0.00';
+  }
+  return Number(value).toFixed(2).toString();
 }
 
 // Show error message if the required field is empty

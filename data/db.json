@@ -140,6 +140,17 @@
       "description": "This test description uses super-duper long paragraph of example text that is enough to make the scrollbar from the view-modal appear.\nThis test description uses super-duper long paragraph of example text that is enough to make the scrollbar from the view-modal appear.\nLoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooog",
       "currency": "CAD",
       "symbol": "$"
+    },
+    {
+      "id": "f7912749-56b6-4d32-867e-170a944764b8",
+      "name": "test first ",
+      "status": "Open",
+      "rate": "0.00",
+      "balance": "0.00",
+      "deposit": "0.00",
+      "description": "test",
+      "currency": "CAD",
+      "symbol": "$"
     }
   ]
 }
