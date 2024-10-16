@@ -73,18 +73,6 @@ function removeTableRow(customerID) {
   tableRow.remove();
 }
 
-// Function to set color of row based on their odd or even index
-function setRowsColor() {
-  const tableRows = document.querySelectorAll('.table-row');
-  tableRows.forEach((row, index) => {
-    if (index % 2 === 0) {
-      row.classList.add('even');
-    } else {
-      row.classList.add('odd');
-    }
-  });
-}
-
 function createTableRow(customer) {
   // Create a new table row
   const newRow = document.createElement('div');
@@ -244,7 +232,6 @@ function addNewTableRow(customer) {
   }
   // window.removeEventListener('click', closeActionMenuWhenClickedOutside);
   loadMenuButton(customer, newRow.querySelector('.menu-button'));
-  setRowsColor();
 }
 
 // Edit the current customer row when edit customer
@@ -311,6 +298,5 @@ export {
   removeTableRow,
   addNewTableRow,
   editCurrentCustomerRow,
-  setRowsColor,
   currentCustomer,
 };

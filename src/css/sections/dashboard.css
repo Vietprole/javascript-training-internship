@@ -97,12 +97,12 @@
   padding: 0px 20px;
 }
 
-.odd {
-  background-color: var(--background-secondary-color);
+.table-row:nth-child(odd) {
+  background-color: var(--background-primary-color);
 }
 
-.even {
-  background-color: var(--background-primary-color);
+.table-row:nth-child(even) {
+  background-color: var(--background-secondary-color);
 }
 
 .name-cell {
