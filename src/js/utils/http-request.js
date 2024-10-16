@@ -19,24 +19,24 @@ async function httpRequest(method, body, url) {
   }
 }
 
-async function get(url = API_BASE_URL) {
+async function getData(url = API_BASE_URL) {
   const data = await httpRequest(HTTP_METHODS.GET, null, url);
   return data;
 }
 
-async function post(body, url = API_BASE_URL) {
+async function postData(body, url = API_BASE_URL) {
   const data = await httpRequest(HTTP_METHODS.POST, body, url);
   return data;
 }
 
-async function put(body, url) {
+async function putData(body, url) {
   const data = await httpRequest(HTTP_METHODS.PUT, body, url);
   return data;
 }
 
-async function del(url) {
+async function deleteData(url) {
   const data = await httpRequest(HTTP_METHODS.DELETE, null, url);
   return data;
 }
 
-export { get, post, put, del };
+export { getData, postData, putData, deleteData };

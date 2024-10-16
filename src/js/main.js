@@ -1,7 +1,7 @@
 import searchInterval from './constants/search';
 import sortingStates from './constants/sort';
 import { API_BASE_URL } from './constants/api';
-import { get } from './utils/http-request';
+import { getData } from './utils/http-request';
 import debounce from './utils/debounce';
 import sortIconDefault from '../assets/icons/sort-default-icon.svg';
 import sortIconAsc from '../assets/icons/sort-asc-icon.svg';
@@ -25,7 +25,7 @@ function hideLoader() {
 async function loadCustomers() {
   showLoader();
   try {
-    const customers = await get();
+    const customers = await getData();
     removeAllTableRows();
     generateTableRows(customers);
   } catch (error) {
@@ -45,10 +45,10 @@ const searchInput = document.querySelector('.search-input');
 async function searchCustomers() {
   const searchValue = searchInput.value.toLowerCase();
   // Fetch customers by name
-  const nameCustomers = await get(`${API_BASE_URL}?name_like=${searchValue}`);
+  const nameCustomers = await getData(`${API_BASE_URL}?name_like=${searchValue}`);
 
   // Fetch customers by status
-  const statusCustomers = await get(`${API_BASE_URL}?status_like=${searchValue}`);
+  const statusCustomers = await getData(`${API_BASE_URL}?status_like=${searchValue}`);
 
   // Combine and remove duplicates
   const customers = combineAndRemoveDuplicates(nameCustomers, statusCustomers);

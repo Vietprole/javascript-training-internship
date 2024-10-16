@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import Customer from '../models/customer';
-import { post, put } from '../utils/http-request';
+import { postData, putData } from '../utils/http-request';
 import { API_BASE_URL } from '../constants/api';
 import { addNewTableRow, editCurrentCustomerRow } from './dashboard';
 import {
@@ -110,7 +110,7 @@ function addEventListenersForModalButtons() {
       // Create a new Customer instance
       const newCustomer = new Customer(id, name, status, rate, balance, deposit, description);
       // Send a POST request to the API
-      await post(newCustomer.toJSON());
+      await postData(newCustomer.toJSON());
       // Add new customer row to top of the table
       addNewTableRow(newCustomer);
     } else {
@@ -130,7 +130,7 @@ function addEventListenersForModalButtons() {
         symbol
       );
       // Send a PUT request to the API
-      await put(updatedCustomer.toJSON(), `${API_BASE_URL}/${id}`);
+      await putData(updatedCustomer.toJSON(), `${API_BASE_URL}/${id}`);
       editCurrentCustomerRow(updatedCustomer);
     }
     closeModal(customerModal);

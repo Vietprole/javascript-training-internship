@@ -1,5 +1,5 @@
 import { API_BASE_URL } from '../constants/api';
-import { del } from '../utils/http-request';
+import { deleteData } from '../utils/http-request';
 import state from '../constants/state';
 import { openModal, closeModal } from '../utils/modal';
 import { removeTableRow } from './dashboard';
@@ -28,7 +28,7 @@ function closeDeleteConfirmationModal() {
 async function removeCustomer(event) {
   const { target } = event;
   target.disabled = true;
-  await del(`${API_BASE_URL}/${state.currentCustomer.id}`);
+  await deleteData(`${API_BASE_URL}/${state.currentCustomer.id}`);
   removeTableRow(state.currentCustomer.id);
   closeDeleteConfirmationModal();
 }
