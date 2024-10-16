@@ -210,10 +210,19 @@ function showNoCustomersFound() {
   tableBody.appendChild(noCustomersFound);
 }
 
+function deleteNoCustomersFound() {
+  const noCustomersFound = document.querySelector('.no-customers-found');
+  if (noCustomersFound) {
+    noCustomersFound.remove();
+  }
+}
+
 // Get customers to view on Dashboard
 function generateTableRows(customers) {
   if (customers.length === 0) {
     showNoCustomersFound();
+  } else {
+    deleteNoCustomersFound();
   }
   customers.forEach((customer) => {
     const newRow = createTableRow(customer);
@@ -224,11 +233,15 @@ function generateTableRows(customers) {
   loadActionMenu(customers);
 }
 
-// Add a new table row when create new customer
+// Add a new table row and append it to the top when create new customer
 function addNewTableRow(customer) {
   const newRow = createTableRow(customer);
   const tableBody = document.querySelector('.table-body');
-  tableBody.appendChild(newRow);
+  if (tableBody.firstChild) {
+    tableBody.insertBefore(newRow, tableBody.firstChild);
+  } else {
+    tableBody.appendChild(newRow);
+  }
   // window.removeEventListener('click', closeActionMenuWhenClickedOutside);
   loadMenuButton(customer, newRow.querySelector('.menu-button'));
   setRowsColor();

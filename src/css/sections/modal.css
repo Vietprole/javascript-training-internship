@@ -11,6 +11,31 @@
   background-color: var(--white);
 }
 
+@media (max-height: 608px) {
+  .modal {
+    position: absolute;
+    top: 0;
+    transform: translate(-50%, 0);
+  }
+}
+
+@media (max-width: 794px) {
+  .modal {
+    position: absolute;
+    left: 0;
+    transform: translate(0, -50%);
+  }
+}
+
+@media (max-width: 794px) and (max-height: 608px) {
+  .modal {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translate(0, 0);
+  }
+}
+
 .modal h2 {
   font-weight: var(--font-weight-semi-bold);
   font-size: var(--heading-size-md);
