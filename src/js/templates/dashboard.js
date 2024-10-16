@@ -1,6 +1,6 @@
 import menuIcon from '../../assets/icons/menu-icon.svg';
 import state from '../constants/state';
-import { getActionMenuPosition } from '../utils/helpers';
+import { getActionMenuPosition, formatNumberWithCommas } from '../utils/helpers';
 import createActionMenu from './action-menu';
 
 let currentCustomer = {};
@@ -123,7 +123,7 @@ function createTableRow(customer) {
   rateAmount.classList.add('amount');
   const rateSymbol = symbol.cloneNode(true); // Clone the symbol element
   const rate = document.createElement('span');
-  rate.textContent = customer.rate;
+  rate.textContent = formatNumberWithCommas(customer.rate);
   rateAmount.appendChild(rateSymbol);
   rateAmount.appendChild(rate);
   // Create a rate currency div
@@ -140,10 +140,10 @@ function createTableRow(customer) {
   balanceAmount.classList.add('positive');
   const balanceSymbol = symbol.cloneNode(true); // Clone the symbol element
   const balance = document.createElement('span');
-  balance.textContent = customer.balance;
+  balance.textContent = formatNumberWithCommas(customer.balance);
   if (customer.balance < 0) {
     balanceSymbol.textContent = `-${customer.symbol}`;
-    balance.textContent = Math.abs(customer.balance);
+    balance.textContent = formatNumberWithCommas(Math.abs(customer.balance).toString());
     balanceAmount.classList.remove('positive');
     balanceAmount.classList.add('negative');
   }
@@ -162,7 +162,7 @@ function createTableRow(customer) {
   depositAmount.classList.add('amount');
   const depositSymbol = symbol.cloneNode(true); // Clone the symbol element
   const deposit = document.createElement('span');
-  deposit.textContent = customer.deposit;
+  deposit.textContent = formatNumberWithCommas(customer.deposit);
   depositAmount.appendChild(depositSymbol);
   depositAmount.appendChild(deposit);
   // Create a deposit currency div

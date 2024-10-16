@@ -30,7 +30,15 @@ function sanitizeInput(value) {
   if (value.endsWith('-')) {
     return '0.00';
   }
-  return Number(value).toFixed(2).toString();
+  return Number(value).toFixed(2);
+}
+
+// Format number to include commas as thousand separators
+function formatNumberWithCommas(number) {
+  // Use Intl.NumberFormat to format the number with commas
+  return new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 2,
+  }).format(number);
 }
 
 // Show error message if the required field is empty
@@ -97,6 +105,7 @@ export {
   enforceMaxLength,
   isValid,
   sanitizeInput,
+  formatNumberWithCommas,
   showErrorIfEmpty,
   combineAndRemoveDuplicates,
   getActionMenuPosition,
