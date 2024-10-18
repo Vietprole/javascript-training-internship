@@ -10,7 +10,6 @@ import {
   showErrorIfEmpty,
   sanitizeInput,
   checkFormValidity,
-  formatNumberWithCommas,
 } from '../utils/helpers';
 
 import { openModal, closeModal } from '../utils/modal';

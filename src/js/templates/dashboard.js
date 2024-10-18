@@ -3,8 +3,6 @@ import state from '../constants/state';
 import { getActionMenuPosition, formatNumberWithCommas } from '../utils/helpers';
 import createActionMenu from './action-menu';
 
-let currentCustomer = {};
-
 // Click outside of the action menu to close it
 // This won't work if you click on another menu button
 function closeActionMenuWhenClickedOutside(event) {
@@ -190,6 +188,14 @@ function createTableRow(customer) {
   return newRow;
 }
 
+function insertTableRowAtPosition(customer, position) {
+  const newRow = createTableRow(customer);
+  const tableBody = document.querySelector('.table-body');
+  tableBody.insertBefore(newRow, position);
+  const menuButton = newRow.querySelector('.menu-button');
+  loadMenuButton(customer, menuButton);
+}
+
 function showNoCustomersFound() {
   const tableBody = document.querySelector('.table-body');
   const noCustomersFound = document.createElement('div');
@@ -237,59 +243,11 @@ function addNewTableRow(customer) {
 // Edit the current customer row when edit customer
 function editCurrentCustomerRow(updatedCustomer) {
   const menuButton = document.querySelector(`div[data-customer-id="${updatedCustomer.id}"]`);
-  let sibling = menuButton.previousElementSibling;
-  const classes = {
-    'name-cell': () => {
-      const nameCell = sibling;
-      const nameField = nameCell.querySelector('.name');
-      nameField.textContent = updatedCustomer.name;
-      const idField = nameCell.querySelector('.id');
-      idField.textContent = updatedCustomer.id;
-      sibling = null;
-    },
-    'description-cell': () => {
-      sibling.textContent = updatedCustomer.description;
-      sibling = sibling.previousElementSibling;
-    },
-    'status-cell': () => {
-      sibling.textContent = updatedCustomer.status;
-      // Add class based on status
-      sibling.classList.remove(`status-${state.currentCustomer.status.toLowerCase()}`);
-      sibling.classList.add(`status-${updatedCustomer.status.toLowerCase()}`);
-      sibling = sibling.previousElementSibling;
-    },
-    'rate-cell': () => {
-      sibling.querySelector('.amount').querySelectorAll('span')[1].textContent =
-        updatedCustomer.rate;
-      sibling = sibling.previousElementSibling;
-    },
-    'balance-cell': () => {
-      const balanceSymbol = sibling.querySelector('.amount').querySelectorAll('span')[0];
-      const balance = sibling.querySelector('.amount').querySelectorAll('span')[1];
-      const balanceAmount = sibling.querySelector('.amount');
-      balance.textContent = updatedCustomer.balance;
-      if (updatedCustomer.balance < 0) {
-        balanceSymbol.textContent = `-${updatedCustomer.symbol}`;
-        balance.textContent = Math.abs(updatedCustomer.balance);
-        balanceAmount.classList.remove('positive');
-        balanceAmount.classList.add('negative');
-      }
-      sibling = sibling.previousElementSibling;
-    },
-    'deposit-cell': () => {
-      sibling.querySelector('.amount').querySelectorAll('span')[1].textContent =
-        updatedCustomer.deposit;
-      sibling = sibling.previousElementSibling;
-    },
-    default: () => {
-      sibling = null;
-    },
-  };
-  while (sibling) {
-    const handler = classes[sibling.classList[0]] || classes.default;
-    handler();
-  }
-  loadMenuButton(updatedCustomer, menuButton);
+  const currentTableRow = menuButton.closest('.table-row');
+  const tableBody = document.querySelector('.table-body');
+  const currentIndex = Array.from(tableBody.children).indexOf(currentTableRow);
+  currentTableRow.remove();
+  insertTableRowAtPosition(updatedCustomer, tableBody.children[currentIndex]);
 }
 
 export {
@@ -298,5 +256,4 @@ export {
   removeTableRow,
   addNewTableRow,
   editCurrentCustomerRow,
-  currentCustomer,
 };

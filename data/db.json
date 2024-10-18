@@ -6,7 +6,7 @@
       "status": "Paid",
       "rate": "1234567.12",
       "balance": "-4030.00",
-      "deposit": "31.00",
+      "deposit": "313111.00",
       "description": "A",
       "currency": "GBP",
       "symbol": "£"
@@ -48,10 +48,12 @@
       "id": "f8728a30-b736-4dad-aef1-789c506a8afb",
       "name": "Echo",
       "status": "Open",
-      "rate": "100.00",
-      "balance": "200.00",
-      "deposit": "300.00",
-      "description": "E"
+      "rate": "150.00",
+      "balance": "250.00",
+      "deposit": "350.00",
+      "description": "E",
+      "currency": "CAD",
+      "symbol": "$"
     },
     {
       "id": "558329b3-bdf6-473b-9c88-0b4f8036ad89",
@@ -149,6 +151,17 @@
       "balance": "-1234567.11",
       "deposit": "1245678.00",
       "description": "longlonglonglonglongdescriptionlonglonglonglonglongdescriptionlonglonglonglonglongdescriptionlonglonglonglonglongdescriptionlonglonglonglonglongdescriptionlonglonglonglonglongdescriptionlonglonglonglonglongdescriptionlonglonglonglonglongdescriptionlonglonglonglonglongdescriptionlonglonglonglonglongdescriptionlonglonglonglonglongdescriptionlonglonglonglonglongdescription",
+      "currency": "CAD",
+      "symbol": "$"
+    },
+    {
+      "id": "f16ddbbc-93e5-4336-848e-098f8607b3d7",
+      "name": "test first ",
+      "status": "Due",
+      "rate": "1111111.11",
+      "balance": "1111111.11",
+      "deposit": "1111111.11",
+      "description": "test",
       "currency": "CAD",
       "symbol": "$"
     }
