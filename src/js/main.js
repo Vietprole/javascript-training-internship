@@ -94,3 +94,20 @@ function sortCustomers() {
 }
 
 sortButton.addEventListener('click', sortCustomers);
+
+// Ensure scroll bar is visible
+document.querySelectorAll('.description-content').forEach((container) => {
+  function ensureScrollVisible() {
+    // Vertical scroll bar
+    if (container.scrollTop === 0) {
+      container.scrollTop += 1;
+      container.scrollTop -= 1;
+    } else {
+      container.scrollTop -= 1;
+      container.scrollTop += 1;
+    }
+  }
+
+  ensureScrollVisible();
+  setInterval(ensureScrollVisible, 250);
+});
