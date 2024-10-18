@@ -90,11 +90,17 @@ function createViewCustomerModal(customer) {
   const descriptionLabel = document.createElement('div');
   descriptionLabel.classList.add('label');
   descriptionLabel.textContent = 'Description';
+  const descriptionWrapper = document.createElement('div');
+  descriptionWrapper.classList.add('tooltip');
   const descriptionContent = document.createElement('div');
   descriptionContent.classList.add('description-content');
   descriptionContent.setAttribute('id', 'description-content');
   descriptionContent.textContent = customer.description;
-  descriptionField.append(descriptionLabel, descriptionContent);
+  const tooltip = document.createElement('span');
+  tooltip.classList.add('tooltiptext');
+  tooltip.textContent = customer.description;
+  descriptionWrapper.append(descriptionContent, tooltip);
+  descriptionField.append(descriptionLabel, descriptionWrapper);
 
   const buttonGroup = document.createElement('div');
   buttonGroup.classList.add('button-group');
