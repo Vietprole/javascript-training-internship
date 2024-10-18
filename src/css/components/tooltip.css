@@ -20,6 +20,7 @@
   font-size: var(--body-size-md);
   line-height: 20px;
   letter-spacing: 0.02em;
+  text-align: left;
 }
 
 .tooltip:hover .tooltiptext {
