@@ -1,9 +1,7 @@
 import menuIcon from '../../assets/icons/menu-icon.svg';
 import state from '../constants/state';
-import { getActionMenuPosition } from '../utils/helpers';
+import { getActionMenuPosition, formatNumberWithCommas } from '../utils/helpers';
 import createActionMenu from './action-menu';
-
-let currentCustomer = {};
 
 // Click outside of the action menu to close it
 // This won't work if you click on another menu button
@@ -123,7 +121,7 @@ function createTableRow(customer) {
   rateAmount.classList.add('amount');
   const rateSymbol = symbol.cloneNode(true); // Clone the symbol element
   const rate = document.createElement('span');
-  rate.textContent = customer.rate;
+  rate.textContent = formatNumberWithCommas(customer.rate);
   rateAmount.appendChild(rateSymbol);
   rateAmount.appendChild(rate);
   // Create a rate currency div
@@ -140,10 +138,10 @@ function createTableRow(customer) {
   balanceAmount.classList.add('positive');
   const balanceSymbol = symbol.cloneNode(true); // Clone the symbol element
   const balance = document.createElement('span');
-  balance.textContent = customer.balance;
+  balance.textContent = formatNumberWithCommas(customer.balance);
   if (customer.balance < 0) {
     balanceSymbol.textContent = `-${customer.symbol}`;
-    balance.textContent = Math.abs(customer.balance);
+    balance.textContent = formatNumberWithCommas(Math.abs(customer.balance).toString());
     balanceAmount.classList.remove('positive');
     balanceAmount.classList.add('negative');
   }
@@ -162,7 +160,7 @@ function createTableRow(customer) {
   depositAmount.classList.add('amount');
   const depositSymbol = symbol.cloneNode(true); // Clone the symbol element
   const deposit = document.createElement('span');
-  deposit.textContent = customer.deposit;
+  deposit.textContent = formatNumberWithCommas(customer.deposit);
   depositAmount.appendChild(depositSymbol);
   depositAmount.appendChild(deposit);
   // Create a deposit currency div
@@ -188,6 +186,14 @@ function createTableRow(customer) {
   newRow.appendChild(menuButton);
 
   return newRow;
+}
+
+function insertTableRowAtPosition(customer, position) {
+  const newRow = createTableRow(customer);
+  const tableBody = document.querySelector('.table-body');
+  tableBody.insertBefore(newRow, position);
+  const menuButton = newRow.querySelector('.menu-button');
+  loadMenuButton(customer, menuButton);
 }
 
 function showNoCustomersFound() {
@@ -237,59 +243,11 @@ function addNewTableRow(customer) {
 // Edit the current customer row when edit customer
 function editCurrentCustomerRow(updatedCustomer) {
   const menuButton = document.querySelector(`div[data-customer-id="${updatedCustomer.id}"]`);
-  let sibling = menuButton.previousElementSibling;
-  const classes = {
-    'name-cell': () => {
-      const nameCell = sibling;
-      const nameField = nameCell.querySelector('.name');
-      nameField.textContent = updatedCustomer.name;
-      const idField = nameCell.querySelector('.id');
-      idField.textContent = updatedCustomer.id;
-      sibling = null;
-    },
-    'description-cell': () => {
-      sibling.textContent = updatedCustomer.description;
-      sibling = sibling.previousElementSibling;
-    },
-    'status-cell': () => {
-      sibling.textContent = updatedCustomer.status;
-      // Add class based on status
-      sibling.classList.remove(`status-${state.currentCustomer.status.toLowerCase()}`);
-      sibling.classList.add(`status-${updatedCustomer.status.toLowerCase()}`);
-      sibling = sibling.previousElementSibling;
-    },
-    'rate-cell': () => {
-      sibling.querySelector('.amount').querySelectorAll('span')[1].textContent =
-        updatedCustomer.rate;
-      sibling = sibling.previousElementSibling;
-    },
-    'balance-cell': () => {
-      const balanceSymbol = sibling.querySelector('.amount').querySelectorAll('span')[0];
-      const balance = sibling.querySelector('.amount').querySelectorAll('span')[1];
-      const balanceAmount = sibling.querySelector('.amount');
-      balance.textContent = updatedCustomer.balance;
-      if (updatedCustomer.balance < 0) {
-        balanceSymbol.textContent = `-${updatedCustomer.symbol}`;
-        balance.textContent = Math.abs(updatedCustomer.balance);
-        balanceAmount.classList.remove('positive');
-        balanceAmount.classList.add('negative');
-      }
-      sibling = sibling.previousElementSibling;
-    },
-    'deposit-cell': () => {
-      sibling.querySelector('.amount').querySelectorAll('span')[1].textContent =
-        updatedCustomer.deposit;
-      sibling = sibling.previousElementSibling;
-    },
-    default: () => {
-      sibling = null;
-    },
-  };
-  while (sibling) {
-    const handler = classes[sibling.classList[0]] || classes.default;
-    handler();
-  }
-  loadMenuButton(updatedCustomer, menuButton);
+  const currentTableRow = menuButton.closest('.table-row');
+  const tableBody = document.querySelector('.table-body');
+  const currentIndex = Array.from(tableBody.children).indexOf(currentTableRow);
+  currentTableRow.remove();
+  insertTableRowAtPosition(updatedCustomer, tableBody.children[currentIndex]);
 }
 
 export {
@@ -298,5 +256,4 @@ export {
   removeTableRow,
   addNewTableRow,
   editCurrentCustomerRow,
-  currentCustomer,
 };

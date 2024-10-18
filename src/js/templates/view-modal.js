@@ -1,5 +1,6 @@
 import state from '../constants/state';
 import { closeModal, openModal } from '../utils/modal';
+import { formatNumberWithCommas } from '../utils/helpers';
 
 function createViewCustomerModal(customer) {
   const viewCustomerModal = document.querySelector('.view-customer-modal');
@@ -46,7 +47,7 @@ function createViewCustomerModal(customer) {
   rateContent.setAttribute('id', 'rate-content');
   const rateSymbol = symbol.cloneNode(true); // Clone the symbol element
   const rate = document.createElement('span');
-  rate.textContent = customer.rate;
+  rate.textContent = formatNumberWithCommas(customer.rate);
   rateContent.append(rateSymbol, rate);
   rateField.append(rateLabel, rateContent);
 
@@ -60,10 +61,10 @@ function createViewCustomerModal(customer) {
   balanceContent.setAttribute('id', 'balance-content');
   const balanceSymbol = symbol.cloneNode(true); // Clone the symbol element
   const balance = document.createElement('span');
-  balance.textContent = customer.balance;
+  balance.textContent = formatNumberWithCommas(customer.balance);
   if (customer.balance < 0) {
     balanceSymbol.textContent = `-${customer.symbol}`;
-    balance.textContent = Math.abs(customer.balance);
+    balance.textContent = formatNumberWithCommas(Math.abs(customer.balance).toString());
     balanceContent.classList.remove('positive');
     balanceContent.classList.add('negative');
   }
@@ -80,7 +81,7 @@ function createViewCustomerModal(customer) {
   depositContent.setAttribute('id', 'deposit-content');
   const depositSymbol = symbol.cloneNode(true); // Clone the symbol element
   const deposit = document.createElement('span');
-  deposit.textContent = customer.deposit;
+  deposit.textContent = formatNumberWithCommas(customer.deposit);
   depositContent.append(depositSymbol, deposit);
   depositField.append(depositLabel, depositContent);
 
@@ -89,11 +90,17 @@ function createViewCustomerModal(customer) {
   const descriptionLabel = document.createElement('div');
   descriptionLabel.classList.add('label');
   descriptionLabel.textContent = 'Description';
+  const descriptionWrapper = document.createElement('div');
+  descriptionWrapper.classList.add('tooltip');
   const descriptionContent = document.createElement('div');
   descriptionContent.classList.add('description-content');
   descriptionContent.setAttribute('id', 'description-content');
   descriptionContent.textContent = customer.description;
-  descriptionField.append(descriptionLabel, descriptionContent);
+  const tooltip = document.createElement('span');
+  tooltip.classList.add('tooltiptext');
+  tooltip.textContent = customer.description;
+  descriptionWrapper.append(descriptionContent, tooltip);
+  descriptionField.append(descriptionLabel, descriptionWrapper);
 
   const buttonGroup = document.createElement('div');
   buttonGroup.classList.add('button-group');
