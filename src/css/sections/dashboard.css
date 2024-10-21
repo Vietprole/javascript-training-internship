@@ -129,6 +129,7 @@
   height: 40px;
   margin-right: 100px;
   overflow: hidden;
+  word-break: break-word;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
