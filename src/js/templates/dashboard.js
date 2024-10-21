@@ -18,8 +18,8 @@ function closeActionMenuWhenClickedOutside(event) {
   }
 }
 
-// Add data and event listeners to menu buttons
-function loadMenuButton(customer, button) {
+// Store customer information in data-* attributes
+function storeCustomerDataInMenuButton(customer, button) {
   const menuButton = button;
   menuButton.dataset.customerId = customer.id;
   menuButton.dataset.customerName = customer.name;
@@ -28,16 +28,15 @@ function loadMenuButton(customer, button) {
   menuButton.dataset.customerBalance = customer.balance;
   menuButton.dataset.customerDeposit = customer.deposit;
   menuButton.dataset.customerDescription = customer.description;
+}
+
+// Add event listeners to menu button
+function addEventListenerToMenuButton(customer, button) {
+  const menuButton = button;
   menuButton.addEventListener('click', () => {
-    // If there is already an action menu, delete it
-    // This is to account for when user click on another menu button
-    if (document.querySelector('.action-menu')) {
-      const actionMenu = document.querySelector('.action-menu');
-      while (actionMenu.firstChild) {
-        actionMenu.removeChild(actionMenu.firstChild);
-      }
-    }
+    // Create the action menu
     createActionMenu();
+    // Open the action menu at the position relative to the menu button
     const actionMenu = document.querySelector('.action-menu');
     state.currentCustomer = customer;
     const { top, left } = getActionMenuPosition(button);
@@ -47,7 +46,13 @@ function loadMenuButton(customer, button) {
   });
 }
 
-function loadActionMenu(customers) {
+// Store customer information in data-* attributes and add event listener to menu button
+function loadMenuButton(customer, button) {
+  storeCustomerDataInMenuButton(customer, button);
+  addEventListenerToMenuButton(customer, button);
+}
+
+function loadAllMenuButtons(customers) {
   const actionMenuButtons = document.querySelectorAll('.menu-button');
   actionMenuButtons.forEach((button, index) => {
     const customer = customers[index];
@@ -71,119 +76,155 @@ function removeTableRow(customerID) {
   tableRow.remove();
 }
 
-function createTableRow(customer) {
-  // Create a new table row
-  const newRow = document.createElement('div');
-  newRow.classList.add('table-row');
-
-  // Create a name cell
+function createNameCell(name, id) {
   const nameCell = document.createElement('div');
   nameCell.classList.add('name-cell');
   // Create a name div
-  const name = document.createElement('div');
-  name.classList.add('name');
-  name.textContent = customer.name;
+  const nameDiv = document.createElement('div');
+  nameDiv.classList.add('name');
+  nameDiv.textContent = name;
   // Create a id div
-  const id = document.createElement('div');
-  id.classList.add('id');
-  id.textContent = customer.id;
+  const idDiv = document.createElement('div');
+  idDiv.classList.add('id');
+  idDiv.textContent = id;
   // Append name and id divs to name cell
-  nameCell.appendChild(name);
-  nameCell.appendChild(id);
+  nameCell.append(nameDiv, idDiv);
+  return nameCell;
+}
 
-  // Create a description cell
+function createDescriptionCell(description) {
   const descriptionCell = document.createElement('div');
   descriptionCell.classList.add('description-cell');
-  descriptionCell.textContent = customer.description;
+  descriptionCell.textContent = description;
+  return descriptionCell;
+}
 
-  // Create a status cell
+function createStatusCell(status) {
   const statusCell = document.createElement('div');
   statusCell.classList.add('status-cell');
-  const { status } = customer;
   // Add class based on status
   statusCell.classList.add(`status-${status.toLowerCase()}`);
   statusCell.textContent = status;
+  return statusCell;
+}
 
+function createSymbolSpan(symbol) {
   // Create a reusable symbol element
-  const symbol = document.createElement('span');
-  symbol.textContent = customer.symbol;
+  const symbolSpan = document.createElement('span');
+  symbolSpan.textContent = symbol;
+  return symbolSpan;
+}
 
-  // Create a reusable currency element
-  const currency = document.createElement('div');
-  currency.classList.add('currency');
-  currency.textContent = customer.currency;
+function createCurrencyDiv(currency) {
+  const currencyDiv = document.createElement('div');
+  currencyDiv.classList.add('currency');
+  currencyDiv.textContent = currency;
+  return currencyDiv;
+}
 
-  // Create a rate cell
+function createRateCell(rate, symbol, currency) {
   const rateCell = document.createElement('div');
   rateCell.classList.add('rate-cell');
   // Create a rate amount div
   const rateAmount = document.createElement('div');
   rateAmount.classList.add('amount');
-  const rateSymbol = symbol.cloneNode(true); // Clone the symbol element
-  const rate = document.createElement('span');
-  rate.textContent = formatNumberWithCommas(customer.rate);
-  rateAmount.appendChild(rateSymbol);
-  rateAmount.appendChild(rate);
+  const rateSymbol = createSymbolSpan(symbol);
+  const rateSpan = document.createElement('span');
+  rateSpan.textContent = formatNumberWithCommas(rate);
+  rateAmount.append(rateSymbol, rateSpan);
   // Create a rate currency div
-  const rateCurrency = currency.cloneNode(true); // Clone the currency element
-  rateCell.appendChild(rateAmount);
-  rateCell.appendChild(rateCurrency);
+  const rateCurrency = createCurrencyDiv(currency);
+  rateCell.append(rateAmount, rateCurrency);
+  return rateCell;
+}
 
-  // Create a balance cell
+function createBalanceCell(balance, symbol, currency) {
   const balanceCell = document.createElement('div');
   balanceCell.classList.add('balance-cell');
   // Create a balance amount div
   const balanceAmount = document.createElement('div');
   balanceAmount.classList.add('amount');
   balanceAmount.classList.add('positive');
-  const balanceSymbol = symbol.cloneNode(true); // Clone the symbol element
-  const balance = document.createElement('span');
-  balance.textContent = formatNumberWithCommas(customer.balance);
-  if (customer.balance < 0) {
-    balanceSymbol.textContent = `-${customer.symbol}`;
-    balance.textContent = formatNumberWithCommas(Math.abs(customer.balance).toString());
+  const balanceSymbol = createSymbolSpan(symbol);
+  const balanceSpan = document.createElement('span');
+  balanceSpan.textContent = formatNumberWithCommas(balance);
+  if (balance < 0) {
+    balanceSymbol.textContent = `-${symbol}`;
+    balanceSpan.textContent = formatNumberWithCommas(Math.abs(balance).toString());
     balanceAmount.classList.remove('positive');
     balanceAmount.classList.add('negative');
   }
-  balanceAmount.appendChild(balanceSymbol);
-  balanceAmount.appendChild(balance);
+  balanceAmount.append(balanceSymbol, balanceSpan);
   // Create a balance currency div
-  const balanceCurrency = currency.cloneNode(true); // Clone the currency element
-  balanceCell.appendChild(balanceAmount);
-  balanceCell.appendChild(balanceCurrency);
+  const balanceCurrency = createCurrencyDiv(currency);
+  balanceCell.append(balanceAmount, balanceCurrency);
+  return balanceCell;
+}
 
+function createDepositCell(deposit, symbol, currency) {
   // Create a deposit cell
   const depositCell = document.createElement('div');
   depositCell.classList.add('deposit-cell');
   // Create a deposit amount div
   const depositAmount = document.createElement('div');
   depositAmount.classList.add('amount');
-  const depositSymbol = symbol.cloneNode(true); // Clone the symbol element
-  const deposit = document.createElement('span');
-  deposit.textContent = formatNumberWithCommas(customer.deposit);
-  depositAmount.appendChild(depositSymbol);
-  depositAmount.appendChild(deposit);
+  const depositSymbol = createSymbolSpan(symbol);
+  const depositSpan = document.createElement('span');
+  depositSpan.textContent = formatNumberWithCommas(deposit);
+  depositAmount.append(depositSymbol, depositSpan);
   // Create a deposit currency div
-  const depositCurrency = currency.cloneNode(true); // Clone the currency element
-  depositCell.appendChild(depositAmount);
-  depositCell.appendChild(depositCurrency);
+  const depositCurrency = createCurrencyDiv(currency);
+  depositCell.append(depositAmount, depositCurrency);
+  return depositCell;
+}
 
+function createMenuButton(iconSrc) {
   // Create a menu button
   const menuButton = document.createElement('div');
   menuButton.classList.add('menu-button', 'icon-wrapper');
   const menuImg = document.createElement('img');
-  menuImg.src = menuIcon;
+  menuImg.src = iconSrc;
   menuImg.alt = 'Menu icon';
   menuButton.appendChild(menuImg);
+  return menuButton;
+}
+
+function createTableRow(customer) {
+  // Create a new table row
+  const newRow = document.createElement('div');
+  newRow.classList.add('table-row');
+
+  // Create a name cell
+  const nameCell = createNameCell(customer.name, customer.id);
+
+  // Create a description cell
+  const descriptionCell = createDescriptionCell(customer.description);
+
+  // Create a status cell
+  const statusCell = createStatusCell(customer.status);
+
+  // Create a rate cell
+  const rateCell = createRateCell(customer.rate, customer.symbol, customer.currency);
+
+  // Create a balance cell
+  const balanceCell = createBalanceCell(customer.balance, customer.symbol, customer.currency);
+
+  // Create a deposit cell
+  const depositCell = createDepositCell(customer.deposit, customer.symbol, customer.currency);
+
+  // Create a menu button
+  const menuButton = createMenuButton(menuIcon);
 
   // Append all cells to the new row
-  newRow.appendChild(nameCell);
-  newRow.appendChild(descriptionCell);
-  newRow.appendChild(statusCell);
-  newRow.appendChild(rateCell);
-  newRow.appendChild(balanceCell);
-  newRow.appendChild(depositCell);
-  newRow.appendChild(menuButton);
+  newRow.append(
+    nameCell,
+    descriptionCell,
+    statusCell,
+    rateCell,
+    balanceCell,
+    depositCell,
+    menuButton
+  );
 
   return newRow;
 }
@@ -213,18 +254,23 @@ function removeNoCustomersFound() {
 
 // Get customers to view on Dashboard
 function generateTableRows(customers) {
+  // Show no customers found message if there are no customers
   if (customers.length === 0) {
     showNoCustomersFound();
   } else {
     removeNoCustomersFound();
   }
+
+  // Create a new table row for each customer
   customers.forEach((customer) => {
     const newRow = createTableRow(customer);
     const tableBody = document.querySelector('.table-body');
     tableBody.appendChild(newRow);
   });
+  // If there is already an event listener to close the action menu, remove it
   window.removeEventListener('click', closeActionMenuWhenClickedOutside);
-  loadActionMenu(customers);
+  // Load the menu buttons by store customers data and add event listeners to create and open/close the action menu
+  loadAllMenuButtons(customers);
 }
 
 // Add a new table row and append it to the top when create new customer
@@ -242,10 +288,13 @@ function addNewTableRow(customer) {
 
 // Edit the current customer row when edit customer
 function editCurrentCustomerRow(updatedCustomer) {
+  // Select the table row that is being edited
   const menuButton = document.querySelector(`div[data-customer-id="${updatedCustomer.id}"]`);
   const currentTableRow = menuButton.closest('.table-row');
+  // Get the index of the table row being edited
   const tableBody = document.querySelector('.table-body');
   const currentIndex = Array.from(tableBody.children).indexOf(currentTableRow);
+  // Remove the current table row and insert the edited table row at the same position
   currentTableRow.remove();
   insertTableRowAtPosition(updatedCustomer, tableBody.children[currentIndex]);
 }

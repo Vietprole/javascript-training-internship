@@ -15,8 +15,8 @@ function enforceMaxLength(event) {
   }
 }
 
-// Function to check if the rate, balance, deposit is valid
-function isValid(input, allowNegative = false) {
+// Function to check if the rate, balance, deposit is in valid format
+function isFinancialValueValid(input, allowNegative = false) {
   if (!allowNegative) {
     // Positive, max 7 digits, max 2 decimal places, allow trailing decimal point
     return REGEX.POSITIVE_VALID.test(input);
@@ -42,7 +42,7 @@ function formatNumberWithCommas(number) {
 }
 
 // Show error message if the required field is empty
-function showErrorIfEmpty(event) {
+function showErrorIfFieldIsEmpty(event) {
   const input = event.target;
   const inputWrapper = input.closest('.input-wrapper');
   const errorMessageDiv = inputWrapper ? inputWrapper.nextElementSibling : null;
@@ -100,15 +100,21 @@ function checkFormValidity() {
   confirmButton.disabled = !isFormValid;
 }
 
+// Capitalize the first letter of the string
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 export {
   hasNumbers,
   enforceMaxLength,
-  isValid,
+  isFinancialValueValid,
   sanitizeInput,
   formatNumberWithCommas,
-  showErrorIfEmpty,
+  showErrorIfFieldIsEmpty,
   combineAndRemoveDuplicates,
   getActionMenuPosition,
   sortCustomersByName,
   checkFormValidity,
+  capitalizeFirstLetter,
 };

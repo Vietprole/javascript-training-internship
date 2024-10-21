@@ -6,10 +6,11 @@ import { addNewTableRow, editCurrentCustomerRow } from './dashboard';
 import {
   hasNumbers,
   enforceMaxLength,
-  isValid,
-  showErrorIfEmpty,
+  isFinancialValueValid,
+  showErrorIfFieldIsEmpty,
   sanitizeInput,
   checkFormValidity,
+  capitalizeFirstLetter,
 } from '../utils/helpers';
 
 import { openModal, closeModal } from '../utils/modal';
@@ -24,11 +25,63 @@ const Status = {
   DUE: 'Due',
 };
 
-function addEventListenersForModalButtons() {
-  const customerModal = document.querySelector('.customer-modal');
-  const closeCustomerModalButton = document.querySelector('.customer-modal .close-button');
-  const confirmButton = document.querySelector('.confirm-button');
+// Store previous values for inputs in an object instead of separated variables
+const previousValues = {
+  name: '',
+  rate: '',
+  balance: '',
+  deposit: '',
+};
 
+// Map the input object with the corresponding key in the previousValues object
+const inputMap = {
+  'name-input': 'name',
+  'rate-input': 'rate',
+  'balance-input': 'balance',
+  'deposit-input': 'deposit',
+};
+
+// Save the previous value of the input fields into the previousValues object
+function setPreviousValue() {
+  const key = inputMap[this.id];
+  if (key) previousValues[key] = this.value;
+}
+
+// Choose the appropriate validator based on the input field
+const validators = {
+  name: (value) => !hasNumbers(value),
+  rate: (value) => isFinancialValueValid(value),
+  balance: (value) => isFinancialValueValid(value, true), // allow negative numbers
+  deposit: (value) => isFinancialValueValid(value),
+};
+
+// Validate the input and revert to the previous value if the new value is invalid
+function validateAndRevertInput() {
+  const key = inputMap[this.id];
+  if (this.value && !validators[key](this.value)) {
+    this.value = previousValues[key];
+  }
+}
+
+// Setup input listeners for each input field
+function setupInputListeners(inputElement, hasMaxLength) {
+  if (hasMaxLength) inputElement.addEventListener('input', enforceMaxLength);
+  inputElement.addEventListener('blur', showErrorIfFieldIsEmpty);
+  inputElement.addEventListener('keydown', setPreviousValue);
+  inputElement.addEventListener('input', validateAndRevertInput);
+  inputElement.addEventListener('input', checkFormValidity);
+}
+
+// Handle the customer modal form submission
+async function handleAddOrEditCustomer(event) {
+  // Disable the confirm button to prevent multiple submissions
+  const { target } = event;
+  target.disabled = true;
+
+  // Get the customer modal
+  const customerModal = document.querySelector('.customer-modal');
+
+  // Get the customer modal inputs
   const nameInput = document.getElementById('name-input');
   const statusInput = document.getElementById('status-input');
   const rateInput = document.getElementById('rate-input');
@@ -36,141 +89,101 @@ function addEventListenersForModalButtons() {
   const depositInput = document.getElementById('deposit-input');
   const descriptionInput = document.getElementById('description-input');
 
-  closeCustomerModalButton.addEventListener('click', () => {
-    closeModal(customerModal);
-  });
+  // Get value of each input field
+  const name = nameInput.value;
+  const status = statusInput.value;
+  const description = descriptionInput.value;
+  let rate = rateInput.value;
+  let balance = balanceInput.value;
+  let deposit = depositInput.value;
+  // Remove any trailing decimal points or negative signs
+  rate = sanitizeInput(rate);
+  balance = sanitizeInput(balance);
+  deposit = sanitizeInput(deposit);
 
-  // Store previous values for inputs in an object instead of separated variables
-  const previousValues = {
-    name: '',
-    rate: '',
-    balance: '',
-    deposit: '',
-  };
-
-  const inputMap = {
-    'name-input': 'name',
-    'rate-input': 'rate',
-    'balance-input': 'balance',
-    'deposit-input': 'deposit',
-  };
-
-  function setPreviousValue() {
-    const key = inputMap[this.id];
-    if (key) previousValues[key] = this.value;
+  // Add new customer if in add mode, otherwise edit the current customer
+  if (state.isAddMode) {
+    const id = uuidv4();
+    // Create a new Customer instance
+    const newCustomer = new Customer(id, name, status, rate, balance, deposit, description);
+    // Send a POST request to the API
+    await postData(newCustomer.toJSON());
+    // Add new customer row to top of the table
+    addNewTableRow(newCustomer);
+  } else {
+    const { id } = state.currentCustomer;
+    const { currency } = state.currentCustomer;
+    const { symbol } = state.currentCustomer;
+    // Create an updated Customer instance
+    const updatedCustomer = new Customer(
+      id,
+      name,
+      status,
+      rate,
+      balance,
+      deposit,
+      description,
+      currency,
+      symbol
+    );
+    // Send a PUT request to the API
+    await putData(updatedCustomer.toJSON(), `${API_BASE_URL}/${id}`);
+    editCurrentCustomerRow(updatedCustomer);
   }
-
-  const validators = {
-    name: (value) => !hasNumbers(value),
-    rate: (value) => isValid(value),
-    balance: (value) => isValid(value, true), // allow negative numbers
-    deposit: (value) => isValid(value),
-  };
-
-  // Validate the input and revert to the previous value if the new value is invalid
-  function validateAndRevertInput() {
-    const key = inputMap[this.id];
-    if (this.value && !validators[key](this.value)) {
-      this.value = previousValues[key];
-    }
-  }
-
-  // maxLength : boolean
-  function setupInputListeners(inputElement, maxLength) {
-    if (maxLength) inputElement.addEventListener('input', enforceMaxLength);
-    inputElement.addEventListener('blur', showErrorIfEmpty);
-    inputElement.addEventListener('keydown', setPreviousValue);
-    inputElement.addEventListener('input', validateAndRevertInput);
-    inputElement.addEventListener('input', checkFormValidity);
-  }
-
-  // Setup listeners for each input field
-  setupInputListeners(nameInput, true);
-  setupInputListeners(rateInput);
-  setupInputListeners(balanceInput);
-  setupInputListeners(depositInput);
-
-  // Handle the customer modal form submission
-  async function handleAddOrEditCustomer(event) {
-    const { target } = event;
-    target.disabled = true;
-    const name = nameInput.value;
-    const status = statusInput.value;
-    const description = descriptionInput.value;
-    let rate = rateInput.value;
-    let balance = balanceInput.value;
-    let deposit = depositInput.value;
-    // Remove any trailing decimal points or negative signs
-    rate = sanitizeInput(rate);
-    balance = sanitizeInput(balance);
-    deposit = sanitizeInput(deposit);
-
-    if (state.isAddMode) {
-      const id = uuidv4();
-      // Create a new Customer instance
-      const newCustomer = new Customer(id, name, status, rate, balance, deposit, description);
-      // Send a POST request to the API
-      await postData(newCustomer.toJSON());
-      // Add new customer row to top of the table
-      addNewTableRow(newCustomer);
-    } else {
-      const { id } = state.currentCustomer;
-      const { currency } = state.currentCustomer;
-      const { symbol } = state.currentCustomer;
-      // Create an updated Customer instance
-      const updatedCustomer = new Customer(
-        id,
-        name,
-        status,
-        rate,
-        balance,
-        deposit,
-        description,
-        currency,
-        symbol
-      );
-      // Send a PUT request to the API
-      await putData(updatedCustomer.toJSON(), `${API_BASE_URL}/${id}`);
-      editCurrentCustomerRow(updatedCustomer);
-    }
-    closeModal(customerModal);
-  }
-  confirmButton.addEventListener('click', handleAddOrEditCustomer);
+  closeModal(customerModal);
 }
 
-function createCustomerModal(isAddMode) {
-  const customerModal = document.querySelector('.customer-modal');
+// The "Field is required" error message
+function createErrorMessage() {
+  const errorMessage = document.createElement('div');
+  errorMessage.classList.add('error-message');
+  return errorMessage;
+}
 
-  const heading = document.createElement('h2');
-  heading.textContent = isAddMode ? 'Add Customer' : 'Edit Customer';
-  const horizontalRule = document.createElement('hr');
-  const form = document.createElement('form');
-  form.classList.add('modal-form');
+// Symbol: $, €, £, etc.
+function createSymbol() {
+  const symbol = document.createElement('span');
+  symbol.classList.add('symbol');
+  symbol.textContent = DEFAULT_SYMBOL;
+  return symbol;
+}
 
+// Input wrapper for layout and styles
+function createInputWrapper() {
+  const inputWrapper = document.createElement('div');
+  inputWrapper.classList.add('input-wrapper');
+  return inputWrapper;
+}
+
+function createNameField() {
   const nameField = document.createElement('div');
   nameField.classList.add('name-field');
+  // Create the label for the name input
   const nameLabel = document.createElement('label');
   nameLabel.setAttribute('for', 'name-input');
   nameLabel.classList.add('label');
   nameLabel.textContent = 'Name';
-  const inputWrapper = document.createElement('div');
-  inputWrapper.classList.add('input-wrapper');
+  // Create the input wrapper
+  const inputWrapper = createInputWrapper();
   const nameInput = document.createElement('input');
   nameInput.setAttribute('type', 'text');
   nameInput.setAttribute('id', 'name-input');
   nameInput.setAttribute('required', 'true');
   inputWrapper.appendChild(nameInput);
-  // Reusable error message
-  const errorMessage = document.createElement('div');
-  errorMessage.classList.add('error-message');
+  // Add error message
+  const errorMessage = createErrorMessage();
   nameField.append(nameLabel, inputWrapper, errorMessage);
+}
 
+function createStatusField() {
   const statusField = document.createElement('div');
   statusField.classList.add('status-field');
+  // Create the label for the status input
   const statusLabel = document.createElement('label');
   statusLabel.setAttribute('for', 'status-input');
   statusLabel.classList.add('label');
   statusLabel.textContent = 'Status';
+  // Select status between Open, Paid, Inactive, Due
   const statusInput = document.createElement('select');
   statusInput.setAttribute('id', 'status-input');
   const openOption = document.createElement('option');
@@ -185,64 +198,34 @@ function createCustomerModal(isAddMode) {
   const dueOption = document.createElement('option');
   dueOption.setAttribute('value', Status.DUE);
   dueOption.textContent = Status.DUE;
+  // Append options to the select element
   statusInput.append(openOption, paidOption, inactiveOption, dueOption);
   statusField.append(statusLabel, statusInput);
+}
 
-  // Reusable symbol
-  const symbol = document.createElement('span');
-  symbol.classList.add('symbol');
-  symbol.textContent = DEFAULT_SYMBOL;
+// Financial value input field: Rate, Balance, Deposit
+function createFinancialField(valueType) {
+  const financialField = document.createElement('div');
+  financialField.classList.add(`${valueType}-field`);
+  const label = document.createElement('label');
+  label.setAttribute('for', `${valueType}-input`);
+  label.classList.add('label');
+  label.textContent = capitalizeFirstLetter(valueType);
+  const inputWrapper = createInputWrapper();
+  const symbol = createSymbol();
+  const input = document.createElement('input');
+  input.setAttribute('type', 'text');
+  input.setAttribute('id', 'rate-input');
+  input.setAttribute('required', 'true');
+  inputWrapper.append(symbol, input);
+  const errorMessage = createErrorMessage();
+  financialField.append(label, inputWrapper, errorMessage);
+}
 
-  const rateField = document.createElement('div');
-  rateField.classList.add('rate-field');
-  const rateLabel = document.createElement('label');
-  rateLabel.setAttribute('for', 'rate-input');
-  rateLabel.classList.add('label');
-  rateLabel.textContent = 'Rate';
-  const rateInputWrapper = inputWrapper.cloneNode(false);
-  const rateSymbol = symbol.cloneNode(true);
-  const rateInput = document.createElement('input');
-  rateInput.setAttribute('type', 'text');
-  rateInput.setAttribute('id', 'rate-input');
-  rateInput.setAttribute('required', 'true');
-  rateInputWrapper.append(rateSymbol, rateInput);
-  const rateErrorMessage = errorMessage.cloneNode(false);
-  rateField.append(rateLabel, rateInputWrapper, rateErrorMessage);
-
-  const balanceField = document.createElement('div');
-  balanceField.classList.add('balance-field');
-  const balanceLabel = document.createElement('label');
-  balanceLabel.setAttribute('for', 'balance-input');
-  balanceLabel.classList.add('label');
-  balanceLabel.textContent = 'Balance';
-  const balanceInputWrapper = inputWrapper.cloneNode(false);
-  const balanceSymbol = symbol.cloneNode(true);
-  const balanceInput = document.createElement('input');
-  balanceInput.setAttribute('type', 'text');
-  balanceInput.setAttribute('id', 'balance-input');
-  balanceInput.setAttribute('required', 'true');
-  balanceInputWrapper.append(balanceSymbol, balanceInput);
-  const balanceErrorMessage = errorMessage.cloneNode(false);
-  balanceField.append(balanceLabel, balanceInputWrapper, balanceErrorMessage);
-
-  const depositField = document.createElement('div');
-  depositField.classList.add('deposit-field');
-  const depositLabel = document.createElement('label');
-  depositLabel.setAttribute('for', 'deposit-input');
-  depositLabel.classList.add('label');
-  depositLabel.textContent = 'Deposit';
-  const depositInputWrapper = inputWrapper.cloneNode(false);
-  const depositSymbol = symbol.cloneNode(true);
-  const depositInput = document.createElement('input');
-  depositInput.setAttribute('type', 'text');
-  depositInput.setAttribute('id', 'deposit-input');
-  depositInput.setAttribute('required', 'true');
-  depositInputWrapper.append(depositSymbol, depositInput);
-  const depositErrorMessage = errorMessage.cloneNode(false);
-  depositField.append(depositLabel, depositInputWrapper, depositErrorMessage);
-
+function createDescriptionField() {
   const descriptionField = document.createElement('div');
   descriptionField.classList.add('description-field');
+  // Create the label for the description input
   const descriptionLabel = document.createElement('label');
   descriptionLabel.setAttribute('for', 'description-input');
   descriptionLabel.classList.add('label');
@@ -250,22 +233,72 @@ function createCustomerModal(isAddMode) {
   const descriptionInput = document.createElement('textarea');
   descriptionInput.setAttribute('id', 'description-input');
   descriptionField.append(descriptionLabel, descriptionInput);
+}
 
+// Create confirm and close buttons
+function createButtonGroup() {
   const buttonGroup = document.createElement('div');
   buttonGroup.classList.add('button-group');
+  // Create the confirm button
   const confirmButton = document.createElement('button');
   confirmButton.classList.add('button-primary', 'confirm-button');
   confirmButton.setAttribute('disabled', 'true');
-  confirmButton.textContent = isAddMode ? 'Create' : 'Save';
+  confirmButton.textContent = state.isAddMode ? 'Create' : 'Save';
+  // Create the close button
   const closeButton = document.createElement('button');
   closeButton.classList.add('button-secondary', 'close-button');
   closeButton.textContent = 'Close';
   buttonGroup.append(confirmButton, closeButton);
+}
 
+function createModalForm() {
+  const form = document.createElement('form');
+  form.classList.add('modal-form');
+  // Create the fields for the form
+  const nameField = createNameField();
+  const statusField = createStatusField();
+  const rateField = createFinancialField('rate');
+  const balanceField = createFinancialField('balance');
+  const depositField = createFinancialField('deposit');
+  const descriptionField = createDescriptionField();
   form.append(nameField, statusField, rateField, balanceField, depositField, descriptionField);
+
+  // Add event listeners to validate the form
+  const nameInput = document.getElementById('name-input');
+  const rateInput = document.getElementById('rate-input');
+  const balanceInput = document.getElementById('balance-input');
+  const depositInput = document.getElementById('deposit-input');
+  // Setup listeners for each input field
+  setupInputListeners(nameInput, true);
+  setupInputListeners(rateInput);
+  setupInputListeners(balanceInput);
+  setupInputListeners(depositInput);
+}
+
+function createCustomerModal(isAddMode) {
+  const customerModal = document.querySelector('.customer-modal');
+  // Create the heading for the modal
+  const heading = document.createElement('h2');
+  heading.textContent = isAddMode ? 'Add Customer' : 'Edit Customer';
+  const horizontalRule = document.createElement('hr');
+
+  // Create the form for the modal
+  const form = createModalForm();
+
+  // Create the button group for the modal
+  const buttonGroup = createButtonGroup();
+
   customerModal.append(heading, horizontalRule, form, buttonGroup);
 
-  addEventListenersForModalButtons();
+  // Add event listeners for the confirm button
+  const confirmButton = document.querySelector('.confirm-button');
+  confirmButton.addEventListener('click', handleAddOrEditCustomer);
+
+  // Add event listeners for the close button
+  const closeCustomerModalButton = document.querySelector('.customer-modal .close-button');
+  closeCustomerModalButton.addEventListener('click', () => {
+    closeModal(customerModal);
+  });
 }
 
 // Fill the edit form with the current customer's data
@@ -290,7 +323,8 @@ async function fillEditModal() {
   depositInput.value = customer.deposit;
   descriptionInput.value = customer.description;
   symbols.forEach((symbol) => {
-    symbol.textContent = customer.symbol;
+    const temp = symbol;
+    temp.textContent = customer.symbol;
   });
 
   // Check the form validity when the modal is opened
@@ -298,4 +332,4 @@ async function fillEditModal() {
   openModal(customerModal);
 }
 
-export { createCustomerModal, fillEditModal, addEventListenersForModalButtons };
+export { createCustomerModal, fillEditModal };
