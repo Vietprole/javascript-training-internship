@@ -1,7 +1,6 @@
 import state from '../constants/state';
 import { closeModal, openModal } from '../utils/modal';
 import { formatNumberWithCommas } from '../utils/helpers';
-import { create } from 'json-server';
 
 function createSymbolSpan(symbol) {
   const symbolSpan = document.createElement('span');
@@ -51,6 +50,7 @@ function createRateField(rate, symbol) {
   rateSpan.textContent = formatNumberWithCommas(rate);
   rateContent.append(rateSymbol, rateSpan);
   rateField.append(rateLabel, rateContent);
+  return rateField;
 }
 
 function createBalanceField(balance, symbol) {
@@ -65,6 +65,7 @@ function createBalanceField(balance, symbol) {
   const balanceSymbol = createSymbolSpan(symbol);
   const balanceSpan = document.createElement('span');
   balanceSpan.textContent = formatNumberWithCommas(balance);
+  balanceContent.classList.add('positive');
   if (balance < 0) {
     balanceSymbol.textContent = `-${symbol}`;
     balanceSpan.textContent = formatNumberWithCommas(Math.abs(balance).toString());
@@ -73,6 +74,7 @@ function createBalanceField(balance, symbol) {
   }
   balanceContent.append(balanceSymbol, balanceSpan);
   balanceField.append(balanceLabel, balanceContent);
+  return balanceField;
 }
 
 function createDepositField(deposit, symbol) {
@@ -89,6 +91,7 @@ function createDepositField(deposit, symbol) {
   depositSpan.textContent = formatNumberWithCommas(deposit);
   depositContent.append(depositSymbol, depositSpan);
   depositField.append(depositLabel, depositContent);
+  return depositField;
 }
 
 function createDescriptionField(description) {
@@ -108,6 +111,7 @@ function createDescriptionField(description) {
   tooltip.textContent = description;
   descriptionWrapper.append(descriptionContent, tooltip);
   descriptionField.append(descriptionLabel, descriptionWrapper);
+  return descriptionField;
 }
 
 function createButtonGroup() {
@@ -122,14 +126,14 @@ function createButtonGroup() {
 
 function createViewCustomerWrapper(customer) {
   const viewCustomerWrapper = document.createElement('div');
-  viewCustomerWrapper.classList.add('view-modal-wrapper');
+  viewCustomerWrapper.classList.add('view-customer-wrapper');
 
   // Create the fields for the modal
   const nameField = createNameField(customer.name);
   const statusField = createStatusField(customer.status);
-  const rateField = createRateField(customer.rate, customer.currency.symbol);
-  const balanceField = createBalanceField(customer.balance, customer.currency.symbol);
-  const depositField = createDepositField(customer.deposit, customer.currency.symbol);
+  const rateField = createRateField(customer.rate, customer.symbol);
+  const balanceField = createBalanceField(customer.balance, customer.symbol);
+  const depositField = createDepositField(customer.deposit, customer.symbol);
   const descriptionField = createDescriptionField(customer.description);
 
   viewCustomerWrapper.append(

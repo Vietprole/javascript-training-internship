@@ -169,10 +169,13 @@ function createNameField() {
   nameInput.setAttribute('type', 'text');
   nameInput.setAttribute('id', 'name-input');
   nameInput.setAttribute('required', 'true');
+  // Setup listeners for the name input
+  setupInputListeners(nameInput, true);
   inputWrapper.appendChild(nameInput);
   // Add error message
   const errorMessage = createErrorMessage();
   nameField.append(nameLabel, inputWrapper, errorMessage);
+  return nameField;
 }
 
 function createStatusField() {
@@ -201,6 +204,7 @@ function createStatusField() {
   // Append options to the select element
   statusInput.append(openOption, paidOption, inactiveOption, dueOption);
   statusField.append(statusLabel, statusInput);
+  return statusField;
 }
 
 // Financial value input field: Rate, Balance, Deposit
@@ -215,11 +219,14 @@ function createFinancialField(valueType) {
   const symbol = createSymbol();
   const input = document.createElement('input');
   input.setAttribute('type', 'text');
-  input.setAttribute('id', 'rate-input');
+  input.setAttribute('id', `${valueType}-input`);
   input.setAttribute('required', 'true');
+  // Setup listeners for the financial input
+  setupInputListeners(input);
   inputWrapper.append(symbol, input);
   const errorMessage = createErrorMessage();
   financialField.append(label, inputWrapper, errorMessage);
+  return financialField;
 }
 
 function createDescriptionField() {
@@ -233,6 +240,7 @@ function createDescriptionField() {
   const descriptionInput = document.createElement('textarea');
   descriptionInput.setAttribute('id', 'description-input');
   descriptionField.append(descriptionLabel, descriptionInput);
+  return descriptionField;
 }
 
 // Create confirm and close buttons
@@ -249,6 +257,7 @@ function createButtonGroup() {
   closeButton.classList.add('button-secondary', 'close-button');
   closeButton.textContent = 'Close';
   buttonGroup.append(confirmButton, closeButton);
+  return buttonGroup;
 }
 
 function createModalForm() {
@@ -262,17 +271,7 @@ function createModalForm() {
   const depositField = createFinancialField('deposit');
   const descriptionField = createDescriptionField();
   form.append(nameField, statusField, rateField, balanceField, depositField, descriptionField);
-
-  // Add event listeners to validate the form
-  const nameInput = document.getElementById('name-input');
-  const rateInput = document.getElementById('rate-input');
-  const balanceInput = document.getElementById('balance-input');
-  const depositInput = document.getElementById('deposit-input');
-  // Setup listeners for each input field
-  setupInputListeners(nameInput, true);
-  setupInputListeners(rateInput);
-  setupInputListeners(balanceInput);
-  setupInputListeners(depositInput);
+  return form;
 }
 
 function createCustomerModal(isAddMode) {
