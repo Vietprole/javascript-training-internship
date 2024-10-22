@@ -4,57 +4,50 @@ import deleteIcon from '../../assets/icons/delete-icon.svg';
 import { createCustomerModal, fillEditModal } from './customer-modal';
 import { viewCustomer } from './view-modal';
 import { createAndOpenDeleteConfirmationModal } from './delete-confirmation-modal';
+import { capitalizeFirstLetter } from '../utils/helpers';
+
+function createActionMenuButton(type, iconSrc) {
+  const button = document.createElement('div');
+  // Add the class based on the type, e.g: view-button, edit-button, delete-button
+  button.classList.add(`${type}-button`);
+  // Button text has the class button-text and the type, e.g: button-text view
+  const buttonText = document.createElement('div');
+  buttonText.classList.add('button-text', `${type}`);
+  // Text content is the capitalized type, e.g: View, Edit, Delete
+  buttonText.textContent = capitalizeFirstLetter(type);
+  // Create the icon for the button
+  const iconWrapper = document.createElement('div');
+  iconWrapper.classList.add('icon-wrapper');
+  const img = document.createElement('img');
+  img.src = iconSrc;
+  img.alt = `${capitalizeFirstLetter(type)} + icon`;
+  iconWrapper.appendChild(img);
+  button.append(buttonText, iconWrapper);
+  return button;
+}
 
 function createActionMenu() {
+  // Select the empty container for the action menu
   const actionMenu = document.querySelector('.action-menu');
+  // If there is already an action menu, delete it
+  // This is to prevent duplicate action menus
+  while (actionMenu.firstChild) {
+    actionMenu.removeChild(actionMenu.firstChild);
+  }
 
   // Create the view button
-  const viewButton = document.createElement('div');
-  viewButton.classList.add('view-button');
-  const viewButtonText = document.createElement('div');
-  viewButtonText.classList.add('button-text');
-  viewButtonText.textContent = 'View';
-  const viewIconWrapper = document.createElement('div');
-  viewIconWrapper.classList.add('icon-wrapper');
-  const viewImg = document.createElement('img');
-  viewImg.src = viewIcon;
-  viewImg.alt = 'View icon';
-  viewIconWrapper.appendChild(viewImg);
-  viewButton.append(viewButtonText, viewIconWrapper);
-
+  const viewButton = createActionMenuButton('view', viewIcon);
   // Create the edit button
-  const editButton = document.createElement('div');
-  editButton.classList.add('edit-button');
-  const editButtonText = document.createElement('div');
-  editButtonText.classList.add('button-text');
-  editButtonText.textContent = 'Edit';
-  const editIconWrapper = document.createElement('div');
-  editIconWrapper.classList.add('icon-wrapper');
-  const editImg = document.createElement('img');
-  editImg.src = editIcon;
-  editImg.alt = 'Edit icon';
-  editIconWrapper.appendChild(editImg);
-  editButton.append(editButtonText, editIconWrapper);
-
+  const editButton = createActionMenuButton('edit', editIcon);
   // Create the delete button
-  const deleteButton = document.createElement('div');
-  deleteButton.classList.add('delete-button');
-  const deleteButtonText = document.createElement('div');
-  deleteButtonText.classList.add('button-text', 'delete');
-  deleteButtonText.textContent = 'Delete';
-  const deleteIconWrapper = document.createElement('div');
-  deleteIconWrapper.classList.add('icon-wrapper');
-  const deleteImg = document.createElement('img');
-  deleteImg.src = deleteIcon;
-  deleteImg.alt = 'Delete icon';
-  deleteIconWrapper.appendChild(deleteImg);
-  deleteButton.append(deleteButtonText, deleteIconWrapper);
-
-  // Append buttons to the main container
-  actionMenu.append(viewButton, editButton, deleteButton);
+  const deleteButton = createActionMenuButton('delete', deleteIcon);
+  // Add event listener to the buttons
   viewButton.addEventListener('click', viewCustomer);
   editButton.addEventListener('click', fillEditModal);
   deleteButton.addEventListener('click', createAndOpenDeleteConfirmationModal);
+
+  // Append buttons to the main container
+  actionMenu.append(viewButton, editButton, deleteButton);
 }
 
 export default createActionMenu;
