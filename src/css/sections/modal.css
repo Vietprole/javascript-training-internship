@@ -110,8 +110,13 @@
 .description-content {
   width: 312px;
   height: 60px;
-  overflow: hidden auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
   word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-clamp: 3;
 }
 
 .input-wrapper,

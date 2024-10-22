@@ -2,15 +2,13 @@ import state from '../constants/state';
 import { closeModal, openModal } from '../utils/modal';
 import { formatNumberWithCommas } from '../utils/helpers';
 
-function createViewCustomerModal(customer) {
-  const viewCustomerModal = document.querySelector('.view-customer-modal');
+function createSymbolSpan(symbol) {
+  const symbolSpan = document.createElement('span');
+  symbolSpan.textContent = symbol;
+  return symbolSpan;
+}
 
-  const heading = document.createElement('h2');
-  heading.textContent = 'View Customer';
-  const horizontalRule = document.createElement('hr');
-  const viewCustomerWrapper = document.createElement('div');
-  viewCustomerWrapper.classList.add('view-customer-wrapper');
-
+function createNameField(name) {
   const nameField = document.createElement('div');
   nameField.classList.add('name-field');
   const nameLabel = document.createElement('div');
@@ -19,24 +17,26 @@ function createViewCustomerModal(customer) {
   const nameContent = document.createElement('div');
   nameContent.classList.add('name-content');
   nameContent.setAttribute('id', 'name-content');
-  nameContent.textContent = customer.name;
+  nameContent.textContent = name;
   nameField.append(nameLabel, nameContent);
+  return nameField;
+}
 
+function createStatusField(status) {
   const statusField = document.createElement('div');
   statusField.classList.add('status-field');
   const statusLabel = document.createElement('div');
   statusLabel.classList.add('label');
   statusLabel.textContent = 'Status';
   const statusContent = document.createElement('div');
-  statusContent.classList.add('status-cell', `status-${customer.status.toLowerCase()}`);
+  statusContent.classList.add('status-cell', `status-${status.toLowerCase()}`);
   statusContent.setAttribute('id', 'status-content');
-  statusContent.textContent = customer.status;
+  statusContent.textContent = status;
   statusField.append(statusLabel, statusContent);
+  return statusField;
+}
 
-  // Create a reusable symbol element
-  const symbol = document.createElement('span');
-  symbol.textContent = customer.symbol;
-
+function createRateField(rate, symbol) {
   const rateField = document.createElement('div');
   rateField.classList.add('rate-field');
   const rateLabel = document.createElement('div');
@@ -45,12 +45,15 @@ function createViewCustomerModal(customer) {
   const rateContent = document.createElement('div');
   rateContent.classList.add('rate-content');
   rateContent.setAttribute('id', 'rate-content');
-  const rateSymbol = symbol.cloneNode(true); // Clone the symbol element
-  const rate = document.createElement('span');
-  rate.textContent = formatNumberWithCommas(customer.rate);
-  rateContent.append(rateSymbol, rate);
+  const rateSymbol = createSymbolSpan(symbol);
+  const rateSpan = document.createElement('span');
+  rateSpan.textContent = formatNumberWithCommas(rate);
+  rateContent.append(rateSymbol, rateSpan);
   rateField.append(rateLabel, rateContent);
+  return rateField;
+}
 
+function createBalanceField(balance, symbol) {
   const balanceField = document.createElement('div');
   balanceField.classList.add('balance-field');
   const balanceLabel = document.createElement('div');
@@ -59,18 +62,22 @@ function createViewCustomerModal(customer) {
   const balanceContent = document.createElement('div');
   balanceContent.classList.add('balance-content');
   balanceContent.setAttribute('id', 'balance-content');
-  const balanceSymbol = symbol.cloneNode(true); // Clone the symbol element
-  const balance = document.createElement('span');
-  balance.textContent = formatNumberWithCommas(customer.balance);
-  if (customer.balance < 0) {
-    balanceSymbol.textContent = `-${customer.symbol}`;
-    balance.textContent = formatNumberWithCommas(Math.abs(customer.balance).toString());
+  const balanceSymbol = createSymbolSpan(symbol);
+  const balanceSpan = document.createElement('span');
+  balanceSpan.textContent = formatNumberWithCommas(balance);
+  balanceContent.classList.add('positive');
+  if (balance < 0) {
+    balanceSymbol.textContent = `-${symbol}`;
+    balanceSpan.textContent = formatNumberWithCommas(Math.abs(balance).toString());
     balanceContent.classList.remove('positive');
     balanceContent.classList.add('negative');
   }
-  balanceContent.append(balanceSymbol, balance);
+  balanceContent.append(balanceSymbol, balanceSpan);
   balanceField.append(balanceLabel, balanceContent);
+  return balanceField;
+}
 
+function createDepositField(deposit, symbol) {
   const depositField = document.createElement('div');
   depositField.classList.add('deposit-field');
   const depositLabel = document.createElement('div');
@@ -79,12 +86,15 @@ function createViewCustomerModal(customer) {
   const depositContent = document.createElement('div');
   depositContent.classList.add('deposit-content');
   depositContent.setAttribute('id', 'deposit-content');
-  const depositSymbol = symbol.cloneNode(true); // Clone the symbol element
-  const deposit = document.createElement('span');
-  deposit.textContent = formatNumberWithCommas(customer.deposit);
-  depositContent.append(depositSymbol, deposit);
+  const depositSymbol = createSymbolSpan(symbol);
+  const depositSpan = document.createElement('span');
+  depositSpan.textContent = formatNumberWithCommas(deposit);
+  depositContent.append(depositSymbol, depositSpan);
   depositField.append(depositLabel, depositContent);
+  return depositField;
+}
 
+function createDescriptionField(description) {
   const descriptionField = document.createElement('div');
   descriptionField.classList.add('description-field');
   const descriptionLabel = document.createElement('div');
@@ -95,19 +105,36 @@ function createViewCustomerModal(customer) {
   const descriptionContent = document.createElement('div');
   descriptionContent.classList.add('description-content');
   descriptionContent.setAttribute('id', 'description-content');
-  descriptionContent.textContent = customer.description;
+  descriptionContent.textContent = description;
   const tooltip = document.createElement('span');
   tooltip.classList.add('tooltiptext');
-  tooltip.textContent = customer.description;
+  tooltip.textContent = description;
   descriptionWrapper.append(descriptionContent, tooltip);
   descriptionField.append(descriptionLabel, descriptionWrapper);
+  return descriptionField;
+}
 
+function createButtonGroup() {
   const buttonGroup = document.createElement('div');
   buttonGroup.classList.add('button-group');
   const closeButton = document.createElement('button');
   closeButton.classList.add('button-secondary', 'close-button');
   closeButton.textContent = 'Close';
   buttonGroup.append(closeButton);
+  return buttonGroup;
+}
+
+function createViewCustomerWrapper(customer) {
+  const viewCustomerWrapper = document.createElement('div');
+  viewCustomerWrapper.classList.add('view-customer-wrapper');
+
+  // Create the fields for the modal
+  const nameField = createNameField(customer.name);
+  const statusField = createStatusField(customer.status);
+  const rateField = createRateField(customer.rate, customer.symbol);
+  const balanceField = createBalanceField(customer.balance, customer.symbol);
+  const depositField = createDepositField(customer.deposit, customer.symbol);
+  const descriptionField = createDescriptionField(customer.description);
 
   viewCustomerWrapper.append(
     nameField,
@@ -117,6 +144,23 @@ function createViewCustomerModal(customer) {
     depositField,
     descriptionField
   );
+  return viewCustomerWrapper;
+}
+
+function createViewCustomerModal(customer) {
+  const viewCustomerModal = document.querySelector('.view-customer-modal');
+
+  // Create header, horizontal rule for the modal
+  const heading = document.createElement('h2');
+  heading.textContent = 'View Customer';
+  const horizontalRule = document.createElement('hr');
+
+  // Create the wrapper for the customer details
+  const viewCustomerWrapper = createViewCustomerWrapper(customer);
+
+  // Create the button group
+  const buttonGroup = createButtonGroup();
+
   viewCustomerModal.append(heading, horizontalRule, viewCustomerWrapper, buttonGroup);
 }
 
