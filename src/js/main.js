@@ -11,16 +11,7 @@ import { createCustomerModal } from './templates/customer-modal';
 import state from './constants/state';
 import { combineAndRemoveDuplicates, sortCustomersByName } from './utils/helpers';
 import { openModal } from './utils/modal';
-// Loader functionality
-const loader = document.querySelector('.loader-container');
-
-function showLoader() {
-  loader.classList.add('flex');
-}
-
-function hideLoader() {
-  loader.classList.add('hidden');
-}
+import { showLoader, hideLoader } from './utils/loader';
 
 async function loadCustomers() {
   showLoader();

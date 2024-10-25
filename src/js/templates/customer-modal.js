@@ -3,6 +3,7 @@ import Customer from '../models/customer';
 import { postData, putData } from '../utils/http-request';
 import { API_BASE_URL } from '../constants/api';
 import { addNewTableRow, editCurrentCustomerRow } from './dashboard';
+import { showLoader, hideLoader } from '../utils/loader';
 import {
   hasNumbers,
   enforceMaxLength,
@@ -106,10 +107,16 @@ async function handleAddOrEditCustomer(event) {
     const id = uuidv4();
     // Create a new Customer instance
     const newCustomer = new Customer(id, name, status, rate, balance, deposit, description);
+    // Close the modal
+    closeModal(customerModal);
+    // Show the loader
+    showLoader();
     // Send a POST request to the API
     await postData(newCustomer.toJSON());
     // Add new customer row to top of the table
     addNewTableRow(newCustomer);
+    // Hide the loader
+    hideLoader();
   } else {
     const { id } = state.currentCustomer;
     const { currency } = state.currentCustomer;
@@ -126,11 +133,16 @@ async function handleAddOrEditCustomer(event) {
       currency,
       symbol
     );
+    // Close the modal
+    closeModal(customerModal);
+    // Show the loader
+    showLoader();
     // Send a PUT request to the API
     await putData(updatedCustomer.toJSON(), `${API_BASE_URL}/${id}`);
     editCurrentCustomerRow(updatedCustomer);
+    // Hide the loader
+    hideLoader();
   }
-  closeModal(customerModal);
 }
 
 // The "Field is required" error message
