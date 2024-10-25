@@ -12,7 +12,10 @@
     border-radius: var(--border-radius-sm);
 }
 
-.action-menu > div {
+.action-menu > button {
+  border: none;
+  background-color: transparent;
+  text-align: left;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -21,16 +24,17 @@
   margin-bottom: 1px;
 }
 
-.action-menu > div:last-child {
+.action-menu > button:last-child {
   margin-bottom: 0;
 }
 
-.action-menu > div:hover {
+.action-menu > button:hover {
   background-color: var(--background-secondary-color);
 }
 
 .button-text {
   width: 64px;
+  font-family: 'Inter';
   font-weight: var(--font-weight-medium);
   font-size: var(--body-size-md);
   line-height: 20px;

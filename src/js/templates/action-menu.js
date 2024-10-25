@@ -7,7 +7,8 @@ import { createAndOpenDeleteConfirmationModal } from './delete-confirmation-moda
 import { capitalizeFirstLetter } from '../utils/helpers';
 
 function createActionMenuButton(type, iconSrc) {
-  const button = document.createElement('div');
+  const button = document.createElement('button');
+  button.setAttribute('type', 'button');
   // Add the class based on the type, e.g: view-button, edit-button, delete-button
   button.classList.add(`${type}-button`);
   // Button text has the class button-text and the type, e.g: button-text view
