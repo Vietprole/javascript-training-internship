@@ -9,12 +9,12 @@ function createSymbolSpan(symbol) {
 }
 
 function createNameField(name) {
-  const nameField = document.createElement('div');
+  const nameField = document.createElement('p');
   nameField.classList.add('name-field');
-  const nameLabel = document.createElement('div');
+  const nameLabel = document.createElement('p');
   nameLabel.classList.add('label');
   nameLabel.textContent = 'Name';
-  const nameContent = document.createElement('div');
+  const nameContent = document.createElement('p');
   nameContent.classList.add('name-content');
   nameContent.setAttribute('id', 'name-content');
   nameContent.textContent = name;
@@ -23,12 +23,12 @@ function createNameField(name) {
 }
 
 function createStatusField(status) {
-  const statusField = document.createElement('div');
+  const statusField = document.createElement('p');
   statusField.classList.add('status-field');
-  const statusLabel = document.createElement('div');
+  const statusLabel = document.createElement('p');
   statusLabel.classList.add('label');
   statusLabel.textContent = 'Status';
-  const statusContent = document.createElement('div');
+  const statusContent = document.createElement('p');
   statusContent.classList.add('status-cell', `status-${status.toLowerCase()}`);
   statusContent.setAttribute('id', 'status-content');
   statusContent.textContent = status;
@@ -37,12 +37,12 @@ function createStatusField(status) {
 }
 
 function createRateField(rate, symbol) {
-  const rateField = document.createElement('div');
+  const rateField = document.createElement('p');
   rateField.classList.add('rate-field');
-  const rateLabel = document.createElement('div');
+  const rateLabel = document.createElement('p');
   rateLabel.classList.add('label');
   rateLabel.textContent = 'Rate';
-  const rateContent = document.createElement('div');
+  const rateContent = document.createElement('p');
   rateContent.classList.add('rate-content');
   rateContent.setAttribute('id', 'rate-content');
   const rateSymbol = createSymbolSpan(symbol);
@@ -54,12 +54,12 @@ function createRateField(rate, symbol) {
 }
 
 function createBalanceField(balance, symbol) {
-  const balanceField = document.createElement('div');
+  const balanceField = document.createElement('p');
   balanceField.classList.add('balance-field');
-  const balanceLabel = document.createElement('div');
+  const balanceLabel = document.createElement('p');
   balanceLabel.classList.add('label');
   balanceLabel.textContent = 'Balance';
-  const balanceContent = document.createElement('div');
+  const balanceContent = document.createElement('p');
   balanceContent.classList.add('balance-content');
   balanceContent.setAttribute('id', 'balance-content');
   const balanceSymbol = createSymbolSpan(symbol);
@@ -78,12 +78,12 @@ function createBalanceField(balance, symbol) {
 }
 
 function createDepositField(deposit, symbol) {
-  const depositField = document.createElement('div');
+  const depositField = document.createElement('p');
   depositField.classList.add('deposit-field');
-  const depositLabel = document.createElement('div');
+  const depositLabel = document.createElement('p');
   depositLabel.classList.add('label');
   depositLabel.textContent = 'Deposit';
-  const depositContent = document.createElement('div');
+  const depositContent = document.createElement('p');
   depositContent.classList.add('deposit-content');
   depositContent.setAttribute('id', 'deposit-content');
   const depositSymbol = createSymbolSpan(symbol);
@@ -95,14 +95,14 @@ function createDepositField(deposit, symbol) {
 }
 
 function createDescriptionField(description) {
-  const descriptionField = document.createElement('div');
+  const descriptionField = document.createElement('p');
   descriptionField.classList.add('description-field');
-  const descriptionLabel = document.createElement('div');
+  const descriptionLabel = document.createElement('p');
   descriptionLabel.classList.add('label');
   descriptionLabel.textContent = 'Description';
-  const descriptionWrapper = document.createElement('div');
+  const descriptionWrapper = document.createElement('p');
   descriptionWrapper.classList.add('tooltip');
-  const descriptionContent = document.createElement('div');
+  const descriptionContent = document.createElement('p');
   descriptionContent.classList.add('description-content');
   descriptionContent.setAttribute('id', 'description-content');
   descriptionContent.textContent = description;
