@@ -3,6 +3,7 @@ import { deleteData } from '../utils/http-request';
 import state from '../constants/state';
 import { openModal, closeModal } from '../utils/modal';
 import { removeTableRow } from './dashboard';
+import { showLoader, hideLoader } from '../utils/loader';
 
 // Function to create the delete confirmation modal
 function createDeleteConfirmationModal() {
@@ -42,14 +43,20 @@ async function removeCustomer(event) {
   const { target } = event;
   target.disabled = true; // Disable the button to prevent multiple clicks
 
+  // Close the delete confirmation modal
+  closeDeleteConfirmationModal();
+
+  // Show the loader
+  showLoader();
+
   // Send delete request to the server
   await deleteData(`${API_BASE_URL}/${state.currentCustomer.id}`);
 
   // Remove the customer row from the table
   removeTableRow(state.currentCustomer.id);
 
-  // Close the delete confirmation modal
-  closeDeleteConfirmationModal();
+  // Hide the loader
+  hideLoader();
 }
 
 // Function to create and open the delete confirmation modal

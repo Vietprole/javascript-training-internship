@@ -7,43 +7,45 @@
     <link rel="stylesheet" href="css/index.css" />
   </head>
   <body>
-    <!--* Main Page -->
-    <section class="dashboard">
-      <div class="search-add-container">
-        <div class="search-bar" tabindex="0">
-          <div class="icon-wrapper">
-            <img src="./assets/icons/search-icon.svg" alt="Search customer icon" />
-          </div>
-          <input type="text" class="search-input" placeholder="Search..." />
-        </div>
-        <button class="button-primary add-button" type="button">
-          <div class="icon-wrapper">
-            <img src="./assets/icons/add-icon.svg" alt="Add customer icon" />
-          </div>
-          Add customer
-        </button>
-      </div>
-      <div class="table">
-        <!--* Loading indicator -->
-        <div class="loader-container">
-          <div class="loader"></div>
-        </div>
-        <div class="table-header">
-          <div class="name-header">
-            <div>Name</div>
-            <div class="sort-button icon-wrapper">
-              <img src="./assets/icons/sort-default-icon.svg" alt="Sort icon" />
+    <main>
+      <!--* Main Page -->
+      <section class="dashboard">
+        <div class="search-add-container">
+          <div class="search-bar" tabindex="0">
+            <div class="icon-wrapper">
+              <img src="./assets/icons/search-icon.svg" alt="Search customer icon" />
             </div>
+            <input type="text" class="search-input" placeholder="Search..." />
           </div>
-          <div class="description-header">Description</div>
-          <div class="status-header">Status</div>
-          <div class="rate-header">Rate</div>
-          <div class="balance-header">Balance</div>
-          <div class="deposit-header">Deposit</div>
+          <button class="button-primary add-button" type="button">
+            <div class="icon-wrapper">
+              <img src="./assets/icons/add-icon.svg" alt="Add customer icon" />
+            </div>
+            Add customer
+          </button>
         </div>
-        <div class="table-body"></div>
-      </div>
-    </section>
+        <div class="table">
+          <!--* Loading indicator -->
+          <div class="loader-container">
+            <div class="loader"></div>
+          </div>
+          <header class="table-header">
+            <div class="name-header">
+              <h2>Name</h2>
+              <div class="sort-button icon-wrapper">
+                <img src="./assets/icons/sort-default-icon.svg" alt="Sort icon" />
+              </div>
+            </div>
+            <h2 class="description-header">Description</h2>
+            <h2 class="status-header">Status</h2>
+            <h2 class="rate-header">Rate</h2>
+            <h2 class="balance-header">Balance</h2>
+            <h2 class="deposit-header">Deposit</h2>
+          </header>
+          <div class="table-body"></div>
+        </div>
+      </section>
+    </main>
     <!--* Action Menu -->
     <div class="action-menu"></div>
     <!--* Modal Overlay -->
