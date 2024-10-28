@@ -1,5 +1,5 @@
 import { API_BASE_URL, HTTP_METHODS } from '../constants/api';
-import createAndOpenErrorModal from '../templates/error-modal';
+import createAndOpenErrorToast from '../templates/error-toast';
 
 async function httpRequest(method, body, url) {
   const options = { method };
@@ -15,7 +15,7 @@ async function httpRequest(method, body, url) {
     const data = await response.json();
     return data;
   } catch (error) {
-    createAndOpenErrorModal(error);
+    createAndOpenErrorToast(error);
   }
 }
 

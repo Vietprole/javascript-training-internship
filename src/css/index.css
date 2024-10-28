@@ -9,5 +9,6 @@
 @import './components/status.css';
 @import './components/loader.css';
 @import './components/tooltip.css';
+@import './components/toast.css';
 @import './base/base.css';
 
