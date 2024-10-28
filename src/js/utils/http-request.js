@@ -1,4 +1,5 @@
 import { API_BASE_URL, HTTP_METHODS } from '../constants/api';
+import createAndOpenErrorModal from '../templates/error-modal';
 
 async function httpRequest(method, body, url) {
   const options = { method };
@@ -14,8 +15,7 @@ async function httpRequest(method, body, url) {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error('There was a problem with the fetch operation:', error);
-    return null;
+    createAndOpenErrorModal(error);
   }
 }
 

@@ -121,7 +121,7 @@
 
 .input-wrapper,
 .status-field select,
-.description-field textarea{
+.description-field textarea {
   padding: 15px;
   border: 1px solid var(--text-secondary-color);
   border-radius: var(--border-radius-sm);
@@ -190,15 +190,30 @@
   line-height: 20px;
 }
 
-.delete-confirmation-modal{
+.delete-confirmation-modal,
+.error-modal {
   width: 395px;
   height: 236px;
 }
 
-.delete-confirmation-modal p {
+.delete-confirmation-modal p,
+.error-modal p {
   font-weight: var(--font-weight-regular);
   font-size: var(--body-size-md);
   color: var(--text-default-color);
   line-height: 17px;
   margin-bottom: 45px;
+}
+
+.error-modal p{
+  min-height: 95px;
+  margin-bottom: 5px;
+}
+
+.error-modal h2 {
+  text-align: center;
+  font-weight: var(--font-weight-semi-bold);
+  font-size: var(--heading-size-md);
+  color: var(--text-primary-color);
+  margin-bottom: 5px;
 }
