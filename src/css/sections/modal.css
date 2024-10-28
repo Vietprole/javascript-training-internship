@@ -121,7 +121,7 @@
 
 .input-wrapper,
 .status-field select,
-.description-field textarea{
+.description-field textarea {
   padding: 15px;
   border: 1px solid var(--text-secondary-color);
   border-radius: var(--border-radius-sm);
@@ -177,10 +177,6 @@
   z-index: 3; /* On top of the page, below the modal */
 }
 
-.open {
-  display: block;
-}
-
 .error {
   border: 1px solid var(--text-danger-color);
 }
@@ -194,7 +190,7 @@
   line-height: 20px;
 }
 
-.delete-confirmation-modal{
+.delete-confirmation-modal {
   width: 395px;
   height: 236px;
 }
@@ -206,3 +202,4 @@
   line-height: 17px;
   margin-bottom: 45px;
 }
+

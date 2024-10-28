@@ -168,7 +168,7 @@ function createViewCustomerModal(customer) {
 function viewCustomer() {
   createViewCustomerModal(state.currentCustomer);
   const viewCustomerModal = document.querySelector('.view-customer-modal');
-  const closeViewModalButton = document.querySelector('.view-customer-modal .close-button');
+  const closeViewModalButton = viewCustomerModal.querySelector('.close-button');
   closeViewModalButton.addEventListener('click', () => {
     closeModal(viewCustomerModal);
   });

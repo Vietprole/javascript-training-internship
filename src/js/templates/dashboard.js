@@ -14,7 +14,7 @@ function closeActionMenuWhenClickedOutside(event) {
     while (actionMenu.firstChild) {
       actionMenu.removeChild(actionMenu.firstChild);
     }
-    actionMenu.classList.remove('open');
+    actionMenu.classList.remove('visible');
   }
 }
 
@@ -42,7 +42,7 @@ function addEventListenerToMenuButton(customer, button) {
     const { top, left } = getActionMenuPosition(button);
     actionMenu.style.top = top;
     actionMenu.style.left = left;
-    actionMenu.classList.add('open');
+    actionMenu.classList.add('visible');
   });
 }
 

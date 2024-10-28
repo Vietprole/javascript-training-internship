@@ -72,7 +72,7 @@ addButton.addEventListener('click', handleOpenAddModal);
 
 // Sort functionality
 const sortButton = document.querySelector('.sort-button');
-const sortButtonIcon = document.querySelector('.sort-button img');
+const sortButtonIcon = sortButton.querySelector('img');
 
 function sortCustomers() {
   currentSortingState = (currentSortingState + 1) % 3;

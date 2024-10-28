@@ -12,7 +12,7 @@
   min-width: 320px;
   height: 32px;
   padding: 6px 12px;
-  background-color: var(--background-primary-color);
+  background-color: var(--white);
   box-shadow:
     0px 0px 0px 1px var(--search-shadow-primary-color),
     0px 1px 2px 0px var(--search-shadow-secondary-color);
@@ -98,7 +98,7 @@
 }
 
 .table-row:nth-child(odd) {
-  background-color: var(--background-primary-color);
+  background-color: var(--white);
 }
 
 .table-row:nth-child(even) {
