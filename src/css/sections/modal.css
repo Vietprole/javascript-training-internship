@@ -177,10 +177,6 @@
   z-index: 3; /* On top of the page, below the modal */
 }
 
-.open {
-  display: block;
-}
-
 .error {
   border: 1px solid var(--text-danger-color);
 }

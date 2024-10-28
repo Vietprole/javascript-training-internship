@@ -18,14 +18,6 @@
   animation: spin 2s linear infinite;
 }
 
-.flex {
-  display: flex;
-}
-
-.hidden {
-  display: none;
-}
-
 @keyframes spin {
   0% {
     transform: rotate(0deg);

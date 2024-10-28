@@ -17,3 +17,15 @@ img {
   width: 100%;
   height: auto;
 }
+
+.visible {
+  display: block;
+}
+
+.flex {
+  display: flex;
+}
+
+.hidden {
+  display: none;
+}
