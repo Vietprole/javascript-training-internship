@@ -10,7 +10,7 @@
 }
 
 .loader {
-  border: 16px solid var(--background-primary-color);
+  border: 16px solid var(--white);
   border-radius: 50%;
   border-top: 16px solid var(--text-info-color);
   width: 120px;

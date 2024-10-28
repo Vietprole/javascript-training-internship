@@ -29,7 +29,7 @@
 
 .button-secondary:hover {
   color: var(--white);
-  background-color: var(--button-secondary-hover-color);
+  background-color: var(--button-secondary-color);
 }
 
 .button-primary:disabled,
