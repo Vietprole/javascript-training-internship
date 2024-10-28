@@ -145,161 +145,68 @@ async function handleAddOrEditCustomer(event) {
   }
 }
 
-// The "Field is required" error message
-function createErrorMessage() {
-  const errorMessage = document.createElement('div');
-  errorMessage.classList.add('error-message');
-  return errorMessage;
-}
-
-// Symbol: $, €, £, etc.
-function createSymbol() {
-  const symbol = document.createElement('span');
-  symbol.classList.add('symbol');
-  symbol.textContent = DEFAULT_SYMBOL;
-  return symbol;
-}
-
-// Input wrapper for layout and styles
-function createInputWrapper() {
-  const inputWrapper = document.createElement('div');
-  inputWrapper.classList.add('input-wrapper');
-  return inputWrapper;
-}
-
-function createNameField() {
-  const nameField = document.createElement('div');
-  nameField.classList.add('name-field');
-  // Create the label for the name input
-  const nameLabel = document.createElement('label');
-  nameLabel.setAttribute('for', 'name-input');
-  nameLabel.classList.add('label');
-  nameLabel.textContent = 'Name';
-  // Create the input wrapper
-  const inputWrapper = createInputWrapper();
-  const nameInput = document.createElement('input');
-  nameInput.setAttribute('type', 'text');
-  nameInput.setAttribute('id', 'name-input');
-  nameInput.setAttribute('required', 'true');
-  // Setup listeners for the name input
-  setupInputListeners(nameInput, true);
-  inputWrapper.appendChild(nameInput);
-  // Add error message
-  const errorMessage = createErrorMessage();
-  nameField.append(nameLabel, inputWrapper, errorMessage);
-  return nameField;
-}
-
-function createStatusField() {
-  const statusField = document.createElement('div');
-  statusField.classList.add('status-field');
-  // Create the label for the status input
-  const statusLabel = document.createElement('label');
-  statusLabel.setAttribute('for', 'status-input');
-  statusLabel.classList.add('label');
-  statusLabel.textContent = 'Status';
-  // Select status between Open, Paid, Inactive, Due
-  const statusInput = document.createElement('select');
-  statusInput.setAttribute('id', 'status-input');
-  const openOption = document.createElement('option');
-  openOption.setAttribute('value', Status.OPEN);
-  openOption.textContent = Status.OPEN;
-  const paidOption = document.createElement('option');
-  paidOption.setAttribute('value', Status.PAID);
-  paidOption.textContent = Status.PAID;
-  const inactiveOption = document.createElement('option');
-  inactiveOption.setAttribute('value', Status.INACTIVE);
-  inactiveOption.textContent = Status.INACTIVE;
-  const dueOption = document.createElement('option');
-  dueOption.setAttribute('value', Status.DUE);
-  dueOption.textContent = Status.DUE;
-  // Append options to the select element
-  statusInput.append(openOption, paidOption, inactiveOption, dueOption);
-  statusField.append(statusLabel, statusInput);
-  return statusField;
-}
-
-// Financial value input field: Rate, Balance, Deposit
-function createFinancialField(valueType) {
-  const financialField = document.createElement('div');
-  financialField.classList.add(`${valueType}-field`);
-  const label = document.createElement('label');
-  label.setAttribute('for', `${valueType}-input`);
-  label.classList.add('label');
-  label.textContent = capitalizeFirstLetter(valueType);
-  const inputWrapper = createInputWrapper();
-  const symbol = createSymbol();
-  const input = document.createElement('input');
-  input.setAttribute('type', 'text');
-  input.setAttribute('id', `${valueType}-input`);
-  input.setAttribute('required', 'true');
-  // Setup listeners for the financial input
-  setupInputListeners(input);
-  inputWrapper.append(symbol, input);
-  const errorMessage = createErrorMessage();
-  financialField.append(label, inputWrapper, errorMessage);
-  return financialField;
-}
-
-function createDescriptionField() {
-  const descriptionField = document.createElement('div');
-  descriptionField.classList.add('description-field');
-  // Create the label for the description input
-  const descriptionLabel = document.createElement('label');
-  descriptionLabel.setAttribute('for', 'description-input');
-  descriptionLabel.classList.add('label');
-  descriptionLabel.textContent = 'Description';
-  const descriptionInput = document.createElement('textarea');
-  descriptionInput.setAttribute('id', 'description-input');
-  descriptionField.append(descriptionLabel, descriptionInput);
-  return descriptionField;
-}
-
-// Create confirm and close buttons
-function createButtonGroup() {
-  const buttonGroup = document.createElement('div');
-  buttonGroup.classList.add('button-group');
-  // Create the confirm button
-  const confirmButton = document.createElement('button');
-  confirmButton.classList.add('button-primary', 'confirm-button');
-  confirmButton.setAttribute('disabled', 'true');
-  confirmButton.textContent = state.isAddMode ? 'Create' : 'Save';
-  // Create the close button
-  const closeButton = document.createElement('button');
-  closeButton.classList.add('button-secondary', 'close-button');
-  closeButton.textContent = 'Close';
-  buttonGroup.append(confirmButton, closeButton);
-  return buttonGroup;
-}
-
-function createModalForm() {
-  const form = document.createElement('form');
-  form.classList.add('modal-form');
-  // Create the fields for the form
-  const nameField = createNameField();
-  const statusField = createStatusField();
-  const rateField = createFinancialField('rate');
-  const balanceField = createFinancialField('balance');
-  const depositField = createFinancialField('deposit');
-  const descriptionField = createDescriptionField();
-  form.append(nameField, statusField, rateField, balanceField, depositField, descriptionField);
-  return form;
-}
-
 function createCustomerModal(isAddMode) {
   const customerModal = document.querySelector('.customer-modal');
-  // Create the heading for the modal
-  const heading = document.createElement('h2');
-  heading.textContent = isAddMode ? 'Add Customer' : 'Edit Customer';
-  const horizontalRule = document.createElement('hr');
+  customerModal.innerHTML = `
+    <h2>${isAddMode ? 'Add Customer' : 'Edit Customer'}</h2>
+    <hr>
+    <form class="modal-form">
+      <div class="name-field">
+        <label for="name-input" class="label">Name</label>
+        <div class="input-wrapper">
+          <input type="text" id="name-input" required>
+        </div>
+        <div class="error-message"></div>
+      </div>
+      <div class="status-field">
+        <label for="status-input" class="label">Status</label>
+        <select id="status-input">
+          <option value="${Status.OPEN}">${Status.OPEN}</option>
+          <option value="${Status.PAID}">${Status.PAID}</option>
+          <option value="${Status.INACTIVE}">${Status.INACTIVE}</option>
+          <option value="${Status.DUE}">${Status.DUE}</option>
+        </select>
+      </div>
+      <div class="rate-field">
+        <label for="rate-input" class="label">Rate</label>
+        <div class="input-wrapper">
+          <span class="symbol">${DEFAULT_SYMBOL}</span>
+          <input type="text" id="rate-input" required>
+        </div>
+        <div class="error-message"></div>
+      </div>
+      <div class="balance-field">
+        <label for="balance-input" class="label">Balance</label>
+        <div class="input-wrapper">
+          <span class="symbol">${DEFAULT_SYMBOL}</span>
+          <input type="text" id="balance-input" required>
+        </div>
+        <div class="error-message"></div>
+      </div>
+      <div class="deposit-field">
+        <label for="deposit-input" class="label">Deposit</label>
+        <div class="input-wrapper">
+          <span class="symbol">${DEFAULT_SYMBOL}</span>
+          <input type="text" id="deposit-input" required>
+        </div>
+        <div class="error-message"></div>
+      </div>
+      <div class="description-field">
+        <label for="description-input" class="label">Description</label>
+        <textarea id="description-input"></textarea>
+      </div>
+    </form>
+    <div class="button-group">
+      <button class="button-primary confirm-button" disabled>${isAddMode ? 'Create' : 'Save'}</button>
+      <button class="button-secondary close-button">Close</button>
+    </div>
+  `;
 
-  // Create the form for the modal
-  const form = createModalForm();
-
-  // Create the button group for the modal
-  const buttonGroup = createButtonGroup();
-
-  customerModal.append(heading, horizontalRule, form, buttonGroup);
+  // Setup input listeners
+  setupInputListeners(document.getElementById('name-input'), true);
+  setupInputListeners(document.getElementById('rate-input'));
+  setupInputListeners(document.getElementById('balance-input'));
+  setupInputListeners(document.getElementById('deposit-input'));
 
   // Add event listeners for the confirm button
   const confirmButton = customerModal.querySelector('.confirm-button');
