@@ -13,6 +13,7 @@
 }
 
 .action-menu > button {
+  min-width: 100%;
   border: none;
   background-color: transparent;
   text-align: left;
