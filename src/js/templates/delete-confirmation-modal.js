@@ -64,8 +64,8 @@ function createAndOpenDeleteConfirmationModal() {
   createDeleteConfirmationModal();
 
   const deleteConfirmationModal = document.querySelector('.delete-confirmation-modal');
-  const deleteConfirmButton = document.querySelector('.delete-confirmation-modal .confirm-button');
-  const deleteCloseButton = document.querySelector('.delete-confirmation-modal .close-button');
+  const deleteConfirmButton = deleteConfirmationModal.querySelector('.confirm-button');
+  const deleteCloseButton = deleteConfirmationModal.querySelector('.close-button');
 
   // Add event listener to close button
   deleteCloseButton.addEventListener('click', closeDeleteConfirmationModal);

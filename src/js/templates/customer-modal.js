@@ -302,11 +302,11 @@ function createCustomerModal(isAddMode) {
   customerModal.append(heading, horizontalRule, form, buttonGroup);
 
   // Add event listeners for the confirm button
-  const confirmButton = document.querySelector('.confirm-button');
+  const confirmButton = customerModal.querySelector('.confirm-button');
   confirmButton.addEventListener('click', handleAddOrEditCustomer);
 
   // Add event listeners for the close button
-  const closeCustomerModalButton = document.querySelector('.customer-modal .close-button');
+  const closeCustomerModalButton = customerModal.querySelector('.close-button');
   closeCustomerModalButton.addEventListener('click', () => {
     closeModal(customerModal);
   });
@@ -324,7 +324,7 @@ async function fillEditModal() {
   const balanceInput = document.getElementById('balance-input');
   const depositInput = document.getElementById('deposit-input');
   const descriptionInput = document.getElementById('description-input');
-  const symbols = document.querySelectorAll('.symbol');
+  const symbols = customerModal.querySelectorAll('.symbol');
 
   const customer = state.currentCustomer;
   nameInput.value = customer.name;

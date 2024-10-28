@@ -28,7 +28,7 @@ function createAndOpenErrorToast(error) {
   createErrorToast(error);
 
   const errorToast = document.querySelector('.error-toast');
-  const errorCloseButton = document.querySelector('.error-toast .close-button');
+  const errorCloseButton = errorToast.querySelector('.close-button');
 
   // Add event listener to close button
   errorCloseButton.addEventListener('click', closeErrorToast);
