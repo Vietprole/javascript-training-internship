@@ -1,5 +1,5 @@
 // API Endpoints
-const API_BASE_URL = 'http://localhost:3000/customers';
+const API_BASE_URL = process.env.API_BASE_URL;
 
 // Define HTTP method constants
 const HTTP_METHODS = {
